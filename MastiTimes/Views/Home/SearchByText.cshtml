@@ -1,0 +1,30 @@
+﻿@model List<MastiTimes.Models.Results>
+
+@{
+    ViewData["Title"] = "SearchByText";
+}
+
+<h5>Results:</h5>
+@if(Model.Count == 0)
+{
+    <p> Sorry, no result found!</p>
+}
+
+<div class="container">
+    <div id="movies" class="row">
+        @foreach (var movie in Model)
+        {
+            <div class="col-md-3">
+                <div class="well text-center">
+                    <a href='@Url.Action("GetSelectedMovie", "Home",
+                                    new { id = @movie.ID })'>
+                        <img src="@movie.poster_path"
+                             class="img-responsive">
+                    </a>
+                    <h5 style="color:#5E5B54">@movie.title</h5>
+                    @*<a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>*@
+                </div>
+            </div>
+        }
+    </div>
+</div>
