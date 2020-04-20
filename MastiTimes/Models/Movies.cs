@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 /// <summary>
-/// This class is a root class to model JSON results
+/// This class is a root class to model JSON results for movies
 /// </summary>
 
 namespace MastiTimes.Models

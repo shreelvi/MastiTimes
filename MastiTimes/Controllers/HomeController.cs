@@ -33,8 +33,8 @@ namespace MastiTimes.Controllers
 
         public IActionResult News()
         {
-            Movies mov = new Movies();
-            var result = mov.getNowPlayingMovies();
+            News news = new News();
+            var result = news.getBollywoodNews();
             return View();
         }
 
