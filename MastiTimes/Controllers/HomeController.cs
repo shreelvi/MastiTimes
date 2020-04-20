@@ -35,7 +35,7 @@ namespace MastiTimes.Controllers
         {
             News news = new News();
             var result = news.getBollywoodNews();
-            return View();
+            return View(result);
         }
 
         public IActionResult Test()

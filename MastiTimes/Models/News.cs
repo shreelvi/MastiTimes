@@ -28,6 +28,8 @@ namespace MastiTimes.Models
             {
                 Articles article = new Articles();
                 article.title = obj.title;
+                article.url = obj.url;
+                article.urlToImage = obj.urlToImage;
                 article.description = obj.description;
                 article.publishedAt = obj.publishedAt;
                 articles.Add(article);

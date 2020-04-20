@@ -1,6 +1,7 @@
-﻿
+﻿@model List<MastiTimes.Models.Articles>
+
 @{
-    ViewData["Title"] = "Test";
+    ViewData["Title"] = "News";
 }
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -22,35 +23,24 @@
     <div class="tab-content">
         <div id="All" class="tab-pane fade in active">
             <h4><strong>News from this month</strong></h4>
-
             <ul class="list-unstyled" style="margin-top:32px;">
-                <li class="media">
-                    <img class="mr" src="~/img/1.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h2 class="news-h2">
-                            <a href="">
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </a>
-                        </h2>
-                        <p class="info-text">
-                            <span class="grey-text">April 20, 2020</span>
-                        </p>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr" src="~/img/5.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </li>
-                <li class="media">
-                    <img class="mr" src="~/img/3.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </li>
+                @foreach (var article in Model)
+                {
+                    <li class="media">
+                        <img class="mr" src="@article.urlToImage" alt="Generic placeholder image">
+                        <div class="media-body" style="margin-top:-20px">
+                            <h2 class="news-h2">
+                                <a href="@article.url">
+                                    @article.title
+                                </a>
+                            </h2>
+                            <p class="info-text">
+                                <span class="grey-text">@article.publishedAt</span>
+                            </p>
+                            <p>@article.description</p>
+                        </div>
+                    </li>
+                }
             </ul>
         </div>
         <div id="menu1" class="tab-pane fade">
@@ -94,3 +84,5 @@
         </li>
     </ul>
 </div>
+
+
