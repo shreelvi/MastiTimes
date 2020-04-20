@@ -31,6 +31,13 @@ namespace MastiTimes.Controllers
             return View(result);
         }
 
+        public IActionResult News()
+        {
+            Movies mov = new Movies();
+            var result = mov.getNowPlayingMovies();
+            return View();
+        }
+
         public IActionResult Test()
         {
             Movies mov = new Movies();

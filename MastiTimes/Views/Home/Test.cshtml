@@ -2,95 +2,71 @@
 @{
     ViewData["Title"] = "Test";
 }
+<style>
+    .mr-3 {
+        height: 84px;
+        width: 84px;
+    }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
 
-@*<div class="movie-card">
-        <div class="movie-container">
-            <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_cover.jpg" alt="movie-cover" class="movie-cover" /></a>
-            <div class="movie-hero">
-                <div class="movie-details">
-                    <div class="title1">The Hobbit <span>PG-13</span></div>
-                    <div class="title2">The Battle of the Five Armies</div>
-                    <span class="likes">109 likes</span>
-                </div>  end details
-            </div>  end hero
 
-            <div class="description">
-                <div class="column1">
-                    <span class="tag">action</span>
-                    <span class="tag">fantasy</span>
-                    <span class="tag">adventure</span>
-                </div>  end column1
+<div class="container" style="width:800px; float:left">
+    <h2>Latest Movie News</h2>
 
-                <div class="column2">
-                    <p>Bilbo Baggins is swept into a quest to reclaim the lost Dwarf Kingdom of Erebor from the fearsome dragon Smaug.
-                    Approached out of the blue by the wizard Gandalf the Grey, Bilbo finds himself joining a company of thirteen dwarves led by the legendary warrior, Thorin Oakenshield.
-                    Their journey will take them into the Wild; through... <a href="#">read more</a></p>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#All">All News</a></li>
+        <li><a data-toggle="tab" href="#menu1">Nepali</a></li>
+        <li><a data-toggle="tab" href="#menu2">Bollywood</a></li>
+        <li><a data-toggle="tab" href="#menu3">Hollywood</a></li>
+    </ul>
 
-                    <div class="avatars">
-                        <a href="#" data-tooltip="Person 1" data-placement="top">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar1.png" alt="avatar1" />
-                        </a>
-
-                        <a href="#" data-tooltip="Person 2" data-placement="top">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar2.png" alt="avatar2" />
-                        </a>
-
-                        <a href="#" data-tooltip="Person 3" data-placement="top">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar3.png" alt="avatar3" />
-                        </a>
-                   </div>  end avatars
-                </div>  end column2
-            </div>  end description
-        </div>  end container
-    </div>  end movie-card*@
-
-<div class="movie-card">
-    <div class="movie-container">
-        <div class="a">
-            <div id="imgBanner" style="background-image:url('//in.bmscdn.com/iedb/movies/images/mobile/thumbnail/large/dabangg-et00005014-24-03-2017-16-14-53.jpg')" class="cover-image"></div>
-            <div class="overlay"></div>
+    <div class="tab-content">
+        <div id="All" class="tab-pane fade in active">
+            <h3>HOME</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
-
-        <a href="#"><img src="https://m.media-amazon.com/images/M/MV5BMTlkMmVmYjktYTc2NC00ZGZjLWEyOWUtMjc2MDMwMjQwOTA5XkEyXkFqcGdeQXVyNTI4MzE4MDU@@._V1_SX300.jpg" alt="movie-cover" class="movie-cover" /></a>
-        <div class="movie-details">
-            <div class="title1">Test <span class="title">PG</span></div>
-            @*<div class="title2">The Battle of the Five Armies</div>*@
-            <span class="likes">IMDB: 7</span>
-            <span>Votes: 90</span>
-        </div> <!-- end details -->
-
-        <div class="description">
-            <div class="column1">
-                <span class="tag">action</span>
-                <span class="tag">fantasy</span>
-                <span class="tag">adventure</span>
-            </div> <!-- end column1 -->
-
-            <div class="column2">
-                <p>
-                    adsafdsf jgfdjg cjhgjvg khgvfvhj khvkhg hvcj khvkhgv kvkhgvkv kvkhvkhgv jgcxgfxhfx hfdxhfdxfx hgxhfdx hgxhxh hgxhfdx hgxhfdx jgcxjgcx jgfcjgfc jgfcjgc. <a href="#">read more</a>
-                </p>
-
-                <div class="avatars">
-                    <a href="#" data-tooltip="Person 1" data-placement="top">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar1.png" alt="avatar1" />
-                    </a>
-
-                    <a href="#" data-tooltip="Person 2" data-placement="top">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar2.png" alt="avatar2" />
-                    </a>
-
-                    <a href="#" data-tooltip="Person 3" data-placement="top">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar3.png" alt="avatar3" />
-                    </a>
-                </div> <!-- end avatars -->
-            </div> <!-- end column2 -->
-        </div> <!-- end description -->
-
+        <div id="menu1" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Menu 2</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            <h3>Menu 3</h3>
+            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        </div>
     </div>
 </div>
 
-
-
+<div class="container" style="width: 300px; float:right;">
+    <h3>Popular Entertainment Videos</h3>
+    <ul class="list-unstyled">
+        <li class="media">
+            <img class="mr-3" src="~/img/1.jpg" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">List-based media object</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+        </li>
+        <li class="media my-4">
+            <img class="mr-3" src="~/img/5.jpg" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">List-based media object</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+        </li>
+        <li class="media">
+            <img class="mr-3" src="~/img/3.jpg" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">List-based media object</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+        </li>
+    </ul>
+</div>
