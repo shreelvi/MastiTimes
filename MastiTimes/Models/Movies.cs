@@ -23,7 +23,7 @@ namespace MastiTimes.Models
         /// Get now playing movies from the TMDB API DB.
         /// </summary>
         /// <returns></returns>
-        public List<Results> getNowPlayingMovies()
+        public List<Results> getUpcomingMovies()
         {
             string url = "https://api.themoviedb.org/3/movie/upcoming?api_key=312856db5a65474581b8885d46fc2c75&language=en-US&page=1";
             string poster = "https://image.tmdb.org/t/p/w500";
@@ -41,10 +41,76 @@ namespace MastiTimes.Models
                 movie.poster_path = poster + obj.poster_path;
                 movie.ID = obj.id;
                 movies.Add(movie);
-
             }
             return movies;
         }
+
+
+        public List<Results> getNowPlayingMovies()
+        {
+            string url = "https://api.themoviedb.org/3/movie/now_playing?api_key=312856db5a65474581b8885d46fc2c75&language=en-US&page=1";
+            string poster = "https://image.tmdb.org/t/p/w500";
+            //synchronous client.
+            var client = new WebClient();
+            var content = client.DownloadString(url);
+            dynamic jsonContent = JsonConvert.DeserializeObject(content);
+
+            List<Results> movies = new List<Results>();
+
+            foreach (var obj in jsonContent.results)
+            {
+                Results movie = new Results();
+                movie.title = obj.title;
+                movie.poster_path = poster + obj.poster_path;
+                movie.ID = obj.id;
+                movies.Add(movie);
+            }
+            return movies;
+        }
+
+        public List<TrailerViewModel> getMovieTrailers()
+        {
+            List<Results> nowPlaying = getNowPlayingMovies();
+            string url;
+            string poster = "https://image.tmdb.org/t/p/w500";
+            List<TrailerViewModel> trailers = new List<TrailerViewModel>();
+
+            //Get youtube key for trailers.
+            for (int i = 0; i < 4; i++)
+            {
+                TrailerViewModel trailer = new TrailerViewModel();
+                url = "https://api.themoviedb.org/3/movie/" + nowPlaying[i].ID + "/videos?api_key=312856db5a65474581b8885d46fc2c75&language=en-US";
+                //synchronous client.
+                var client = new WebClient();
+                var content = client.DownloadString(url);
+                dynamic jsonContent = JsonConvert.DeserializeObject(content);
+
+                trailer.key = jsonContent.results[0].key;
+                trailers.Add(trailer);          
+            }
+
+            //Get backdrop posters
+            for (int i = 0; i < trailers.Count; i++)
+            {
+                url = "https://api.themoviedb.org/3/movie/" + nowPlaying[i].ID + "?api_key=312856db5a65474581b8885d46fc2c75&language=en-US";
+                //synchronous client.
+                var client = new WebClient();
+                var content = client.DownloadString(url);
+                dynamic jsonContent = JsonConvert.DeserializeObject(content);
+                trailers[i].backdrop_path = poster + jsonContent.backdrop_path;
+                trailers[i].title = jsonContent.title;
+            }
+
+            return trailers;
+        }
+
+        public List<TrailerViewModel> GetNowPlayingTrailers()
+        {
+            List<TrailerViewModel> trailers = new List<TrailerViewModel>();
+            trailers = getMovieTrailers();
+            return trailers;
+        }
+
 
         /// <summary>
         /// Get movies by search text from OMDB database

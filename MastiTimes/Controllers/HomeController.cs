@@ -27,21 +27,25 @@ namespace MastiTimes.Controllers
         public IActionResult Index()
         {
             Movies mov = new Movies();
-            var result = mov.getNowPlayingMovies();
+            var result = mov.getUpcomingMovies();
             return View(result);
         }
 
         public IActionResult News()
         {
             News news = new News();
+            Movies movies = new Movies();
             var result = news.getBollywoodNews();
+            var hollywood = news.getHollywoodNews();
+            ViewBag.hollywood = hollywood;
+            ViewBag.trailers = movies.GetNowPlayingTrailers();
             return View(result);
         }
 
         public IActionResult Test()
         {
             Movies mov = new Movies();
-            var result = mov.getNowPlayingMovies();
+            var result = mov.getUpcomingMovies();
             string title = result[0].title;
             return View(result);
         }
@@ -60,7 +64,8 @@ namespace MastiTimes.Controllers
             Movies mov = new Movies();
             Search result = mov.getSelectedMovie(id);
             return View(result);
-        }
+        }       
+
 
 
     }
