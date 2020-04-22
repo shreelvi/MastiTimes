@@ -26,6 +26,22 @@ namespace MastiTimes.Controllers
 
         public IActionResult Index()
         {
+            News news = new News();
+            var bollywood = news.getBollywoodNews();
+
+            //filter top 5 articles and pass them to viewbag
+            List<Articles> TopFive = new List<Articles>();
+            for (int i = 0; i < 5; i++)
+            {
+                Articles article = new Articles();
+                article.title = bollywood[i].title;
+                article.url = bollywood[i].url;
+                article.urlToImage = bollywood[i].urlToImage;
+                article.description = bollywood[i].description;
+                TopFive.Add(article);
+            }
+            ViewBag.Articles = TopFive;
+
             Movies mov = new Movies();
             var result = mov.getUpcomingMovies();
             return View(result);
@@ -44,6 +60,7 @@ namespace MastiTimes.Controllers
 
         public IActionResult Test()
         {
+            DAL.GetAllUsers();
             Movies mov = new Movies();
             var result = mov.getUpcomingMovies();
             string title = result[0].title;

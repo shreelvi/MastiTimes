@@ -5,41 +5,44 @@
     ViewData["Title"] = "Home Page";
 }
 
-<!--delete me later-->
-@*<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js"></script>
-    <script src="~/js/main.js"></script>
-    <script>
-        $(document).ready(function () {
-            $.get("@Url.Action("GetComingSoonMovies", "Home")", function (response) {
-                console.log(response);
-            });
-        });
-    </script>
-    <!---->*@
+<style>
+    @@media (min-width: 1200px) {
+        .container-home {
+            width: 800px;
+            float: left;
+        }
+    }
+    .widget-box-popular {
+        border: 1px solid #d3d3d3;
+        margin: 10px 0;
+        display: inline-block;
+        width: 300px;
+        float: right;
+    }
 
-
-@***************************************************************@
+    .tdiv {
+        overflow: hidden;
+        position: relative;
+        display: block;
+        min-height: 70px;
+        background-color: #000;
+        vertical-align: central;
+        margin: 0 auto;
+        width: 110px;
+    }
+</style>
 <!-- CSS and JS for now playing and coming soon poster sliders-->
 <!--auto compiled css & Js-->
 <script type="text/javascript"
         src="//code.jquery.com/jquery-1.9.1.js">
 </script>
-<link rel="stylesheet"
-      type="text/css"
-      href="/css/result-light.css">
 
 <script type="text/javascript"
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
-
 </script>
-<link rel="stylesheet"
-      type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-      type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 <!-- JavaScript for adding
  slider for multiple images
@@ -61,77 +64,109 @@
 <!-- CSS and JS END for Sliders-->
 @************************************************************@
 
+<div class="container-home">
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about movie show times, events, activities and more.. happening in Nepal.</p>
+    </div>
 
+    <nav class="navbar ">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">Now Playing Movies</a>
+            </div>
+        </div>
+    </nav>
 
+    <!-- container class for bootstrap card-->
+    <div class="container" style="width:800px">
+        <!-- bootstrap card with row name myCarousel as row 1-->
+        <div class="carousel slide" id="myCarousel">
+            <div class="carousel-inner">
+                @{
+                    bool active = true;
+                }
+                @foreach (var movie in Model)
+                {
+                    if (active)
+                    {
+                        <div class="item active">
+                            <div class="col-xs-2">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about movie show times, events, activities and more.. happening in Nepal.</p>
-</div>
+                                <a href='@Url.Action("GetSelectedMovie", "Home",
+                                    new { id = @movie.ID })'>
+                                    <img src="@movie.poster_path"
+                                         class="img-responsive">
+                                    @Html.ActionLink(@movie.title, "GetSelectedMovie", "Home", new { id = movie.imdbID })
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <div class="col-xs-2">
 
-<nav class="navbar ">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">Now Playing Movies</a>
+                                <a href='@Url.Action("GetSelectedMovie", "Home", new { id = @movie.ID })'>
+                                    <img src="@movie.poster_path"
+                                         class="img-responsive">
+                                    @Html.ActionLink(@movie.title, "GetSelectedMovie", "Home", new { id = movie.imdbID })
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    active = false;
+                }
+
+            </div> <a class="left carousel-control"
+                      href="#myCarousel"
+                      data-slide="prev">
+                <i class="glyphicon glyphicon-chevron-left">
+                </i>
+            </a>
+            <a class="right carousel-control"
+               href="#myCarousel"
+               data-slide="next">
+                <i class="glyphicon glyphicon-chevron-right">
+                </i>
+            </a>
+
         </div>
     </div>
-</nav>
-
-<!-- container class for bootstrap card-->
-<div class="container">
-    <!-- bootstrap card with row name myCarousel as row 1-->
-    <div class="carousel slide" id="myCarousel">
-        <div class="carousel-inner">
-            @{
-                bool active = true;
-            }
-            @foreach (var movie in Model)
-            {
-                if (active)
-                {
-                    <div class="item active">
-                        <div class="col-xs-2">
-                            
-                            <a href='@Url.Action("GetSelectedMovie", "Home",
-                                    new { id = @movie.ID })'>
-                                <img src="@movie.poster_path"
-                                     class="img-responsive">
-                                @Html.ActionLink(@movie.title, "GetSelectedMovie", "Home", new { id = movie.imdbID })
-                            </a>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="item">
-                        <div class="col-xs-2">
-                            
-                            <a href='@Url.Action("GetSelectedMovie", "Home", new { id = @movie.ID })'>
-                                <img src="@movie.poster_path"
-                                     class="img-responsive">
-                                @Html.ActionLink(@movie.title, "GetSelectedMovie", "Home", new { id = movie.imdbID })
-                            </a>
-                        </div>
-                    </div>
-                }
-                active = false;
-            }
-
-        </div> <a class="left carousel-control"
-                  href="#myCarousel"
-                  data-slide="prev">
-            <i class="glyphicon glyphicon-chevron-left">
-            </i>
-        </a>
-        <a class="right carousel-control"
-           href="#myCarousel"
-           data-slide="next">
-            <i class="glyphicon glyphicon-chevron-right">
-            </i>
-        </a>
-
-    </div>
 </div>
+
+<div class="widget-box-popular">
+    <h4>&nbsp;&nbsp; Popular News</h4>
+    <table class="table">
+        <tbody>
+            @foreach (var article in ViewBag.Articles)
+            {
+                
+                <tr>
+                    <td class="movie">
+                        <a href="@article.url" target="_blank">
+                            @article.title
+                        </a><br />
+                    </td>
+                    <td class="news-thumbnail">
+                        <div class="tdiv">
+                            <a href="@article.url" target="_blank">
+                                <img src="@article.urlToImage" style="height:80px; width:100px" />
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
 
 
 
