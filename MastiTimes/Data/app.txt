@@ -1,0 +1,45 @@
+﻿DROP procedure IF EXISTS `insert_movie`;
+
+DELIMITER $$
+USE `test`$$
+CREATE PROCEDURE `insert_movie` (
+OUT id int,
+IN title varchar(256),
+IN released datetime
+)
+BEGIN
+insert into movie (title, released) values (title ,released);
+SET id = LAST_INSERT_ID();	
+END$$
+
+Alter table movie 
+ADD title varchar(256) NOT NULL;
+
+call insert_movie(@id, 'Test test', '2020-04-20');
+
+
+DELIMITER $$
+CREATE PROCEDURE `get_movie_id` (
+IN `id` int
+)  
+BEGIN
+	 SELECT * FROM movie
+	 WHERE movie.id = id;
+END$$
+
+
+DELIMITER $$
+CREATE PROCEDURE `get_movies` (
+)  
+BEGIN
+	 SELECT * FROM movie;
+END$$
+
+CREATE TABLE `movie_theater` (
+  `id` int primary key auto_increment,
+  `movie_id` INT,
+  `theater_id` int,
+  `show_time` datetime NOT NULL,
+  FOREIGN KEY (movie_id) REFERENCES movie(id),
+  FOREIGN KEY (theater_id) REFERENCES theater(id)
+)
