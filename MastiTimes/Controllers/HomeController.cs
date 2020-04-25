@@ -42,7 +42,7 @@ namespace MastiTimes.Controllers
             }
             ViewBag.Articles = TopFive;
 
-            Movies mov = new Movies();
+            RootMovies mov = new RootMovies();
             var result = mov.getUpcomingMovies();
             return View(result);
         }
@@ -50,7 +50,7 @@ namespace MastiTimes.Controllers
         public IActionResult News()
         {
             News news = new News();
-            Movies movies = new Movies();
+            RootMovies movies = new RootMovies();
             var result = news.getBollywoodNews();
             var hollywood = news.getHollywoodNews();
             ViewBag.hollywood = hollywood;
@@ -60,17 +60,14 @@ namespace MastiTimes.Controllers
 
         public IActionResult Test()
         {
-            DAL.GetAllUsers();
-            Movies mov = new Movies();
-            var result = mov.getUpcomingMovies();
-            string title = result[0].title;
-            return View(result);
+           
+            return View();
         }
 
         [System.Web.Mvc.HttpPost]
         public IActionResult SearchByText(string searchText)
         {
-            Movies mov = new Movies();
+            RootMovies mov = new RootMovies();
             var result = mov.getMoviesBySearchText(searchText);
             
             return View(result);
@@ -78,7 +75,7 @@ namespace MastiTimes.Controllers
 
         public IActionResult GetSelectedMovie(int id)
         {
-            Movies mov = new Movies();
+            RootMovies mov = new RootMovies();
             Search result = mov.getSelectedMovie(id);
             return View(result);
         }       

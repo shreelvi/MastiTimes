@@ -13,7 +13,7 @@ using System.Web;
 
 namespace MastiTimes.Models
 {
-    public class Movies
+    public class RootMovies
     {
         public List<Results> results { get; set; } //tmdb db produce output as 'results' array
         public List<Results> search { get; set; } //omdb results map
@@ -168,12 +168,12 @@ namespace MastiTimes.Models
                 movie.Title = jsonContent.Title; // Retrieve info from json obj
                 movie.Poster = jsonContent.Poster;
                 movie.Released = jsonContent.Released;
-                movie.ImdbRating = jsonContent.imdbRating;
                 movie.Rated = jsonContent.Rated;
                 movie.Genre = jsonContent.Genre;
                 movie.Plot = jsonContent.Plot;
                 movie.ImdbVotes = jsonContent.imdbVotes;
-
+                movie.ImdbRating = jsonContent.imdbRating;     
+                
             }
             return movie;
         }
