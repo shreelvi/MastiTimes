@@ -18,12 +18,7 @@ namespace MastiTimes.Models.Database
             get { return _ID; }
             set { _ID = value; }
         }
-        public abstract int dbSave();
-
-        protected abstract int dbAdd();
-
-        protected abstract int dbUpdate();
-
+      
         public abstract void Fill(MySql.Data.MySqlClient.MySqlDataReader dr);
 
         public abstract override string ToString();
