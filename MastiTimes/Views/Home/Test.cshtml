@@ -1,7 +1,26 @@
-﻿
+﻿@model List<MastiTimes.Models.MovieTheater>
 @{
     ViewData["Title"] = "Test";
 }
+@{
+    var temp = 0;
+    var count = 1;
+    var ColClass = "";
+    var ColID = "";
+    var movieTemp = 0;
+ }
+
+<style>
+    .card-title {
+        margin-left: 10px;
+    }
+
+    .card-text {
+        margin-left: 10px;
+    }
+
+}</style>
+
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -9,62 +28,99 @@
 
 
 
-<div class="container" style="width:800px; float:left">
-    <h2>Latest Movie News</h2>
-
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#All">All News</a></li>
-        <li><a data-toggle="tab" href="#menu1">Nepali</a></li>
-        <li><a data-toggle="tab" href="#menu2">Bollywood</a></li>
-        <li><a data-toggle="tab" href="#menu3">Hollywood</a></li>
-    </ul>
-
-    <div class="tab-content">
-        <div id="All" class="tab-pane fade in active">
-            <h4><strong>News from this month</strong></h4>
-
-            <ul class="list-unstyled" style="margin-top:32px;">
-                <li class="media">
-                    <img class="mr" src="~/img/1.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h2 class="news-h2">
-                            <a href="">
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </a>
-                        </h2>
-                        <p class="info-text">
-                            <span class="grey-text">April 20, 2020</span>
+<div class="card">
+    <h2>Now Playing Movies</h2>
+    @foreach (var movietheater in Model)
+    {
+        ColClass = "collapse";
+        ColID = "collapseExample";
+        if (movietheater.TheaterID == temp)
+        {
+            ColClass = ColClass + movietheater.TheaterID;
+            ColID = ColID + movietheater.TheaterID;
+            if (movietheater.MovieID != movieTemp)
+            {
+                <div class="@ColClass" id="@ColID">
+                    <div class="mt-3">
+                        <p>
+                            <h4>@movietheater.Movie.Title </h4><br />
+                            @movietheater.Movie.DateReleased
+                            @movietheater.ShowTime
                         </p>
                     </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr" src="~/img/5.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </li>
-                <li class="media">
-                    <img class="mr" src="~/img/3.jpg" alt="Generic placeholder image">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </div>
-    </div>
+                </div>
+            }
+            else
+            {
+                @movietheater.ShowTime
+            }
+            movieTemp = movietheater.MovieID;
+
+
+        }
+        else
+        {
+            ColClass = ColClass + movietheater.TheaterID;
+            ColID = ColID + movietheater.TheaterID;
+            <div class="card-block">
+                <h3 class="card-title"><a href="#">@movietheater.Theater.Name</a></h3>
+                <p class="card-text">
+                    <a href="#">Read Reviews </a> |
+                    <a href="#">Rate Theater</a><br />
+                    @movietheater.Theater.Address<br />
+                    <a href="#">@movietheater.Theater.PhoneNumber</a>|
+                    <a href="#">View map</a>
+                </p>
+                <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="@ColClass" data-target="#@ColID"
+                        aria-expanded="false" aria-controls="">
+                    View Showtimes
+                </button>
+            </div>
+        }
+        temp = movietheater.TheaterID;
+   }
 </div>
 
+
+            @*<div class="card">
+                    <div class="card-header">
+                        Featured
+                    </div>
+                    <div class="card-block">
+                        <h3 class="card-title"><a href="#">QFX Cinemas</a></h3>
+                        <p class="card-text">
+                            <a href="#">Read Reviews </a> |
+                            <a href="#">Rate Theater</a><br />
+                            5550 Westwood st, Tempe AZ 83201<br />
+                            <a href="#">555-999-0000</a>|
+                            <a href="#">View map</a>
+                        </p>
+                        <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="collapse" data-target="#collapseExample"
+                                aria-expanded="false" aria-controls="collapseExample">
+                            View Showtimes
+                        </button>
+                    </div>
+
+                    <div class="card-block">
+                        <h3 class="card-title"><a href="#">QFX Cinemas</a></h3>
+                        <p class="card-text">
+                            <a href="#">Read Reviews </a> |
+                            <a href="#">Rate Theater</a><br />
+                            5550 Westwood st, Tempe AZ 83201<br />
+                            <a href="#">555-999-0000</a>|
+                            <a href="#">View map</a>
+                        </p>
+                        <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="collapse" data-target="#collapseExample"
+                                aria-expanded="false" aria-controls="collapseExample">
+                            View Showtimes
+                        </button>
+                    </div>
+                </div>
+                         Collapsible element
+                        <div class="collapse" id="collapseExample">
+                            <div class="mt-3">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim
+                                keffiyeh helvetica,
+                                craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                            </div>
+                        </div>*@

@@ -78,3 +78,11 @@ ON movie.movie_id = movie_theater.movie_id
 join theater
 ON movie_theater.theater_id = theater.theater_id;
 END
+
+
+
+CREATE PROCEDURE `get_theater` (In ID int)
+BEGIN
+	SELECT * FROM theater
+    WHERE theater.theater_id = ID;
+END

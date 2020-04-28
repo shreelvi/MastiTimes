@@ -29,21 +29,31 @@ namespace MastiTimes.Models
         #region Database String
         internal const string db_ID = "theater_id";
         internal const string db_Name = "theater_name";
-        internal const string db_Address = "theater_address";
-        internal const string db_City = "theater_city";
+        internal const string db_Address = "address";
+        internal const string db_City = "city";
         internal const string db_Phone = "phone_number";
+        internal const string db_Review = "reviews";
         internal const string db_Likes = "likes";
         #endregion
+
+        
 
         #region Public Subs
         public override void Fill(MySqlDataReader dr)
         {
             _ID = dr.GetInt32(db_ID);
             Name = dr.GetString(db_Name);
-            Address = dr.GetString(db_Address);
-            City = dr.GetString(db_City);
-            PhoneNumber = dr.GetString(db_Phone);
-            Likes = dr.GetInt32(db_Likes);
+            if(!dr.IsDBNull(2))
+                Address = dr.GetString(db_Address);
+            if (!dr.IsDBNull(3))
+                City = dr.GetString(db_City);
+            if (!dr.IsDBNull(4))
+                Likes = dr.GetInt32(db_Likes);
+            if (!dr.IsDBNull(5))
+                reviews = dr.GetString(db_Review);
+            if(!dr.IsDBNull(6))
+                PhoneNumber = dr.GetString(db_Phone);
+
         }
         #endregion
 

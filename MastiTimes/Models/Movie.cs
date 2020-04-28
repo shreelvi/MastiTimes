@@ -30,6 +30,9 @@ namespace MastiTimes.Models
         public string Country { get; set; }
         public string Language { get; set; }
         public string Trailer { get; set; }
+        public string Duration { get; set; }
+        public string Genre { get; set; }
+        public List<Theater> theaters { get; set; }
 
 
         #region Database String
@@ -45,23 +48,44 @@ namespace MastiTimes.Models
         internal const string db_Country = "country";
         internal const string db_Language = "language";
         internal const string db_Trailer = "trailer";
+        internal const string db_Duration = "duration";
+        internal const string db_Genre = "genre";
+        internal const string db_Reviews = "reviews";
+
+
         #endregion
 
         #region Public Subs
         public override void Fill(MySqlDataReader dr)
         {
             _ID = dr.GetInt32(db_ID);
+            if (!dr.IsDBNull(1))
+                DateReleased = dr.GetDateTime(db_Released);
             Title = dr.GetString(db_Title);
-            DateReleased = dr.GetDateTime(db_Released);
-            PosterUrl = dr.GetString(db_Poster);
-            Actors = dr.GetString(db_Actors);
-            Likes = dr.GetInt32(db_Likes);
-            Rated = dr.GetString(db_Rated);
-            Votes = dr.GetString(db_ImdbVotes);
-            Rating = dr.GetString(db_Rating);
-            Country = dr.GetString(db_Country);
-            Language = dr.GetString(db_Language);
-            Trailer = dr.GetString(db_Trailer);
+            if(!dr.IsDBNull(3))
+                PosterUrl = dr.GetString(db_Poster);
+            if (!dr.IsDBNull(4))
+                Actors = dr.GetString(db_Actors);
+            if (!dr.IsDBNull(5))
+                Rated = dr.GetString(db_Rated);
+            if (!dr.IsDBNull(6))
+                Votes = dr.GetString(db_ImdbVotes);
+            if (!dr.IsDBNull(7))
+                Rating = dr.GetString(db_Rating);
+            if (!dr.IsDBNull(8))
+                Country = dr.GetString(db_Country);
+            if (!dr.IsDBNull(9))
+                Language = dr.GetString(db_Language);
+            if (!dr.IsDBNull(10))
+                Trailer = dr.GetString(db_Trailer);
+            if (!dr.IsDBNull(11))
+                Likes = dr.GetInt32(db_Likes);
+            if (!dr.IsDBNull(12))
+                Likes = dr.GetInt32(db_Reviews);
+            if (!dr.IsDBNull(13))
+                Duration = dr.GetString(db_Duration);
+            if (!dr.IsDBNull(14))
+                Genre = dr.GetString(db_Genre);
         }
         #endregion
 

@@ -9,8 +9,8 @@ namespace MastiTimes.Models
     public class DAL
     {
         //Database information for the hosting website db
-        private static string ReadOnlyConnectionString = "Server=localhost;Database=sakila; Port=3306;Uid=root;Pwd=cubic123;Convert Zero Datetime=True;Allow Zero Datetime=True";
-        private static string EditOnlyConnectionString = "Server=localhost;Database=sakila; Port=3306;Uid=root;Pwd=cubic123;Convert Zero Datetime=True;Allow Zero Datetime=True";
+        private static string ReadOnlyConnectionString = "Server=localhost;Database=test; Port=3306;Uid=root;Pwd=cubic123;Convert Zero Datetime=True;Allow Zero Datetime=True";
+        private static string EditOnlyConnectionString = "Server=localhost;Database=test; Port=3306;Uid=root;Pwd=cubic123;Convert Zero Datetime=True;Allow Zero Datetime=True";
 
         private DAL()
         {
@@ -129,6 +129,74 @@ namespace MastiTimes.Models
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             return retList;
+        }
+
+        internal static List<MovieTheater> GetMovieTimes()
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie_times");
+            List<MovieTheater> retObj = new List<MovieTheater>();
+            try
+            {
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new MovieTheater(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
+        internal static Theater GetTheaterByID(int id)
+        {
+            MySqlCommand comm = new MySqlCommand("get_theater");
+            Theater retObj = null;
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Theater.db_ID, id);
+                MySqlDataReader dr = GetDataReader(comm);
+
+                while (dr.Read())
+                {
+                    retObj = new Theater(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
+        internal static Movie GetMovieByID(int id)
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie");
+            Movie retObj = null;
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Movie.db_ID, id);
+                MySqlDataReader dr = GetDataReader(comm);
+
+                while (dr.Read())
+                {
+                    retObj = new Movie(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
         }
     }
 }

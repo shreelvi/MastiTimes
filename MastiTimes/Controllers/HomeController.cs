@@ -60,8 +60,12 @@ namespace MastiTimes.Controllers
 
         public IActionResult Test()
         {
-           
-            return View();
+            MovieTheater mov = new MovieTheater();
+            List<MovieTheater> times = new List<MovieTheater>();
+
+           times = mov.GetMovieTimes();
+            string tit = times[0].Movie.Title;
+            return View(times);
         }
 
         [System.Web.Mvc.HttpPost]
