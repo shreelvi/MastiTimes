@@ -86,3 +86,20 @@ BEGIN
 	SELECT * FROM theater
     WHERE theater.theater_id = ID;
 END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_showtimes_movietheater`(IN movie INT, IN theater int)
+BEGIN
+	SELECT movie.movie_title, movie_theater.show_time
+    FROM movie_theater
+    Inner join movie ON movie_theater.movie_id = movie.movie_id
+    Inner join theater ON movie_theater.theater_id = theater.theater_id
+    WHERE movie_theater.movie_id = movie && movie_theater.theater_id = theater;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_showtimes_movietheater`(IN movie INT, IN theater int)
+BEGIN
+	SELECT  movie_theater.show_time
+    FROM movie_theater
+    WHERE movie_theater.movie_id = movie && movie_theater.theater_id = theater && movie_theater.now_playing = true;
+END

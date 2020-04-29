@@ -103,34 +103,11 @@ namespace MastiTimes.Models
             }
             return retInt;
         }
+
+
         #endregion
 
-        /// <summary>
-        /// Testing database connection...
-        /// </summary>
-        /// <returns></returns>
-        internal static List<string> GetAllUsers()
-        {
-            MySqlCommand comm = new MySqlCommand("Select first_name from actor;");
-            List<string> retList = new List<string>();
-            try
-            {
-                comm.CommandType = System.Data.CommandType.Text;
-                MySqlDataReader dr = GetDataReader(comm);
-                while (dr.Read())
-                {
-                    return retList;
-                }
-                comm.Connection.Close();
-            }
-            catch (Exception ex)
-            {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retList;
-        }
-
+        #region db methods
         internal static List<MovieTheater> GetMovieTimes()
         {
             MySqlCommand comm = new MySqlCommand("get_movie_times");
@@ -198,5 +175,38 @@ namespace MastiTimes.Models
             }
             return retObj;
         }
+
+
+        internal static List<string> GetShowTimesMovieTheater(int movie, int theater)
+        {
+            MySqlCommand comm = new MySqlCommand("get_showtimes_movietheater");
+            List<MovieTheater> retObj = new List<MovieTheater>();
+            List<string> showtimes = null;
+            try
+            {
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_MovieID, movie);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_TheaterID, theater);
+                MySqlDataReader dr = GetDataReader(comm);
+
+                while (dr.Read())
+                {
+                    retObj.Add(new MovieTheater(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+
+            foreach (var mov in retObj)
+            {
+                showtimes.Add(mov.ShowTime.ToString("H:mm"));
+            }
+           
+            return showtimes ;
+        }
+        #endregion
     }
 }

@@ -5,8 +5,6 @@
 @{
     var temp = 0;
     var count = 1;
-    var ColClass = "";
-    var ColID = "";
     var movieTemp = 0;
  }
 
@@ -32,27 +30,25 @@
     <h2>Now Playing Movies</h2>
     @foreach (var movietheater in Model)
     {
-        ColClass = "collapse";
-        ColID = "collapseExample";
+
         if (movietheater.TheaterID == temp)
         {
-            ColClass = ColClass + movietheater.TheaterID;
-            ColID = ColID + movietheater.TheaterID;
+
             if (movietheater.MovieID != movieTemp)
             {
-                <div class="@ColClass" id="@ColID">
-                    <div class="mt-3">
-                        <p>
-                            <h4>@movietheater.Movie.Title </h4><br />
-                            @movietheater.Movie.DateReleased
-                            @movietheater.ShowTime
-                        </p>
-                    </div>
+                <div class="content">
+                    <p>
+                        <h4>@movietheater.Movie.Title </h4><br />
+                        @movietheater.Movie.DateReleased
+                        @movietheater.ShowTime
+                    </p>
                 </div>
             }
             else
             {
-                @movietheater.ShowTime
+                <div class="content">
+                    @movietheater.ShowTime
+                </div>
             }
             movieTemp = movietheater.MovieID;
 
@@ -60,8 +56,7 @@
         }
         else
         {
-            ColClass = ColClass + movietheater.TheaterID;
-            ColID = ColID + movietheater.TheaterID;
+
             <div class="card-block">
                 <h3 class="card-title"><a href="#">@movietheater.Theater.Name</a></h3>
                 <p class="card-text">
@@ -71,14 +66,14 @@
                     <a href="#">@movietheater.Theater.PhoneNumber</a>|
                     <a href="#">View map</a>
                 </p>
-                <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="@ColClass" data-target="#@ColID"
+                <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="" data-target="#"
                         aria-expanded="false" aria-controls="">
                     View Showtimes
                 </button>
             </div>
         }
         temp = movietheater.TheaterID;
-   }
+    }
 </div>
 
 

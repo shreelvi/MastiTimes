@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace MastiTimes.Models
 {
+    /// <summary>
+    /// Movie is a class that hold information about movies 
+    /// that are now showing, coming soon in a particular place and time. 
+    /// The records of this class
+    /// is modified and stored directly in our db
+    /// </summary>
     public class Movie : Database.DatabaseRecord
     {
         #region Constructors

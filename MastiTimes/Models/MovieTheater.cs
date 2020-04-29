@@ -32,7 +32,7 @@ namespace MastiTimes.Models
         private bool _NowPlaying;
         private Movie _Movie;
         private Theater _Theater;
-
+        private List<string> _ShowTimes;
         #endregion
 
         #region Public Properties
@@ -123,7 +123,7 @@ namespace MastiTimes.Models
         }
 
         /// <summary>
-        /// Gets or sets the movie for this object.
+        /// Gets or sets the theater for this object.
         /// </summary>
         /// <remarks></remarks>
         [XmlIgnore]
@@ -148,6 +148,28 @@ namespace MastiTimes.Models
                 {
                     _TheaterID = value.ID;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the list of showtimes for this 
+        /// movie theater object.
+        /// </summary>
+        /// <remarks></remarks>
+        [XmlIgnore]
+        public List<string> ShowTimes
+        {
+            get
+            {
+                if (_ShowTimes == null)
+                {
+                    _ShowTimes = DAL.GetShowTimesMovieTheater(_MovieID, _TheaterID);
+                }
+                return _ShowTimes;
+            }
+            set
+            {
+                _ShowTimes = value;
             }
         }
         #endregion
