@@ -180,8 +180,8 @@ namespace MastiTimes.Models
         internal static List<string> GetShowTimesMovieTheater(int movie, int theater)
         {
             MySqlCommand comm = new MySqlCommand("get_showtimes_movietheater");
-            List<MovieTheater> retObj = new List<MovieTheater>();
-            List<string> showtimes = null;
+            List<DateTime> retObj = new List<DateTime>();
+            List<string> showtimes = new List<string>();
             try
             {
                 comm.Parameters.AddWithValue("@" + MovieTheater.db_MovieID, movie);
@@ -190,7 +190,7 @@ namespace MastiTimes.Models
 
                 while (dr.Read())
                 {
-                    retObj.Add(new MovieTheater(dr));
+                    retObj.Add(dr.GetDateTime("show_time"));
                 }
                 comm.Connection.Close();
             }
@@ -200,9 +200,9 @@ namespace MastiTimes.Models
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
 
-            foreach (var mov in retObj)
+            foreach (var time in retObj)
             {
-                showtimes.Add(mov.ShowTime.ToString("H:mm"));
+                showtimes.Add(time.ToString("H:mm"));
             }
            
             return showtimes ;

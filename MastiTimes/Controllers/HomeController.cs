@@ -65,6 +65,7 @@ namespace MastiTimes.Controllers
 
            times = mov.GetMovieTimes();
             string tit = times[0].Movie.Title;
+            List<string> show = times[0].ShowTimes;
             return View(times);
         }
 

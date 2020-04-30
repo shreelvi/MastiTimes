@@ -6,18 +6,21 @@
     var temp = 0;
     var count = 1;
     var movieTemp = 0;
+    int[] showCount = new int[100];
+    var demo = "";
  }
 
 <style>
-    .card-title {
-        margin-left: 10px;
+    
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
     }
+</style>
 
-    .card-text {
-        margin-left: 10px;
-    }
 
-}</style>
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -30,29 +33,37 @@
     <h2>Now Playing Movies</h2>
     @foreach (var movietheater in Model)
     {
-
         if (movietheater.TheaterID == temp)
         {
-
+            demo = "demo" + movietheater.TheaterID;
             if (movietheater.MovieID != movieTemp)
             {
-                <div class="content">
-                    <p>
-                        <h4>@movietheater.Movie.Title </h4><br />
-                        @movietheater.Movie.DateReleased
-                        @movietheater.ShowTime
-                    </p>
+                <div id="@demo" class="collapse">
+                    <h4>@movietheater.Movie.Title </h4><br />
+                    <h5>@movietheater.Movie.DateReleased</h5>
+
+                    @if (showCount[movietheater.MovieID] < 1)
+                    {
+                        @foreach (string time in movietheater.ShowTimes)
+                        {
+                            showCount[movietheater.MovieID] += 1;
+                            <p>@time</p>
+                        }
+
+                    }
+                    else
+                    {
+
+                    }
                 </div>
             }
             else
             {
-                <div class="content">
-                    @movietheater.ShowTime
+                <div class="content ">
+
                 </div>
             }
             movieTemp = movietheater.MovieID;
-
-
         }
         else
         {
@@ -66,11 +77,10 @@
                     <a href="#">@movietheater.Theater.PhoneNumber</a>|
                     <a href="#">View map</a>
                 </p>
-                <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="" data-target="#"
-                        aria-expanded="false" aria-controls="">
-                    View Showtimes
-                </button>
             </div>
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo, #demo1">
+                View Showtimes
+            </button>
         }
         temp = movietheater.TheaterID;
     }

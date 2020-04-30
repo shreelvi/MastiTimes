@@ -185,12 +185,16 @@ namespace MastiTimes.Models
         #region Public Subs
         public override void Fill(MySqlDataReader dr)
         {
-            
-            _MovieID = dr.GetInt32(db_MovieID);
-            _ID = dr.GetInt32(db_ID);
-            _TheaterID = dr.GetInt32(db_TheaterID);
-            _ShowTime = dr.GetDateTime(db_ShowTime);
-            _NowPlaying = dr.GetBoolean(db_NowPlaying);
+            if (!dr.IsDBNull(0))
+                _MovieID = dr.GetInt32(db_MovieID);
+            if (!dr.IsDBNull(1))
+                _ID = dr.GetInt32(db_ID);
+            if (!dr.IsDBNull(2))
+                _TheaterID = dr.GetInt32(db_TheaterID);
+            if (!dr.IsDBNull(3))
+                _ShowTime = dr.GetDateTime(db_ShowTime);
+            if (!dr.IsDBNull(4))
+                _NowPlaying = dr.GetBoolean(db_NowPlaying);
         }
         #endregion
 
