@@ -331,6 +331,30 @@ namespace MastiTimes.Models
             }
             return -1;
         }
+
+        internal static List<Theater> GetTheaters()
+        {
+            MySqlCommand comm = new MySqlCommand("get_theaters");
+            List<Theater> retObj = new List<Theater>();
+            try
+            {
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new Theater(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
+
         #endregion
     }
 }

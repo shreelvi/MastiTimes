@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,7 +24,8 @@ namespace MastiTimes.Models
         public string City { get; set; }
         public string PhoneNumber { get; set; }
         public int Likes { get; set; }
-        public string reviews { get; set; }
+
+        [NotMapped]
         public List<Movie> Movies { get; set; }
 
         #region Database String
@@ -32,7 +34,6 @@ namespace MastiTimes.Models
         internal const string db_Address = "address";
         internal const string db_City = "city";
         internal const string db_Phone = "phone_number";
-        internal const string db_Review = "reviews";
         internal const string db_Likes = "likes";
         #endregion
 
@@ -49,9 +50,7 @@ namespace MastiTimes.Models
                 City = dr.GetString(db_City);
             if (!dr.IsDBNull(4))
                 Likes = dr.GetInt32(db_Likes);
-            if (!dr.IsDBNull(5))
-                reviews = dr.GetString(db_Review);
-            if(!dr.IsDBNull(6))
+            if(!dr.IsDBNull(5))
                 PhoneNumber = dr.GetString(db_Phone);
 
         }

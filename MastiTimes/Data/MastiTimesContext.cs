@@ -15,5 +15,7 @@ namespace MastiTimes.Data
         }
 
         public DbSet<MastiTimes.Models.Movie> Movie { get; set; }
+
+        public DbSet<MastiTimes.Models.Theater> Theater { get; set; }
     }
 }
