@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using MastiTimes.Data;
 
 namespace MastiTimes
 {
@@ -25,6 +27,9 @@ namespace MastiTimes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<MastiTimesContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MastiTimesContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

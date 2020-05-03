@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +30,6 @@ namespace MastiTimes.Models
         public string PosterUrl { get; set; }
         public string Actors { get; set; }
         public int Likes { get; set; }
-        public string Reviews { get; set; }
         public string Rated { get; set; }
         public string Votes { get; set; }
         public string Rating { get; set; }
@@ -38,6 +38,8 @@ namespace MastiTimes.Models
         public string Trailer { get; set; }
         public string Duration { get; set; }
         public string Genre { get; set; }
+
+        [NotMapped]
         public List<Theater> theaters { get; set; }
 
 
@@ -56,7 +58,6 @@ namespace MastiTimes.Models
         internal const string db_Trailer = "trailer";
         internal const string db_Duration = "duration";
         internal const string db_Genre = "genre";
-        internal const string db_Reviews = "reviews";
 
 
         #endregion
@@ -87,10 +88,8 @@ namespace MastiTimes.Models
             if (!dr.IsDBNull(11))
                 Likes = dr.GetInt32(db_Likes);
             if (!dr.IsDBNull(12))
-                Likes = dr.GetInt32(db_Reviews);
-            if (!dr.IsDBNull(13))
                 Duration = dr.GetString(db_Duration);
-            if (!dr.IsDBNull(14))
+            if (!dr.IsDBNull(13))
                 Genre = dr.GetString(db_Genre);
         }
         #endregion

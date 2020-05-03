@@ -15,6 +15,9 @@ namespace MastiTimes.Models
         private DAL()
         {
         }
+
+       
+
         internal enum dbAction
         {
             Read,
@@ -52,6 +55,7 @@ namespace MastiTimes.Models
                 return null;
             }
         }
+
 
         public static int GetIntReader(MySqlCommand comm)
         {
@@ -104,6 +108,29 @@ namespace MastiTimes.Models
             return retInt;
         }
 
+        internal static int UpdateObject(MySqlCommand comm)
+        {
+            int retInt = 0;
+            try
+            {
+                comm.Connection = new MySqlConnection(EditOnlyConnectionString);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Connection.Open();
+                retInt = comm.ExecuteNonQuery();
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            
+            {
+                if (comm.Connection != null)
+                    comm.Connection.Close();
+
+                retInt = -1;
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+            }
+            return retInt;
+        }
 
         #endregion
 
@@ -119,6 +146,28 @@ namespace MastiTimes.Models
                 while (dr.Read())
                 {
                     retObj.Add(new MovieTheater(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
+        internal static List<Movie> GetMovies()
+        {
+            MySqlCommand comm = new MySqlCommand("get_movies");
+            List<Movie> retObj = new List<Movie>();
+            try
+            {
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new Movie(dr));
                 }
                 comm.Connection.Close();
             }
@@ -153,7 +202,7 @@ namespace MastiTimes.Models
             return retObj;
         }
 
-        internal static Movie GetMovieByID(int id)
+        internal static Movie GetMovieByID(int? id)
         {
             MySqlCommand comm = new MySqlCommand("get_movie");
             Movie retObj = null;
@@ -206,6 +255,81 @@ namespace MastiTimes.Models
             }
            
             return showtimes ;
+        }
+
+        internal static int AddMovie(Movie obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("insert_movie");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Movie.db_Released, obj.DateReleased);
+                comm.Parameters.AddWithValue("@" + Movie.db_Title, obj.Title);
+                comm.Parameters.AddWithValue("@" + Movie.db_Poster, obj.PosterUrl);
+                comm.Parameters.AddWithValue("@" + Movie.db_Actors, obj.Actors);
+                comm.Parameters.AddWithValue("@" + Movie.db_Rated, obj.Rated);
+                comm.Parameters.AddWithValue("@" + Movie.db_ImdbVotes, obj.Votes);
+                comm.Parameters.AddWithValue("@" + Movie.db_Rating, obj.Rating);
+                comm.Parameters.AddWithValue("@" + Movie.db_Country, obj.Country);
+                comm.Parameters.AddWithValue("@" + Movie.db_Language, obj.Language);
+                comm.Parameters.AddWithValue("@" + Movie.db_Trailer, obj.Trailer);
+                comm.Parameters.AddWithValue("@" + Movie.db_Likes, obj.Likes);
+                comm.Parameters.AddWithValue("@" + Movie.db_Duration, obj.Duration);
+                comm.Parameters.AddWithValue("@" + Movie.db_Genre, obj.Genre);
+                return AddObject(comm, "@" + Movie.db_ID);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
+
+        internal static int EditMovie(Movie obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("edit_movie");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Movie.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + Movie.db_Released, obj.DateReleased);
+                comm.Parameters.AddWithValue("@" + Movie.db_Title, obj.Title);
+                comm.Parameters.AddWithValue("@" + Movie.db_Poster, obj.PosterUrl);
+                comm.Parameters.AddWithValue("@" + Movie.db_Actors, obj.Actors);
+                comm.Parameters.AddWithValue("@" + Movie.db_Rated, obj.Rated);
+                comm.Parameters.AddWithValue("@" + Movie.db_ImdbVotes, obj.Votes);
+                comm.Parameters.AddWithValue("@" + Movie.db_Rating, obj.Rating);
+                comm.Parameters.AddWithValue("@" + Movie.db_Country, obj.Country);
+                comm.Parameters.AddWithValue("@" + Movie.db_Language, obj.Language);
+                comm.Parameters.AddWithValue("@" + Movie.db_Trailer, obj.Trailer);
+                comm.Parameters.AddWithValue("@" + Movie.db_Likes, obj.Likes);
+                comm.Parameters.AddWithValue("@" + Movie.db_Duration, obj.Duration);
+                comm.Parameters.AddWithValue("@" + Movie.db_Genre, obj.Genre);
+                UpdateObject(comm);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return -1;
+            }
+            return 1;
+        }
+
+        internal static int DeleteMovie(int movieID)
+        {
+            if (movieID == 0) return -1;
+            MySqlCommand comm = new MySqlCommand();
+            try
+            {
+                comm.CommandText = "remove_movie";
+                comm.Parameters.AddWithValue("@" + Movie.db_ID, movieID);
+                return UpdateObject(comm);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
         }
         #endregion
     }
