@@ -179,7 +179,7 @@ namespace MastiTimes.Models
             return retObj;
         }
 
-        internal static Theater GetTheaterByID(int id)
+        internal static Theater GetTheaterByID(int? id)
         {
             MySqlCommand comm = new MySqlCommand("get_theater");
             Theater retObj = null;
@@ -354,6 +354,64 @@ namespace MastiTimes.Models
             return retObj;
         }
 
+        internal static int AddTheater(Theater obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("insert_theater");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Theater.db_Name, obj.Name);
+                comm.Parameters.AddWithValue("@" + Theater.db_Address, obj.Address);
+                comm.Parameters.AddWithValue("@" + Theater.db_City, obj.City);
+                comm.Parameters.AddWithValue("@" + Theater.db_Likes, obj.Likes);
+                comm.Parameters.AddWithValue("@" + Theater.db_Phone, obj.PhoneNumber);
+                return AddObject(comm, "@" + Theater.db_ID);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
+
+        internal static int EditTheater(Theater obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("edit_theater");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Theater.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + Theater.db_Name, obj.Name);
+                comm.Parameters.AddWithValue("@" + Theater.db_Address, obj.Address);
+                comm.Parameters.AddWithValue("@" + Theater.db_City, obj.City);
+                comm.Parameters.AddWithValue("@" + Theater.db_Likes, obj.Likes);
+                comm.Parameters.AddWithValue("@" + Theater.db_Phone, obj.PhoneNumber);
+                UpdateObject(comm);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return -1;
+            }
+            return 1;
+        }
+
+        internal static int DeleteTheater(int theaterID)
+        {
+            if (theaterID == 0) return -1;
+            MySqlCommand comm = new MySqlCommand();
+            try
+            {
+                comm.CommandText = "remove_theater";
+                comm.Parameters.AddWithValue("@" + Theater.db_ID, theaterID);
+                return UpdateObject(comm);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
 
         #endregion
     }

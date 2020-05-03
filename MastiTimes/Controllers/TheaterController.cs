@@ -22,6 +22,15 @@ namespace MastiTimes.Controllers
         // GET: Theater
         public async Task<IActionResult> Index()
         {
+            //Gets error message to display from Create method 
+            var a = TempData["TheaterAdd"];
+            if (a != null)
+                ViewData["TheaterAdd"] = a;
+            //Gets error message to display from Delete method 
+            var d = TempData["TheaterDelete"];
+            if (d != null)
+                ViewData["TheaterDelete"] = d;
+
             var theaters = DAL.GetTheaters();
             return View(theaters);
         }
@@ -44,6 +53,7 @@ namespace MastiTimes.Controllers
             return View(theater);
         }
 
+        #region create
         // GET: Theater/Create
         public IActionResult Create()
         {
@@ -57,15 +67,20 @@ namespace MastiTimes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Address,City,PhoneNumber,Likes,ID")] Theater theater)
         {
-            if (ModelState.IsValid)
+            int m = DAL.AddTheater(theater);
+            if (m == -1)
             {
-                _context.Add(theater);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                TempData["TheaterAdd"] = "Error occured when adding the theater!";
             }
-            return View(theater);
+            else
+            {
+                TempData["TheaterAdd"] = "Successfully added the theater!";
+            }
+            return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region edit
         // GET: Theater/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -74,7 +89,7 @@ namespace MastiTimes.Controllers
                 return NotFound();
             }
 
-            var theater = await _context.Theater.FindAsync(id);
+            var theater = DAL.GetTheaterByID(id);
             if (theater == null)
             {
                 return NotFound();
@@ -94,28 +109,26 @@ namespace MastiTimes.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(theater);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TheaterExists(theater.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                int m = DAL.EditTheater(theater);
             }
-            return View(theater);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TheaterExists(theater.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region delete
 
         // GET: Theater/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -125,8 +138,7 @@ namespace MastiTimes.Controllers
                 return NotFound();
             }
 
-            var theater = await _context.Theater
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var theater = DAL.GetTheaterByID(id);
             if (theater == null)
             {
                 return NotFound();
@@ -140,11 +152,18 @@ namespace MastiTimes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var theater = await _context.Theater.FindAsync(id);
-            _context.Theater.Remove(theater);
-            await _context.SaveChangesAsync();
+            var theater = DAL.DeleteTheater(id);
+            if (theater == -1)
+            {
+                TempData["TheaterDelete"] = "Error occured when deleting the movie!";
+            }
+            else
+            {
+                TempData["TheaterDelete"] = "Successfully deleted the movie!";
+            }
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
         private bool TheaterExists(int id)
         {
