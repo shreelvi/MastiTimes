@@ -36,31 +36,27 @@ namespace MastiTimes.Controllers
             return View(movietheaters);
         }
 
-        // GET: MovieTheater/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var movieTheater = await _context.MovieTheater
-                .Include(m => m.Movie)
-                .Include(m => m.Theater)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (movieTheater == null)
-            {
-                return NotFound();
-            }
-
-            return View(movieTheater);
-        }
-
+       
         // GET: MovieTheater/Create
         public IActionResult Create()
         {
-            ViewData["MovieID"] = new SelectList(_context.Movie, "ID", "ID");
-            ViewData["TheaterID"] = new SelectList(_context.Theater, "ID", "ID");
+            // Gets Data from Database for the dropdown in create view
+            // And insert select item in List
+            // Reference: https://www.c-sharpcorner.com/article/binding-dropdown-list-with-database-in-asp-net-core-mvc/
+
+            List<Movie> MovieList = new List<Movie>();
+            MovieList = DAL.GetMovies();
+            //Inserting Select Item for course in List
+            MovieList.Insert(0, new Movie { ID = 0, Title = "Select" });
+            ViewBag.Movies = MovieList;
+
+            List<Theater> TheaterList = new List<Theater>();
+            TheaterList = DAL.GetTheaters();
+            //Inserting Select Item for course in List
+            TheaterList.Insert(0, new Theater { ID = 0, Name = "Select", City= "Select"});
+            ViewBag.Theaters = TheaterList;
+
+           
             return View();
         }
 
