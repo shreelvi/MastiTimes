@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -32,6 +33,7 @@ namespace MastiTimes.Models
         private bool _NowPlaying;
         private Movie _Movie;
         private Theater _Theater;
+        [NotMapped]
         private List<string> _ShowTimes;
         #endregion
 
@@ -157,6 +159,7 @@ namespace MastiTimes.Models
         /// </summary>
         /// <remarks></remarks>
         [XmlIgnore]
+        [NotMapped]
         public List<string> ShowTimes
         {
             get

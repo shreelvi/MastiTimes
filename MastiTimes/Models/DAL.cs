@@ -16,8 +16,6 @@ namespace MastiTimes.Models
         {
         }
 
-       
-
         internal enum dbAction
         {
             Read,
@@ -135,95 +133,6 @@ namespace MastiTimes.Models
         #endregion
 
         #region db methods
-        internal static List<MovieTheater> GetMovieTimes()
-        {
-            MySqlCommand comm = new MySqlCommand("get_movie_times");
-            List<MovieTheater> retObj = new List<MovieTheater>();
-            try
-            {
-                comm.CommandType = System.Data.CommandType.StoredProcedure;
-                MySqlDataReader dr = GetDataReader(comm);
-                while (dr.Read())
-                {
-                    retObj.Add(new MovieTheater(dr));
-                }
-                comm.Connection.Close();
-            }
-            catch (Exception ex)
-            {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retObj;
-        }
-
-        internal static List<Movie> GetMovies()
-        {
-            MySqlCommand comm = new MySqlCommand("get_movies");
-            List<Movie> retObj = new List<Movie>();
-            try
-            {
-                comm.CommandType = System.Data.CommandType.StoredProcedure;
-                MySqlDataReader dr = GetDataReader(comm);
-                while (dr.Read())
-                {
-                    retObj.Add(new Movie(dr));
-                }
-                comm.Connection.Close();
-            }
-            catch (Exception ex)
-            {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retObj;
-        }
-
-        internal static Theater GetTheaterByID(int? id)
-        {
-            MySqlCommand comm = new MySqlCommand("get_theater");
-            Theater retObj = null;
-            try
-            {
-                comm.Parameters.AddWithValue("@" + Theater.db_ID, id);
-                MySqlDataReader dr = GetDataReader(comm);
-
-                while (dr.Read())
-                {
-                    retObj = new Theater(dr);
-                }
-                comm.Connection.Close();
-            }
-            catch (Exception ex)
-            {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retObj;
-        }
-
-        internal static Movie GetMovieByID(int? id)
-        {
-            MySqlCommand comm = new MySqlCommand("get_movie");
-            Movie retObj = null;
-            try
-            {
-                comm.Parameters.AddWithValue("@" + Movie.db_ID, id);
-                MySqlDataReader dr = GetDataReader(comm);
-
-                while (dr.Read())
-                {
-                    retObj = new Movie(dr);
-                }
-                comm.Connection.Close();
-            }
-            catch (Exception ex)
-            {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retObj;
-        }
 
 
         internal static List<string> GetShowTimesMovieTheater(int movie, int theater)
@@ -253,9 +162,55 @@ namespace MastiTimes.Models
             {
                 showtimes.Add(time.ToString("H:mm"));
             }
-           
-            return showtimes ;
+
+            return showtimes;
         }
+        internal static List<MovieTheater> GetMovieTimes()
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie_times");
+            List<MovieTheater> retObj = new List<MovieTheater>();
+            try
+            {
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new MovieTheater(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+        #endregion
+
+        #region movie
+        internal static List<Movie> GetMovies()
+        {
+            MySqlCommand comm = new MySqlCommand("get_movies");
+            List<Movie> retObj = new List<Movie>();
+            try
+            {
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new Movie(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
 
         internal static int AddMovie(Movie obj)
         {
@@ -331,6 +286,56 @@ namespace MastiTimes.Models
             }
             return -1;
         }
+        
+        internal static Movie GetMovieByID(int? id)
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie");
+            Movie retObj = null;
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Movie.db_ID, id);
+                MySqlDataReader dr = GetDataReader(comm);
+
+                while (dr.Read())
+                {
+                    retObj = new Movie(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
+        #endregion
+
+        #region theater
+        internal static Theater GetTheaterByID(int? id)
+        {
+            MySqlCommand comm = new MySqlCommand("get_theater");
+            Theater retObj = null;
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Theater.db_ID, id);
+                MySqlDataReader dr = GetDataReader(comm);
+
+                while (dr.Read())
+                {
+                    retObj = new Theater(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
 
         internal static List<Theater> GetTheaters()
         {
@@ -412,7 +417,7 @@ namespace MastiTimes.Models
             }
             return -1;
         }
-
         #endregion
+
     }
 }

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MastiTimes.Models.MovieTheater>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Movie 
+            </th>
+            <th>
+                Theater Name
+            </th>
+            <th>
+                Theater Location
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NowPlaying)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShowTime)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Movie.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theater.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theater.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NowPlaying)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShowTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
