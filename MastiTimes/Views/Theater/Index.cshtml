@@ -1,20 +1,13 @@
 ﻿@model IEnumerable<MastiTimes.Models.Theater>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 @{
-    ViewData["Title"] = "Theater Admin";
+    ViewData["Title"] = "Theater Home";
 }
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color:#563d7c;">
-    <!-- Navbar content -->
-    <a class="navbar-brand" asp-controller="Admin" asp-action="Index" style="color:orange">Masti Times Admin</a>
-</nav>
 
 <p style="color:blue">
     @ViewData["TheaterAdd"]
@@ -23,8 +16,6 @@
 <p style="color:red">
     @ViewData["TheaterDelete"]
 </p>
-
-
 
 <h1>Index</h1>
 

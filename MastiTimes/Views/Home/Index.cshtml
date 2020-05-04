@@ -31,6 +31,8 @@
         width: 110px;
     }
 </style>
+
+
 <!-- CSS and JS for now playing and coming soon poster sliders-->
 <!--auto compiled css & Js-->
 <script type="text/javascript"
@@ -94,7 +96,7 @@
                             <div class="col-xs-2">
 
                                 <a href='@Url.Action("GetSelectedMovie", "Home",
-                                    new { id = @movie.ID })'>
+                                    new { id = @movie.ID })' target="_blank">
                                     <img src="@movie.poster_path"
                                          class="img-responsive">
                                     @Html.ActionLink(@movie.title, "GetSelectedMovie", "Home", new { id = movie.imdbID })

@@ -1,7 +1,9 @@
 ﻿@model MastiTimes.Models.Theater
-
 @{
-    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    ViewData["Title"] = "Theater Create";
 }
 
 <h1>Create</h1>
@@ -37,7 +39,7 @@
                 <input asp-for="Likes" class="form-control" />
                 <span asp-validation-for="Likes" class="text-danger"></span>
             </div>
-           
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
