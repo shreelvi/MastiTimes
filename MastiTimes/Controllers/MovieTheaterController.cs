@@ -72,13 +72,13 @@ namespace MastiTimes.Controllers
 
             if (retInt < 0)
             {
-                TempData["MovieTheaterAdd"] = "Database problem occured when adding the Courses for Semester";
+                TempData["MovieTheaterAdd"] = "Database problem occured when adding the movie for theater";
             }
 
             //If sucessful, assigns the class to the user that is creating
             else
             {
-                TempData["MovieTheaterAdd"] = "Class added but problem occured when assigning user the class.";
+                TempData["MovieTheaterAdd"] = "Successfully added movie for the theater";
 
             }
 
@@ -88,21 +88,33 @@ namespace MastiTimes.Controllers
 
 
         // GET: MovieTheater/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var movieTheater = await _context.MovieTheater.FindAsync(id);
-            if (movieTheater == null)
+            List<Movie> MovieList = new List<Movie>();
+            MovieList = DAL.GetMovies();
+            //Inserting Select Item for course in List
+            MovieList.Insert(0, new Movie { ID = 0, Title = "Select" });
+            ViewBag.Movies = MovieList;
+
+            List<Theater> TheaterList = new List<Theater>();
+            TheaterList = DAL.GetTheaters();
+            //Inserting Select Item for course in List
+            TheaterList.Insert(0, new Theater { ID = 0, Name = "Select", City = "Select" });
+            ViewBag.Theaters = TheaterList;
+
+            var movietheater = DAL.GetMovieTheaterByID(id);
+            if (movietheater == null)
             {
                 return NotFound();
             }
-            ViewData["MovieID"] = new SelectList(_context.Movie, "ID", "ID", movieTheater.MovieID);
-            ViewData["TheaterID"] = new SelectList(_context.Theater, "ID", "ID", movieTheater.TheaterID);
-            return View(movieTheater);
+            return View(movietheater);
+
+            return View();
         }
 
         // POST: MovieTheater/Edit/5
@@ -110,36 +122,29 @@ namespace MastiTimes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieID,TheaterID,ShowTime,NowPlaying,ID")] MovieTheater movieTheater)
+        public IActionResult Edit(int id, [Bind("MovieID,TheaterID,ShowTime,NowPlaying,ID")] MovieTheater movieTheater)
         {
             if (id != movieTheater.ID)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(movieTheater);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MovieTheaterExists(movieTheater.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                int m = DAL.EditMovieTheater(movieTheater);
             }
-            ViewData["MovieID"] = new SelectList(_context.Movie, "ID", "ID", movieTheater.MovieID);
-            ViewData["TheaterID"] = new SelectList(_context.Theater, "ID", "ID", movieTheater.TheaterID);
-            return View(movieTheater);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovieTheaterExists(movieTheater.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Theater/Delete/5

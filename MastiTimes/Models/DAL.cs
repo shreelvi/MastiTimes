@@ -247,6 +247,27 @@ namespace MastiTimes.Models
             }
             return -1;
         }
+
+        internal static int EditMovieTheater(MovieTheater obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("edit_movie_theater");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_ID, obj.ID);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_MovieID, obj.MovieID);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_TheaterID, obj.TheaterID);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_ShowTime, obj.ShowTime);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_NowPlaying, obj.NowPlaying);
+                UpdateObject(comm);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return -1;
+            }
+            return 1;
+        }
         #endregion
 
         #region movie
