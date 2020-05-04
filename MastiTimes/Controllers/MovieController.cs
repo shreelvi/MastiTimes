@@ -112,7 +112,7 @@ namespace MastiTimes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,DateReleased,PosterUrl,Actors,Likes,Rated,Votes,Rating,Country,Language,Trailer,Duration,Genre,ID")] Movie movie)
+        public IActionResult Edit(int id, [Bind("Title,DateReleased,PosterUrl,Actors,Likes,Rated,Votes,Rating,Country,Language,Trailer,Duration,Genre,ID")] Movie movie)
         {
             if (id != movie.ID)
             {

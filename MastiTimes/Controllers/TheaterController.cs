@@ -20,7 +20,7 @@ namespace MastiTimes.Controllers
         }
 
         // GET: Theater
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //Gets error message to display from Create method 
             var a = TempData["TheaterAdd"];
@@ -131,7 +131,7 @@ namespace MastiTimes.Controllers
         #region delete
 
         // GET: Theater/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -150,7 +150,7 @@ namespace MastiTimes.Controllers
         // POST: Theater/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             var theater = DAL.DeleteTheater(id);
             if (theater == -1)

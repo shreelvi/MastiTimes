@@ -188,6 +188,67 @@ namespace MastiTimes.Models
         }
         #endregion
 
+        #region movie theater
+        internal static int AddMovieTheater(MovieTheater obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("insert_movie_theater");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_MovieID, obj.MovieID);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_TheaterID, obj.TheaterID);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_ShowTime, obj.ShowTime);
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_NowPlaying, obj.NowPlaying);
+                return AddObject(comm, "@" + MovieTheater.db_ID);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
+
+        internal static MovieTheater GetMovieTheaterByID(int? id)
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie_theater");
+            MovieTheater retObj = null;
+            try
+            {
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_ID, id);
+                MySqlDataReader dr = GetDataReader(comm);
+
+                while (dr.Read())
+                {
+                    retObj = new MovieTheater(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
+        internal static int DeleteMovieTheater(int movtheaterID)
+        {
+            if (movtheaterID == 0) return -1;
+            MySqlCommand comm = new MySqlCommand();
+            try
+            {
+                comm.CommandText = "remove_movie_theater";
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_ID, movtheaterID);
+                return UpdateObject(comm);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
+        #endregion
+
         #region movie
         internal static List<Movie> GetMovies()
         {

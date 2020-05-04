@@ -65,18 +65,27 @@ namespace MastiTimes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieID,TheaterID,ShowTime,NowPlaying,ID")] MovieTheater movieTheater)
+        public IActionResult Create([Bind("MovieID,TheaterID,ShowTime,NowPlaying,ID")] MovieTheater movieTheater)
         {
-            if (ModelState.IsValid)
+            //Add the class to the coursesemester table
+            int retInt = DAL.AddMovieTheater(movieTheater);
+
+            if (retInt < 0)
             {
-                _context.Add(movieTheater);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                TempData["MovieTheaterAdd"] = "Database problem occured when adding the Courses for Semester";
             }
-            ViewData["MovieID"] = new SelectList(_context.Movie, "ID", "ID", movieTheater.MovieID);
-            ViewData["TheaterID"] = new SelectList(_context.Theater, "ID", "ID", movieTheater.TheaterID);
-            return View(movieTheater);
+
+            //If sucessful, assigns the class to the user that is creating
+            else
+            {
+                TempData["MovieTheaterAdd"] = "Class added but problem occured when assigning user the class.";
+
+            }
+
+            return RedirectToAction(nameof(Index));
         }
+
+
 
         // GET: MovieTheater/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -133,34 +142,37 @@ namespace MastiTimes.Controllers
             return View(movieTheater);
         }
 
-        // GET: MovieTheater/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Theater/Delete/5
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var movieTheater = await _context.MovieTheater
-                .Include(m => m.Movie)
-                .Include(m => m.Theater)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (movieTheater == null)
+            var m = DAL.GetMovieTheaterByID(id);
+            if (m == null)
             {
                 return NotFound();
             }
 
-            return View(movieTheater);
+            return View(m);
         }
 
-        // POST: MovieTheater/Delete/5
+        // POST: Theater/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var movieTheater = await _context.MovieTheater.FindAsync(id);
-            _context.MovieTheater.Remove(movieTheater);
-            await _context.SaveChangesAsync();
+            var d = DAL.DeleteMovieTheater(id);
+            if (d == -1)
+            {
+                TempData["MovieTheaterDelete"] = "Error occured when deleting the movie theater!";
+            }
+            else
+            {
+                TempData["MovieTheaterDelete"] = "Successfully deleted the movie theater!";
+            }
             return RedirectToAction(nameof(Index));
         }
 
