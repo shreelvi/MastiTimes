@@ -26,7 +26,21 @@ namespace MastiTimes.Models
         public int Likes { get; set; }
 
         [NotMapped]
-        public List<Movie> Movies { get; set; }
+        public List<Movie> _NowPlayingMovies;
+        
+        public List<Movie> NowPlayingMovies
+        {
+            get
+            {
+                _NowPlayingMovies = DAL.GetNowPlayingMoviesByTheater(_ID);
+                return _NowPlayingMovies;
+            }
+            set
+            {
+                _NowPlayingMovies = value;
+                
+            }
+        }
 
         #region Database String
         internal const string db_ID = "theater_id";
@@ -59,6 +73,11 @@ namespace MastiTimes.Models
         public override string ToString()
         {
             return this.GetType().ToString();
+        }
+
+        internal List<Theater> GetTheatersByCity(string city)
+        {
+            return DAL.GetTheatersByCity(city);
         }
 
        

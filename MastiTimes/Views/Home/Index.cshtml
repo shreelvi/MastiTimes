@@ -12,6 +12,7 @@
             float: left;
         }
     }
+
     .widget-box-popular {
         border: 1px solid #d3d3d3;
         margin: 10px 0;
@@ -30,8 +31,13 @@
         margin: 0 auto;
         width: 110px;
     }
-</style>
 
+    .card-img-top{
+        height: 280px;
+        width: 220px;
+        padding: 0px 0px 0px 15px;
+    }
+</style>
 
 <!-- CSS and JS for now playing and coming soon poster sliders-->
 <!--auto compiled css & Js-->
@@ -43,6 +49,7 @@
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
 </script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -61,21 +68,112 @@
                 (i = $(this).siblings(":first")),
                 i.children(":first-child").clone().appendTo($(this))
         })
+
+        $('.carousel.carousel-multi-item.v-2 .carousel-item').each(function(){
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+
+            for (var i=0;i<4;i++) {
+                next=next.next();
+                if (!next.length) {
+                    next=$(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
+            }
+        })
     });
+
+
 </script>
 <!-- CSS and JS END for Sliders-->
 @************************************************************@
+
 
 <div class="container-home">
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
         <p>Learn about movie show times, events, activities and more.. happening in Nepal.</p>
+        <br />
+        <h4>Now Showing Movies in Kathmandu</h4>
     </div>
 
+    <div id="carousel-example-multi" class="carousel slide carousel-multi-item v-2" data-ride="carousel">
+
+        <!--Controls-->
+        <div class="controls-top" style="text-align:center;">
+            <a class="btn-floating" href="#carousel-example-multi" data-slide="prev">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </a>
+            <a class="btn-floating" href="#carousel-example-multi" data-slide="next">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </a>
+        </div>
+        <!--/.Controls-->
+        <br />
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-multi" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-multi" data-slide-to="1"></li>
+            <li data-target="#carousel-example-multi" data-slide-to="2"></li>
+            <li data-target="#carousel-example-multi" data-slide-to="3"></li>
+            <li data-target="#carousel-example-multi" data-slide-to="4"></li>
+            <li data-target="#carousel-example-multi" data-slide-to="5"></li>
+        </ol>
+        <!--/.Indicators-->
+
+        <div class="carousel-inner v-2" role="listbox">
+            @{
+                bool a = true;
+            }
+            @foreach (var movie in Model)
+            {
+                if (a)
+                {
+                    <div class="carousel-item active">
+                        <div class="col-12 col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top" src="@movie.poster_path"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title font-weight-bold">@movie.title</h4>
+                                    <p class="card-text">
+                                        12:45 PM
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        <div class="col-12 col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top" src="@movie.poster_path"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title font-weight-bold">@movie.title</h4>
+                                    <p class="card-text">
+                                        8:00 AM
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                a = false;
+            }
+        </div>
+    </div>
+
+    <br />
     <nav class="navbar ">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">Now Playing Movies</a>
+                <a class="navbar-brand" href="index.html">New and Upcoming Movies</a>
             </div>
         </div>
     </nav>
@@ -143,7 +241,7 @@
         <tbody>
             @foreach (var article in ViewBag.Articles)
             {
-                
+
                 <tr>
                     <td class="movie">
                         <a href="@article.url" target="_blank">

@@ -60,13 +60,11 @@ namespace MastiTimes.Controllers
 
         public IActionResult Test()
         {
-            MovieTheater mov = new MovieTheater();
-            List<MovieTheater> times = new List<MovieTheater>();
+            Theater theater = new Theater();
+            List<Theater> theaters = new List<Theater>();
 
-           times = mov.GetMovieTimes();
-            string tit = times[0].Movie.Title;
-            List<string> show = times[0].ShowTimes;
-            return View(times);
+           theaters = theater.GetTheatersByCity("Kathmandu");
+            return View(theaters);
         }
 
         [System.Web.Mvc.HttpPost]

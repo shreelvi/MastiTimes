@@ -441,6 +441,52 @@ namespace MastiTimes.Models
             return retObj;
         }
 
+        internal static List<Theater> GetTheatersByCity(string city)
+        {
+            MySqlCommand comm = new MySqlCommand("get_theaters_by_city");
+            List<Theater> retObj = new List<Theater>();
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Theater.db_City, city);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new Theater(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
+        internal static List<Movie> GetNowPlayingMoviesByTheater(int id)
+        {
+            MySqlCommand comm = new MySqlCommand("get_movies_by_theater");
+            List<Movie> retObj = new List<Movie>();
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Theater.db_ID, id);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new Movie(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
         internal static int AddTheater(Theater obj)
         {
             if (obj == null) return -1;
