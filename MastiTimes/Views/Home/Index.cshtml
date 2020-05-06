@@ -39,12 +39,11 @@
     }  
 
     /* Banner slider home page*/
+    /* Sourcehttps://medium.com/wdstack/bootstrap-4-custom-carousel-94a537364fde */
 
     @@media (min-width: 768px) {
         /* show 3 items */
-        .carousel-inner .active,
-        .carousel-inner .active + .carousel-item,
-        .carousel-inner .active + .carousel-item + .carousel-item {
+        .carousel-inner .active, .carousel-inner .active + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item {
             display: block;
         }
 
@@ -139,27 +138,29 @@ $(window).load(function () {
         <h1 class="display-4">Welcome</h1>
         <p>Learn about movie show times, events, activities and more.. happening in Nepal.</p>
         <br />
-        <h4>Now Showing Movies in Kathmandu</h4>
+        <h4>Now Showing Movies in Kathmandu</h4><br />
     </div>
 
     <div class="container-fluid">
-        <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
+        <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="5000">
             <div class="carousel-inner row w-10 mxauto" role="listbox">
                 @{
                     bool act = true;
                 }
-                @for(int i=0; i<9; i++)
+                @for(int i=0; i<Model.Count; i++)
                 {
                     if (act)
                     {
                         <div class="carousel-item col-md-4 active">
-                            <img class="img-fluid mx-auto d-bloc" src="@Model[i].poster_path" alt="slide">
+                            <img class="img-fluid mx-auto d-bloc" src="@Model[i].poster_path" alt="@Model[i].title" style="height: 255px;">
+                            <p>QFX -- 12:00 PM @i</p>
                         </div>
                     }
                     else
                     {
                         <div class="carousel-item col-md-4">
-                            <img class="img-fluid mx-auto d-bloc" src="@Model[i].poster_path" alt="slide">
+                            <img class="img-fluid mx-auto d-bloc" src="@Model[i].poster_path" alt="@Model[i].title" style="height: 255px;">
+                            <p>QFX -- 12:00 PM @i</p>
                         </div>
                     }
                     act = false;
@@ -172,13 +173,13 @@ $(window).load(function () {
             </a>
 
             <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
-                <i class="glyphicon glyphicon-chevron-right"></i>
+                <i class="glyphicon glyphicon-chevron-right" style="color:black"></i>
                 <span class="sr-only">Next</span>
             </a>
 
         </div>
     </div>
-
+    <br /><br />
 
     <nav class="navbar ">
         <div class="container">
