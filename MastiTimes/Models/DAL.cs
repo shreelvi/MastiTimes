@@ -11,11 +11,8 @@ namespace MastiTimes.Models
         //Database information for the hosting website db
         private static string ReadOnlyConnectionString = "Server=localhost;Database=test; Port=3306;Uid=root;Pwd=cubic123;Convert Zero Datetime=True;Allow Zero Datetime=True";
         private static string EditOnlyConnectionString = "Server=localhost;Database=test; Port=3306;Uid=root;Pwd=cubic123;Convert Zero Datetime=True;Allow Zero Datetime=True";
-
-        private DAL()
-        {
-        }
-
+        public static string _Pepper = "gLj23Epo084ioAnRfgoaHyskjasf"; //HACK: set here for now, will move elsewhere later.
+        public static int _Stretches = 10000;
         internal enum dbAction
         {
             Read,
@@ -546,6 +543,40 @@ namespace MastiTimes.Models
             return -1;
         }
         #endregion
+
+        public static User GetUser(string userName, string password)
+        {
+
+            MySqlCommand comm = new MySqlCommand("GetUserByUserName");
+            User retObj = null;
+            try
+            {
+                comm.Parameters.AddWithValue("@" + User.db_UserName, userName);
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj = new User(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+
+            //Verify password matches.
+            if (retObj != null)
+            {
+                if (!Tools.Hasher.IsValid(password, retObj.Salt, _Pepper, _Stretches, retObj.Password))
+                {
+                    retObj = null;
+                }
+            }
+
+            return retObj;
+
+        }
 
     }
 }
