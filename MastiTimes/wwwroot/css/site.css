@@ -116,4 +116,18 @@ body {
 }
 
 
+#header #secondary {
+    background: #d2c5b3 url(/images/app/subnav.gif) center bottom;
+    height: 24px;
+    padding: 12px;
+    text-align: left;
+}
 
+#header #secondary span #slogan {
+    color: rgba(0, 0, 0, 0.4);
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin: -1px 18px 0 20px;
+    width: 500px;
+}

@@ -7,6 +7,25 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <style>
+        #header #secondary {
+            background: #d2c5b3 url(/images/app/subnav.gif) center bottom;
+            height: 24px;
+            padding: 12px;
+            text-align: left;
+        }
+
+
+            #header #secondary span #slogan {
+                color: rgba(0, 0, 0, 0.4);
+                float: left;
+                font-size: 18px;
+                font-weight: bold;
+                margin: -1px 18px 0 20px;
+                width: 500px;
+            }
+    </style>
 </head>
 <body>
     <header>
@@ -44,17 +63,23 @@
                     </ul>
                 </div>
 
-
-                <form asp-controller="Home" asp-action="SearchByText">
+            </div>
+        </nav>
+        <div id="secondary" style="background: #d2c5b3 url(http://cinematreasures.org/images/app/subnav.gif) center bottom;
+            height: 48px;
+            margin-top: -10px;
+            padding: 12px;
+            text-align: left;">
+            <span style="display: block; margin: 0 auto 0 auto; text-align: left; width: 960px;">
+                <div id="slogan" style="color: rgba(0, 0, 0, 0.4); float: left; font-size: 18px; font-weight: bold; margin: -1px 18px 0 20px;width: 500px;">Your guide to movie times, events and activities</div>
+                <form asp-controller="Home" asp-action="SearchByText" style="float: right; margin: -3px 18px 0 20px;">
                     <p>
                         <input type="text" name="searchText" placeholder="Search Movies...">
                         <input type="submit" value="Search" />
                     </p>
-
                 </form>
-
-            </div>
-        </nav>
+            </span>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
