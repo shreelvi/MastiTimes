@@ -29,7 +29,8 @@ namespace MastiTimes
             services.AddControllersWithViews();
 
             services.AddDbContext<MastiTimesContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MastiTimesContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("MastiTimesContext")));        
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -35,6 +35,15 @@ namespace MastiTimes.Controllers
             return View(movies);
         }
 
+        public IActionResult ShowTimes()
+        {
+            Theater theater = new Theater();
+            List<Theater> theaters = new List<Theater>();
+
+            theaters = theater.GetTheatersByCity("Kathmandu");
+            return View(theaters);
+        }
+
         #region Details method
         // GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -177,5 +186,7 @@ namespace MastiTimes.Controllers
         {
             return _context.Movie.Any(e => e.ID == id);
         }
+
+
     }
 }

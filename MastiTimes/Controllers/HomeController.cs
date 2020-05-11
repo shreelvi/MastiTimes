@@ -24,8 +24,10 @@ namespace MastiTimes.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
+            
             News news = new News();
             var bollywood = news.getBollywoodNews();
 
@@ -60,11 +62,7 @@ namespace MastiTimes.Controllers
 
         public IActionResult Test()
         {
-            Theater theater = new Theater();
-            List<Theater> theaters = new List<Theater>();
-
-           theaters = theater.GetTheatersByCity("Kathmandu");
-            return View(theaters);
+            return View();
         }
 
         [System.Web.Mvc.HttpPost]

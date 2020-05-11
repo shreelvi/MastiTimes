@@ -1,73 +1,147 @@
-﻿@model List<MastiTimes.Models.Theater>
-@{
-    ViewData["Title"] = "Test";
+﻿@{
+    Layout = null;
 }
 @{
-    var temp = 0;
-    var count = 1;
-    var movieTemp = 0;
-    int[] showCount = new int[100];
-    var demo = "";
+    ViewData["Title"] = "ShowTimes";
 }
-
 <style>
+    #comments {
+        margin: 24px 0 12px 0;
+        width: 640px;
+    }
 
-    .content {
-        padding: 0 18px;
-        display: none;
+
+    h2 {
+        color: #A3121B;
+        font-family: "museo-1","museo-2";
+        font-size: 20px;
+        font-weight: normal;
+        margin: 12px 0;
+    }
+
+    .comment .avatar {
+        float: left;
+        margin: 0 12px 0 0;
+        position: absolute;
+    }
+
+    .acontent  {
+        color: #666;
+        text-decoration: none;
+    }
+
+
+    .comment {
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -o-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
+        behavior: url(/stylesheets/PIE.htc);
+        border: 1px solid #eee;
+        color: #444;
+        font-size: 14px;
+        margin: 12px 0;
         overflow: hidden;
-        background-color: #f1f1f1;
+        padding: 12px 12px 0px 12px;
     }
-    .card-block{
-        margin-left:10px;
+
+    .comment.even {
+        background-color: #fafafa;
     }
-    .well{
-        width: fit-content;
+
+    #new_comment {
+        margin: 24px 0 24px 0;
+        padding: 0;
+        width: 630px;
+    }
+
+
+    .comment .body {
+        float: left;
+        margin: 0 0 0 65px;
+        min-height: 50px;
+    }
+
+    form input, .form input {
+        display: block;
+    }
+
+    .login_prompt {
+        float: right;
+        margin-top: 3px;
+    }
+
+    p {
+        margin: 12px 0;
+    }
+
+    .comment-box {
+        position: absolute;
+        display: none;
+        overflow-wrap: break-word;
+        font-weight: 400;
+        width: 630px;
+        font-family: monospace;
+        line-height: normal;
+        font-size: 16px;
+        padding: 3px;
+    }
+
+    #new_comment .tips {
+        color: #555555;
+        font-size: 14px;
+        margin: 12px 30px 24px 0;
     }
 </style>
 
-<div class="card">
-    <h3 style="margin-left: 10px;"><strong>Kathmandu, Nepal Movie Times</strong></h3>
-    @{ int i = 0;}
-    @foreach (var theater in Model)
-    {
-        i++;
-        <div class="card-block">
-            <h3 class="card-title"><a href="#">@theater.Name</a></h3>
-            <p class="card-text">
-                <a href="#">Read Reviews </a> |
-                <a href="#">Rate Theater</a><br />
-                @theater.Address<br />
-                <a href="#">@theater.PhoneNumber</a>|
-                <a href="#">View map</a>
-            </p>
-            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#@i" style="width:150px;">
-            View Showtimes
-            </button>
+<div id="comments">
+    <h2>
+        Comments
+        <span>(3)</span>
+    </h2>
+    <div class="comment even">
+        <div class="avatar">
+            <a href="" >
+                <img alt="karpf" height="48" width="48" src="http://photos.cinematreasures.org/production/users/96350/1583394046/small.jpg?1583394046" />
+            </a>
         </div>
-        
-        <div class="movie-container" style=" margin-top: 10px;">
-            <div id="@i" class="collapse">
-                @{int j = 0;}
-                @foreach (var movie in theater.NowPlayingMovies)
-                {
-                    <div class="col-md-3">
-                        <div class="well text-center">
-                            <a href='@Url.Action("GetSelectedMovie", "Home",
-                        new { id = @movie.ID })'>
-                                <img src="@movie.PosterUrl"
-                                     class="img-responsive" style="height:100px; width:100px;">
-                            </a>
-                            <h5 style="color:#5E5B54">@movie.Title</h5>
-                            @*<a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>*@
-                        </div>
-                    </div>
+        <div class="body">
+            <strong>
+                <a class="acontent" href="#">
+                    Bilal
+                </a>
+            </strong>
+            <span>on March 7, 2020 at 11:39am</span>           
+            <p>Great video! I'm so glad I watched this.</p>
+        </div>
+    </div>
+    <form action="" class="new_comment" id="new_comment" method="post">
+        <div style="margin:0; padding:0; display:inline">
 
-                }
+        </div>
+        <div class="login_prompt">You must login before making a comment.</div>
+        <h2>New Comment</h2>
+        <p>
+            <textarea cols="40" disabled="disabled" id="comment_body" name="comment[body]" rows="5" style="overflow:hidden; width:630px;">
+               
+            </textarea>
+            <div class="comment-box">
+                &nbsp;
             </div>
+
+        </p>
+
+        <div class="tips">
+            <ul>
+                <li>Contribute something to the conversation</li>
+                <li>No personal attacks</li>
+                <li>Stay on-topic</li>
+            </ul>
+            <p>
+                <input disabled="disabled" id="comment_submit" name="commit" type="submit" value="Add comment" />
+            </p>
         </div>
-
-    }
+    </form>
 </div>
-
-
