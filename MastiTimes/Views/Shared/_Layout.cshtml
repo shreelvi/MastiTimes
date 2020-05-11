@@ -9,22 +9,30 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
     <style>
-        #header #secondary {
-            background: #d2c5b3 url(/images/app/subnav.gif) center bottom;
-            height: 24px;
-            padding: 12px;
-            text-align: left;
+        .links{
+            -moz-border-radius-bottomleft: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            -o-border-bottom-left-radius: 10px;
+            -ms-border-bottom-left-radius: 10px;
+            -khtml-border-bottom-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            -o-border-bottom-right-radius: 10px;
+            -ms-border-bottom-right-radius: 10px;
+            -khtml-border-bottom-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            float: right;
+            font-size: 14px;
+            display: inline;
+            background: lightskyblue;
+            margin: 0 6px 0 0;
+            margin-top:-24px;
+            padding: 9px 12px 9px 12px;
+            position: relative;
+            z-index: 3;
         }
-
-
-            #header #secondary span #slogan {
-                color: rgba(0, 0, 0, 0.4);
-                float: left;
-                font-size: 18px;
-                font-weight: bold;
-                margin: -1px 18px 0 20px;
-                width: 500px;
-            }
     </style>
 </head>
 <body>
@@ -62,7 +70,11 @@
                         </li>
                     </ul>
                 </div>
-
+                <div class="links">
+                    <a href="#" style="color:white">Login</a>
+                    or
+                    <a href="#" style="color:white">Sign up</a>
+                </div>
             </div>
         </nav>
         <div id="secondary" style="background: #d2c5b3 url(http://cinematreasures.org/images/app/subnav.gif) center bottom;
