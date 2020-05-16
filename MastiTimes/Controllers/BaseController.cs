@@ -12,7 +12,7 @@ namespace MastiTimes.Controllers
 {
     public class BaseController : Controller
     {
-        public IActionResult Index()
+        public IActionResult BaseIndex()
         {
             return View();
         }

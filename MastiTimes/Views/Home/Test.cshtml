@@ -1,10 +1,23 @@
-﻿@{
-    Layout = null;
-}
+﻿
 @{
     ViewData["Title"] = "ShowTimes";
 }
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
+    .fa-heart-o {
+        color: red;
+        cursor: pointer;       
+    }
+
+    .fa-heart {
+        color: red;
+        cursor: pointer;
+    }
+
     #comments {
         margin: 24px 0 12px 0;
         width: 640px;
@@ -25,7 +38,7 @@
         position: absolute;
     }
 
-    .acontent  {
+    .acontent {
         color: #666;
         text-decoration: none;
     }
@@ -47,9 +60,9 @@
         padding: 12px 12px 0px 12px;
     }
 
-    .comment.even {
-        background-color: #fafafa;
-    }
+        .comment.even {
+            background-color: #fafafa;
+        }
 
     #new_comment {
         margin: 24px 0 24px 0;
@@ -95,6 +108,47 @@
         margin: 12px 30px 24px 0;
     }
 </style>
+<script>
+    // It checks to see if the span id #heart has "liked" class, if not it run the else statement and adds the "liked" class, on a 2nd click it see that it has the "liked" class so it replaces the ihherHTML and removes class, on 3rd click it runs the else statement again cause there is no "liked" class(remomved on 2nd click).
+    $(document).ready(function () {
+        $("#heart").click(function () {
+            var theater = "QFX"
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LikeTheater")',
+                data: {
+                    'howdy': "theaterr"
+                },
+                dataType: "json",
+                //contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    console.log(response)
+                    if (response.message == "No") {
+                        alert("Please Login to Like the page!");
+                    }
+                    else {
+                        if ($("#heart").hasClass("liked")) {
+                            $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+                            $("#heart").removeClass("liked");
+                        } else {
+                            $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+                            $("#heart").addClass("liked");
+                        }
+                    }
+                    //$("#comments h2").append("Success");
+                },
+                error: function () {  
+                    alert("Error rror ror");  
+                }
+            });                
+        });
+    });
+</script>
+
+
+<p>Click on the heart to love or un-love this post.</p>
+<p>@ViewBag.LoginError</p>
+<span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>23 likes </span>
 
 <div id="comments">
     <h2>
@@ -103,7 +157,7 @@
     </h2>
     <div class="comment even">
         <div class="avatar">
-            <a href="" >
+            <a href="">
                 <img alt="karpf" height="48" width="48" src="http://photos.cinematreasures.org/production/users/96350/1583394046/small.jpg?1583394046" />
             </a>
         </div>
@@ -113,7 +167,7 @@
                     Bilal
                 </a>
             </strong>
-            <span>on March 7, 2020 at 11:39am</span>           
+            <span>on March 7, 2020 at 11:39am</span>
             <p>Great video! I'm so glad I watched this.</p>
         </div>
     </div>

@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace MastiTimes.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -24,7 +24,6 @@ namespace MastiTimes.Controllers
             _logger = logger;
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             
@@ -60,9 +59,26 @@ namespace MastiTimes.Controllers
             return View(result);
         }
 
-        public IActionResult Test()
+        public IActionResult Test(string s)
         {
+            if(s == "null")
+            {
+                ViewBag.LoginError = "Please login to view the page.";
+            }          
             return View();
+        }
+
+        public IActionResult LikeTheater(string howdy)
+        {
+            User LoggedIn = null;
+            if (LoggedIn == null)
+            {
+                return Json(new { Message = "No", JsonRequestBehavior.AllowGet });
+            }
+            //else { string message = "SUCCESS"; }
+            return RedirectToAction("Test");
+
+
         }
 
         [System.Web.Mvc.HttpPost]
