@@ -124,7 +124,8 @@
                 success: function (response) {
                     console.log(response)
                     if (response.message == "No") {
-                        alert("Please Login to Like the page!");
+                        $("#Error").html('<span>Please Login to like the page!</span>');
+                        //alert("Please Login to Like the page!");
                     }
                     else {
                         if ($("#heart").hasClass("liked")) {
@@ -147,8 +148,8 @@
 
 
 <p>Click on the heart to love or un-love this post.</p>
-<p>@ViewBag.LoginError</p>
-<span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>23 likes </span>
+<p id="Error" style="color:red">@ViewBag.LoginError</p>
+<span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp; 2 likes </span>
 
 <div id="comments">
     <h2>
