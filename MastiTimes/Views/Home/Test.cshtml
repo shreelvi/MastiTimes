@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "ShowTimes";
 }
-
+@{ var check = "no";}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -112,7 +112,7 @@
     // It checks to see if the span id #heart has "liked" class, if not it run the else statement and adds the "liked" class, on a 2nd click it see that it has the "liked" class so it replaces the ihherHTML and removes class, on 3rd click it runs the else statement again cause there is no "liked" class(remomved on 2nd click).
     $(document).ready(function () {
         $("#heart").click(function () {
-            var theater = "QFX"
+            
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("LikeTheater")',
@@ -122,7 +122,7 @@
                 dataType: "json",
                 //contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    console.log(response)
+                    //console.log(response)
                     if (response.message == "No") {
                         $("#Error").html('<span>Please Login to like the page!</span>');
                         //alert("Please Login to Like the page!");
@@ -138,8 +138,8 @@
                     }
                     //$("#comments h2").append("Success");
                 },
-                error: function () {  
-                    alert("Error rror ror");  
+                error: function () {
+                    alert("Error rror ror");
                 }
             });                
         });

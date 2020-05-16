@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using MastiTimes.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace MastiTimes
 {
@@ -26,11 +28,27 @@ namespace MastiTimes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddControllersWithViews();
 
             services.AddDbContext<MastiTimesContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MastiTimesContext")));        
-           
+                    options.UseSqlServer(Configuration.GetConnectionString("MastiTimesContext")));
+
+            // Add the following to start using a session.
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-2.2
+            services.AddSession(sessOptions => {
+                sessOptions.IdleTimeout = TimeSpan.FromSeconds(100000); // short time for testing. 
+                //TimeSpan.FromMinutes(20) // default 20 minutes.
+                sessOptions.Cookie.HttpOnly = true;
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +64,7 @@ namespace MastiTimes
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

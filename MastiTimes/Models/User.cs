@@ -38,7 +38,7 @@ namespace MastiTimes.Models
         #endregion
 
         #region Database String
-        internal const string db_ID = "ID";
+        internal const string db_ID = "UserID";
         internal const string db_FirstName = "FirstName";
         internal const string db_LastName = "LastName";
         internal const string db_EmailAddress = "EmailAddress";
@@ -66,6 +66,8 @@ namespace MastiTimes.Models
             get { return _EmailAddress; }
             set { _EmailAddress = value; }
         }
+
+        [Required]
         public string UserName
         {
             get { return _UserName; }
@@ -130,9 +132,12 @@ namespace MastiTimes.Models
         public override void Fill(MySql.Data.MySqlClient.MySqlDataReader dr)
         {
             _ID = dr.GetInt32(db_ID);
-            _FirstName = dr.GetString(db_FirstName);
-            _LastName = dr.GetString(db_LastName);
-            _EmailAddress = dr.GetString(db_EmailAddress);
+            if (!dr.IsDBNull(1))
+                _FirstName = dr.GetString(db_FirstName);
+            if (!dr.IsDBNull(2))
+                _LastName = dr.GetString(db_LastName);
+            if (!dr.IsDBNull(3))
+                _EmailAddress = dr.GetString(db_EmailAddress);
             _UserName = dr.GetString(db_UserName);
             _Password = dr.GetString(db_Password);
             // DateTime DateCreated = dr.GetDateTime(db_DateCreated);

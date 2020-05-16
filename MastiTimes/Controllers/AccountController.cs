@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using MastiTimes.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using ValidateAntiForgeryTokenAttribute = Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute;
 
 namespace MastiTimes.Controllers
 {
@@ -16,15 +20,7 @@ namespace MastiTimes.Controllers
         }
 
 
-        /// <summary>
-        /// Code By: Elvis
-        /// Date Created: 03/09/2019
-        /// Reference: Prof. PeerVal Project, GitHub
-        /// Taken code and modified return view and view data
-        /// Modified on: 03/16/2019
-        /// --Added view data as URI for the files directory
-        /// User can access their directory from the dashboard
-        /// </summary>
+    
         public ActionResult Login(string returnUrl)
         {
             var s = TempData["UserAddSuccess"];
@@ -36,19 +32,9 @@ namespace MastiTimes.Controllers
             else if (e != null)
                 ViewData["UserAddError"] = e;
 
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
-        /// <summary>
-        /// Created on: 03/07/2019
-        /// Created By: Elvis
-        /// Attempts to login the user with the provided username and password
-        /// Modified On: 03/18/2019
-        /// --Return User directory link to the dashboard page
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="passWord"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(String userName, String passWord)
@@ -65,6 +51,48 @@ namespace MastiTimes.Controllers
             ViewBag.User = userName;
             return RedirectToAction("Index", "Home");
 
+        }
+
+        // GET: /Account/AddUser
+        [AllowAnonymous]
+        public ActionResult Register(string returnUrl)
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public ActionResult Register(User NewUser)
+        {
+            int check = DAL.CheckUserExists(NewUser.UserName);
+            if (check > 0)
+            {
+                ViewBag.Error = " Username not Unique! Please enter a new username.";
+                return View(); //Redirects to add user page
+
+            }
+            else
+            {
+                try
+                {
+                    int UserAdd = DAL.AddUser(NewUser);
+                    if (UserAdd < 1)
+                    {
+                        TempData["UserAddError"] = "Sorry, unexpected Database Error. Please try again later.";
+                    }
+                    else
+                    {
+                        TempData["UserAddSuccess"] = "Registration successful!";
+                    }
+                }
+                catch
+                {
+                    TempData["UserAddError"] = "Sorry, unexpected Database Error. Please try again later.";
+                }
+            }
+            return RedirectToAction("Login"); //Directs to Login page after success
         }
     }
 }
