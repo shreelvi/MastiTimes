@@ -45,11 +45,11 @@ namespace MastiTimes.Controllers
                 CurrentUser = loggedIn; //Sets the session for user from base controller
                 HttpContext.Session.SetString("username", loggedIn.UserName);
                 HttpContext.Session.SetInt32("UserID", loggedIn.ID); //Sets userid in the session
-                
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.Error = "Invalid Username and/or Password";
             ViewBag.User = userName;
-            return RedirectToAction("Index", "Home");
+            return View();
 
         }
 
