@@ -22,9 +22,43 @@ for details on configuring this project to bundle and minify static web assets. 
     font-weight: 700;
 }
 
-.navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: darkseagreen;
+/* Bookitnow.pk nav bar buttons style */
+.button20 {
+    color: #666;
+    float: left;
+    margin-left: 10px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    position: relative;
+    font-weight: 600;
+    border: 2px solid #d2d2d2;
+    overflow: hidden;
 }
+
+.sim-button {
+    line-height: 28px;
+    height: 32px;
+    text-align: center;
+    margin-right: auto;
+    width: auto;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    
+}
+
+.sim-button:hover{
+    background-color: green;
+    color:white;
+}
+/* Bookitnow.pk nav bar buttons style */
+
+/*.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: darkseagreen;
+}*/
 
 a.navbar-brand {
   white-space: normal;
