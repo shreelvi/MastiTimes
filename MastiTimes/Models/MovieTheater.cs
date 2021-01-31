@@ -189,9 +189,9 @@ namespace MastiTimes.Models
         public override void Fill(MySqlDataReader dr)
         {
             if (!dr.IsDBNull(0))
-                _MovieID = dr.GetInt32(db_MovieID);
-            if (!dr.IsDBNull(1))
                 _ID = dr.GetInt32(db_ID);
+            if (!dr.IsDBNull(1))
+                _MovieID = dr.GetInt32(db_MovieID);
             if (!dr.IsDBNull(2))
                 _TheaterID = dr.GetInt32(db_TheaterID);
             if (!dr.IsDBNull(3))

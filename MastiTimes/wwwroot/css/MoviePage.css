@@ -134,24 +134,9 @@
     float: left;
 }
 
-.avatars {
-    margin-top: 23px;
-    img
-
-{
-    cursor: pointer;
+.show-time {
+    margin-top: 10px;
 }
-
-img:hover {
-    opacity: 0.6;
-}
-
-a:hover {
-    text-decoration: none;
-}
-
-
-
 /*//star rating stuff via: https://codepen.io/jamesbarnett/pen/vlpkh/*/
 
 fieldset, label {

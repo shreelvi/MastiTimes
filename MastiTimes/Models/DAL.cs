@@ -228,6 +228,29 @@ namespace MastiTimes.Models
             return retObj;
         }
 
+        internal static List<MovieTheater> GetTimesByMovie(int? id)
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie_showtimes");
+            List<MovieTheater> retObj = new List<MovieTheater>();
+            try
+            {
+                comm.Parameters.AddWithValue("@" + MovieTheater.db_MovieID, id);
+                MySqlDataReader dr = GetDataReader(comm);
+
+                while (dr.Read())
+                {
+                    retObj.Add(new MovieTheater(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
         internal static int DeleteMovieTheater(int movtheaterID)
         {
             if (movtheaterID == 0) return -1;

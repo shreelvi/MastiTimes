@@ -3,6 +3,19 @@
 @{ ViewData["Title"] = "GetSelectedMovie"; }
 
 <link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
+
+<div class="show-time">
+    <h3 style="text-align:center;">Movie Playing at:</h3>
+    <div class="time" style="margin-bottom: 10px; margin-left: 15px; text-align: center;">
+        @foreach (var time in ViewBag.MovieTimes)
+        {
+            <strong>@time.Theater.Name - </strong>
+            <button type="button" class="btn-success" disabled style="margin-right:15px">@time.ShowTime.ToString("hh:mm tt")</button>                           
+        }
+    </div>
+</div>
+
+
 <div class="movie-card" style="    margin-top: 28px;">
     <div class="movie-container">
         <div class="a">
@@ -24,7 +37,7 @@
                 @foreach (var genre in Model.Genre)
                 {
                     <span class="tag">@genre</span>
-                }
+                }               
             </div> <!-- end column1 -->
 
             <div class="column2">
@@ -52,10 +65,8 @@
                     <p><strong>Language:</strong> @Model.Language</p>
                 </div>
 
-
             </div> <!-- end column2 -->
         </div> <!-- end description -->
-
     </div>
 </div>
 

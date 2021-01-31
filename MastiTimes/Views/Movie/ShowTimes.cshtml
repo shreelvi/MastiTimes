@@ -57,13 +57,13 @@
                 {
                     <div class="col-md-3">
                         <div class="well text-center">
-                            <a href='@Url.Action("GetSelectedMovie", "Home",
-                        new { id = @movie.ID })'>
+                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                        new { title = @movie.Title, movieId = movie.ID })'>
                                 <img src="@movie.PosterUrl"
                                      class="img-responsive" style="height:100px; width:100px;">
                             </a>
                             <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
-                            <button type="button" class="btn btn-success">@(movie.Showtime.ToString("hh:mm tt"))</button>
+                            <button type="button" class="btn-success" disabled>@(movie.Showtime.ToString("hh:mm tt"))</button>
                             @*<a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>*@
                         </div>
                     </div>

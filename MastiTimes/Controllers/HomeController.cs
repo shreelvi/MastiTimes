@@ -99,13 +99,18 @@ namespace MastiTimes.Controllers
         {
             RootMovies mov = new RootMovies();
             Search result = mov.getSelectedMovie(id);
+
             return View(result);
         }
 
-        public IActionResult GetSelectedMovieByTitle(string title)
+        public IActionResult GetSelectedMovieByTitle(string title, int movieId)
         {
             RootMovies mov = new RootMovies();
             Search result = mov.getSelectedMovieByTitle(title);
+
+            var showtimes = DAL.GetTimesByMovie(movieId);
+            ViewBag.MovieTimes = showtimes;
+
             return View(result);
         }
 
