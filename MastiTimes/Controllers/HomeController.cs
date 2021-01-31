@@ -100,7 +100,14 @@ namespace MastiTimes.Controllers
             RootMovies mov = new RootMovies();
             Search result = mov.getSelectedMovie(id);
             return View(result);
-        }       
+        }
+
+        public IActionResult GetSelectedMovieByTitle(string title)
+        {
+            RootMovies mov = new RootMovies();
+            Search result = mov.getSelectedMovieByTitle(title);
+            return View(result);
+        }
 
         public IActionResult InsertMovies()
         {

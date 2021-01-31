@@ -163,7 +163,10 @@ $(window).load(function () {
                         <div class="carousel-item col-md-4">
                             <img class="img-fluid mx-auto d-bloc" src="@movie.Movie.PosterUrl" alt="@movie.Movie.Title" style="height: 255px;">
                             <h4 style="color:blue">@movie.Theater.Name</h4>
-                            <button type="button" class="btn btn-success">@movie.ShowTime.ToString("hh:mm tt")</button>
+                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                                    new { title = @movie.Movie.Title })' target="_blank">
+                                <button type="button" class="btn btn-success">@movie.ShowTime.ToString("hh:mm tt")</button>
+                            </a>    
                         </div>
                     }
                     act = false;

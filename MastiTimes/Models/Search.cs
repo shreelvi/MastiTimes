@@ -21,6 +21,11 @@ namespace MastiTimes.Models
         public string ImdbVotes { get; set; }
         public string Rated { get; set; }
         public string Plot { get; set; }
-        public string Genre { get; set; }
+        public List<string> Genre { get; set; }
+        public string Actors { get; set; }
+        public string Directors { get; set; }
+        public string Country { get; set; }
+        public string Language { get; set; }
+        public string Duration { get; set; }
     }
 }

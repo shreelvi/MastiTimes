@@ -1,8 +1,6 @@
 ﻿@model MastiTimes.Models.Search
 
-@{
-    ViewData["Title"] = "GetSelectedMovie";
-}
+@{ ViewData["Title"] = "GetSelectedMovie"; }
 
 <link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
 <div class="movie-card" style="    margin-top: 28px;">
@@ -14,7 +12,7 @@
 
         <a href="#"><img src="@Model.Poster" alt="movie-cover" class="movie-cover" /></a>
         <div class="movie-details">
-            <div class="title1">@Model.Title <span class="title">@Model.Rated</span></div>
+            <div class="title1">&nbsp;&nbsp;&nbsp;&nbsp;@Model.Title <span class="title">@Model.Rated</span></div>
             @*<div class="title2">The Battle of the Five Armies</div>*@
             <span class="likes"><b>IMDB:</b> @Model.ImdbRating</span>&nbsp;
             <span><b>Votes:</b>@Model.ImdbVotes</span><br />
@@ -53,6 +51,8 @@
                 <div class="language">
                     <p><strong>Language:</strong> @Model.Language</p>
                 </div>
+
+
             </div> <!-- end column2 -->
         </div> <!-- end description -->
 

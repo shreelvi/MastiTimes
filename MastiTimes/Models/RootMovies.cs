@@ -169,15 +169,52 @@ namespace MastiTimes.Models
                 movie.Poster = jsonContent.Poster;
                 movie.Released = jsonContent.Released;
                 movie.Rated = jsonContent.Rated;
-                movie.Genre = jsonContent.Genre;
+                string Gen = jsonContent.Genre;
+                movie.Genre = Gen.Split(',').ToList<string>();
                 movie.Plot = jsonContent.Plot;
                 movie.ImdbVotes = jsonContent.imdbVotes;
-                movie.ImdbRating = jsonContent.imdbRating;     
-                
+                movie.ImdbRating = jsonContent.imdbRating;
+                movie.Actors = jsonContent.Actors;
+                movie.Directors = jsonContent.Director;
+                movie.Country = jsonContent.Country;
+                movie.Language = jsonContent.Language;
+                movie.Duration = jsonContent.Runtime;
             }
             return movie;
         }
 
+        public Search getSelectedMovieByTitle(string title)
+        {
+            string url = "http://www.omdbapi.com/?apikey=de835211&t=" + title;
+            var client = new WebClient();
+            var content = client.DownloadString(url);
+            dynamic jsonContent = JsonConvert.DeserializeObject(content);
+
+            Search movie = new Search();
+
+            if (((JObject)jsonContent).Count == 0)
+            {
+                return movie;//return empty 
+            }
+            else
+            {
+                movie.Title = jsonContent.Title; // Retrieve info from json obj
+                movie.Poster = jsonContent.Poster;
+                movie.Released = jsonContent.Released;
+                movie.Rated = jsonContent.Rated;
+                string Gen = jsonContent.Genre;
+                movie.Genre = Gen.Split(',').ToList<string>();
+                movie.Plot = jsonContent.Plot;
+                movie.ImdbVotes = jsonContent.imdbVotes;
+                movie.ImdbRating = jsonContent.imdbRating;
+                movie.Actors = jsonContent.Actors;
+                movie.Directors = jsonContent.Director;
+                movie.Country = jsonContent.Country;
+                movie.Language = jsonContent.Language;
+                movie.Duration = jsonContent.Runtime;
+            }
+            return movie;
+        }
 
         public string getImdbID(int id)
         {
