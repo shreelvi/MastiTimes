@@ -1,0 +1,140 @@
+﻿@model List<MastiTimes.Models.Articles>
+
+@{
+    ViewData["Title"] = "News";
+}
+
+<style>
+    .widget-box-popular {
+        border: 1px solid #d3d3d3;
+        margin: 10px 0;
+        display: inline-block;
+        width: 300px;
+        float: right;
+    }
+
+    .tdiv {
+        overflow: hidden;
+        position: relative;
+        display: block;
+        min-height: 70px;
+        background-color: #000;
+        vertical-align: central;
+        margin: 0 auto;
+        width: 110px;
+    }
+</style>
+
+<div class="container" style="width:800px; float:left">
+    <h2>Latest Movie News</h2>
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#All">All News</a></li>
+        <li><a data-toggle="tab" href="#menu1">Nepali</a></li>
+        <li><a data-toggle="tab" href="#menu2">Bollywood</a></li>
+        <li><a data-toggle="tab" href="#menu3">Hollywood</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="All" class="tab-pane fade in active">
+            <h4><strong>News from this month</strong></h4>
+            <ul class="list-unstyled" style="margin-top:32px;">
+                @foreach (var article in Model)
+                {
+                    <li class="media">
+                        <img class="mr" src="@article.urlToImage" alt="Generic placeholder image">
+                        <div class="media-body" style="margin-top:-20px">
+                            <h2 class="news-h2">
+                                <a href="@article.url" target="_blank">
+                                    @article.title
+                                </a>
+                            </h2>
+                            <p class="info-text">
+                                <span class="grey-text">@article.publishedAt</span>
+                            </p>
+                            <p>@article.description</p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h4><strong>News from this month</strong></h4>
+            <ul class="list-unstyled" style="margin-top:32px;">
+                @foreach (var article in Model)
+                {
+                    <li class="media">
+                        <img class="mr" src="@article.urlToImage" alt="Generic placeholder image">
+                        <div class="media-body" style="margin-top:-20px">
+                            <h2 class="news-h2">
+                                <a href="@article.url" target="_blank">
+                                    @article.title
+                                </a>
+                            </h2>
+                            <p class="info-text">
+                                <span class="grey-text">@article.publishedAt</span>
+                            </p>
+                            <p>@article.description</p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div id="menu3" class="tab-pane fade">
+            <h4><strong>News from this month</strong></h4>
+            <ul class="list-unstyled" style="margin-top:32px;">
+                @foreach (var article in ViewBag.hollywood)
+                {
+                    
+                    <li class="media">
+                        <img class="mr" src="@article.urlToImage" alt="Generic placeholder image">
+                        <div class="media-body" style="margin-top:-20px">
+                            <h2 class="news-h2">
+                                <a href="@article.url" target="_blank">
+                                    @article.title
+                                </a>
+                            </h2>
+                            <p class="info-text">
+                                <span class="grey-text">@article.publishedAt</span>
+                            </p>
+                            <p>@article.description</p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="widget-box-popular">
+    <h4>&nbsp;&nbsp; New Movie Trailers</h4>
+    <table class="table">
+        <tbody>
+            @foreach (var trailer in ViewBag.trailers)
+            {
+                string url;
+                url = "https://www.youtube.com/watch?v=" + trailer.key;
+                <tr>
+                    <td class="movie">
+                        <a href="@url" target="_blank">
+                            @trailer.title
+                        </a><br />
+                     </td>
+                    <td class="movie-thumbnail">
+                        <div class="tdiv">
+                            <a href="@url" target="_blank">
+                                <img src="@trailer.backdrop_path" style="height:80px; width:100px" />
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

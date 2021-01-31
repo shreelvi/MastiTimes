@@ -1,0 +1,105 @@
+﻿DROP procedure IF EXISTS `insert_movie`;
+
+DELIMITER $$
+USE `test`$$
+CREATE PROCEDURE `insert_movie` (
+OUT id int,
+IN title varchar(256),
+IN released datetime
+)
+BEGIN
+insert into movie (title, released) values (title ,released);
+SET id = LAST_INSERT_ID();	
+END$$
+
+Alter table movie 
+ADD title varchar(256) NOT NULL;
+
+call insert_movie(@id, 'Test test', '2020-04-20');
+
+
+DELIMITER $$
+CREATE PROCEDURE `get_movie_id` (
+IN `id` int
+)  
+BEGIN
+	 SELECT * FROM movie
+	 WHERE movie.id = id;
+END$$
+
+
+DELIMITER $$
+CREATE PROCEDURE `get_movies` (
+)  
+BEGIN
+	 SELECT * FROM movie;
+END$$
+
+CREATE TABLE `movie_theater` (
+  `id` int primary key auto_increment,
+  `movie_id` INT,
+  `theater_id` int,
+  `show_time` datetime NOT NULL,
+  FOREIGN KEY (movie_id) REFERENCES movie(id),
+  FOREIGN KEY (theater_id) REFERENCES theater(id)
+)
+
+DELIMITER $$
+CREATE PROCEDURE `insert_movie_theater` (
+OUT id int,
+IN movie_id int,
+IN theater_id int,
+IN show_time datetime
+)
+BEGIN
+insert into movie_theater (movie_id, theater_id, show_time) values (movie_id ,theater_id, show_time);
+SET id = LAST_INSERT_ID();	
+
+END$$
+
+
+CREATE PROCEDURE `GetMoviesTheater` ()
+BEGIN
+SELECT movie.title, theater.name, theater.city 
+FROM movie
+inner join movie_theater
+ON movie.id = movie_theater.movie_id
+join theater
+ON movie_theater.theater_id = theater.id;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_movie_times`()
+BEGIN
+SELECT theater.theater_name,  theater.city, theater.address, theater.phone_number, movie.movie_title, movie.poster_url, movie.rated, movie.rating, 
+		movie.duration, movie.genre, movie_theater.show_time, movie_theater.now_playing 
+FROM movie
+inner join movie_theater
+ON movie.movie_id = movie_theater.movie_id
+join theater
+ON movie_theater.theater_id = theater.theater_id;
+END
+
+
+
+CREATE PROCEDURE `get_theater` (In ID int)
+BEGIN
+	SELECT * FROM theater
+    WHERE theater.theater_id = ID;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_showtimes_movietheater`(IN movie INT, IN theater int)
+BEGIN
+	SELECT movie.movie_title, movie_theater.show_time
+    FROM movie_theater
+    Inner join movie ON movie_theater.movie_id = movie.movie_id
+    Inner join theater ON movie_theater.theater_id = theater.theater_id
+    WHERE movie_theater.movie_id = movie && movie_theater.theater_id = theater;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_showtimes_movietheater`(IN movie INT, IN theater int)
+BEGIN
+	SELECT  movie_theater.show_time
+    FROM movie_theater
+    WHERE movie_theater.movie_id = movie && movie_theater.theater_id = theater && movie_theater.now_playing = true;
+END

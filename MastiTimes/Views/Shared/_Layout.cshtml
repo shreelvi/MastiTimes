@@ -1,0 +1,151 @@
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9JXF18VMHP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-9JXF18VMHP');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - KTM FLame</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <style>
+        .links {
+            -moz-border-radius-bottomleft: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            -o-border-bottom-left-radius: 10px;
+            -ms-border-bottom-left-radius: 10px;
+            -khtml-border-bottom-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            -o-border-bottom-right-radius: 10px;
+            -ms-border-bottom-right-radius: 10px;
+            -khtml-border-bottom-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            float: right;
+            font-size: 14px;
+            display: inline;
+            background: lightskyblue;
+            margin: 0 6px 0 0;
+            margin-top: -24px;
+            padding: 9px 12px 9px 12px;
+            position: relative;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/Flame-Logo.jpg" style="margin-top:-27px; height:67px" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                <div class="sim-button button20"><span>Home</span></div> 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="News">
+                                <div class="sim-button button20"><span>News</span></div>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black">
+                                <div class="sim-button button20"><span>Theater</span></div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Movie" asp-action="ShowTimes">Show times</a>
+                                <a class="dropdown-item disabled" href="#">My theaters</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item disabled" href="#">Locate nearby theaters</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                @if (Context.Session.Get("CurrentUser") != null)
+                {
+                    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                        <ul class="nav navbar-nav pull-right">
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle text-capitalize" data-toggle="dropdown" style="color:black">Welcome, @Context.Session.GetString("username")</a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a asp-action="Profile" asp-controller="Account" class="dropdown-item">
+                                        <i class="fas fa-users-cog "></i><em>My Profile</em>
+                                    </a>
+                                    <a class="dropdown-item" asp-controller="account" asp-action="UserResetPassword">Reset Password</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a asp-controller="Account" class="dropdown-item" asp-action="Logout">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="links">
+                        <a asp-area="" asp-controller="Account" asp-action="Login" style="color:white">Login</a>
+                        or
+                        <a asp-area="" asp-controller="Account" asp-action="Register" style="color:white">Sign up</a>
+                    </div>
+                }
+            </div>
+        </nav>
+        <div id="secondary" style="background: #d2c5b3 url(http://cinematreasures.org/images/app/subnav.gif) center bottom;
+            height: 48px;
+            margin-top: -10px;
+            padding: 12px;
+            text-align: left;">
+            <span style="display: block; margin: 0 auto 0 auto; text-align: left; width: 960px;">
+                <div id="slogan" style="color: rgba(0, 0, 0, 0.4); float: left; font-size: 18px; font-weight: bold; margin: -1px 18px 0 20px;width: 500px;">Your guide to movie times, events and activities</div>
+                <form asp-controller="Home" asp-action="SearchByText" style="float: right; margin: -3px 18px 0 20px;">
+                    <p>
+                        <input type="text" name="searchText" placeholder="Search Movies...">
+                        <input type="submit" value="Search" />
+                    </p>
+                </form>
+            </span>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - MastiTimes  <a asp-area="" asp-controller="Home" asp-action="Privacy"></a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

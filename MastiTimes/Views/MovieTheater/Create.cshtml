@@ -1,0 +1,49 @@
+﻿@model MastiTimes.Models.MovieTheater
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    ViewData["Title"] = "MovieTheater Create";
+}
+
+<h1>Create</h1>
+
+<h4>MovieTheater</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Movie</label>
+                <select asp-for="MovieID" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Movies, "ID", "Title"))"></select>
+                <span asp-validation-for="Movie.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Theater</label>
+                <select asp-for="TheaterID" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Theaters, "ID", "Name"))"></select>
+                <span asp-validation-for="Theater.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShowTime" class="control-label"></label>
+                <input asp-for="ShowTime" class="form-control" />
+                <span asp-validation-for="ShowTime" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="NowPlaying" /> @Html.DisplayNameFor(model => model.NowPlaying)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

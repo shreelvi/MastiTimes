@@ -1,0 +1,80 @@
+﻿
+@model List<MastiTimes.Models.Theater>
+@{
+    ViewData["Title"] = "Show Times";
+}
+@{
+    var temp = 0;
+    var count = 1;
+    var movieTemp = 0;
+    int[] showCount = new int[100];
+    var demo = "";
+}
+
+<style>
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+
+    .card-block {
+        margin-left: 10px;
+    }
+
+    .well {
+        width: fit-content;
+    }
+</style>
+
+
+<div class="card">
+    <h3 style="margin-left: 10px;"><strong>Kathmandu, Nepal Movie Times</strong></h3>
+    @{ int i = 0;}
+    @foreach (var theater in Model)
+    {
+        i++;
+        <div class="card-block">
+            <h3 class="card-title"><a href="#">@theater.Name</a></h3>
+            <p class="card-text">
+                <a href="#">Read Reviews </a> |
+                <a href="#">Rate Theater</a><br />
+                @theater.Address<br />
+                <a href="#">@theater.PhoneNumber</a>|
+                <a href="#">View map</a>
+            </p>
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#@i" style="width:150px;">
+                View Showtimes
+            </button>
+        </div>
+
+        <div class="movie-container" style=" margin-top: 10px;">
+            <div id="@i" class="collapse">
+                @{int j = 0;}
+                @foreach (var movie in theater.NowPlayingMovies)
+                {
+                    <div class="col-md-3">
+                        <div class="well text-center">
+                            <a href='@Url.Action("GetSelectedMovie", "Home",
+                        new { id = @movie.ID })'>
+                                <img src="@movie.PosterUrl"
+                                     class="img-responsive" style="height:100px; width:100px;">
+                            </a>
+                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                            <button type="button" class="btn btn-success">@(movie.Showtime.ToString("hh:mm tt"))</button>
+                            @*<a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>*@
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    }
+</div>
+
+
+
+

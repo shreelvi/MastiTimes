@@ -1,0 +1,54 @@
+﻿@model MastiTimes.Models.Search
+
+@{
+    ViewData["Title"] = "GetSelectedMovie";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
+<div class="movie-card" style="    margin-top: 28px;">
+    <div class="movie-container">
+        <div class="a">
+            <div id="imgBanner" style="background-image:url('@Model.Poster')" class="cover-image"></div>
+            <div class="overlay"></div>
+        </div>
+
+        <a href="#"><img src="@Model.Poster" alt="movie-cover" class="movie-cover" /></a>
+        <div class="movie-details">
+            <div class="title1">@Model.Title <span class="title">@Model.Rated</span></div>
+            @*<div class="title2">The Battle of the Five Armies</div>*@
+            <span class="likes"><b>IMDB:</b> @Model.ImdbRating</span>&nbsp;
+            <span><b>Votes:</b>@Model.ImdbVotes</span><br />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Released</span>
+        </div> <!-- end details -->
+
+        <div class="description">
+            <div class="column1">
+                <span class="tag">action</span>
+                <span class="tag">fantasy</span>
+                <span class="tag">adventure</span>
+            </div> <!-- end column1 -->
+
+            <div class="column2">
+                <p style="color: black">
+                    @Model.Plot
+                </p>
+
+                <div class="avatars">
+                    <a href="#" data-tooltip="Person 1" data-placement="top">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar1.png" alt="avatar1" />
+                    </a>
+
+                    <a href="#" data-tooltip="Person 2" data-placement="top">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar2.png" alt="avatar2" />
+                    </a>
+
+                    <a href="#" data-tooltip="Person 3" data-placement="top">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_avatar3.png" alt="avatar3" />
+                    </a>
+                </div> <!-- end avatars -->
+            </div> <!-- end column2 -->
+        </div> <!-- end description -->
+
+    </div>
+</div>
+
