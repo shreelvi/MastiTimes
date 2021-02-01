@@ -6,6 +6,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
 
 <style>
     .fa-heart-o {
@@ -199,4 +200,28 @@
             </p>
         </div>
     </form>
+
+    <form asp-action="test" class="new_comment" id="new_comment" method="post">
+        <div style="margin:0; padding:0; display:inline">
+
+        </div>
+        <div class="login_prompt">You must login before making a comment.</div>
+        <h2>New Comment</h2>
+        <p>
+            <textarea cols="40" id="comment_body" name="comment" rows="5" style="overflow:hidden; width:630px;">  
+            </textarea>
+        </p>
+
+        <div class="tips">
+            <ul>
+                <li>Contribute something to the conversation</li>
+                <li>No personal attacks</li>
+                <li>Stay on-topic</li>
+            </ul>
+            <p>
+                <input id="comment_submit" name="commit" type="submit" value="Add comment" />
+            </p>
+        </div>
+    </form>
+
 </div>

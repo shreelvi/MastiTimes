@@ -24,11 +24,11 @@ namespace MastiTimes.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             
             News news = new News();
-            var bollywood = news.getBollywoodNews();
+            var bollywood = await news.getBollywoodNews();
 
             //filter top 5 articles and pass them to viewbag
             List<Articles> TopFive = new List<Articles>();
@@ -44,12 +44,12 @@ namespace MastiTimes.Controllers
             ViewBag.Articles = TopFive;
 
             List<MovieTheater> nowMovies = new List<MovieTheater>();
-            nowMovies = DAL.GetNowShowingMovies();
+            nowMovies = await DAL.GetNowShowingMovies();
 
             ViewBag.NowMovies = nowMovies;
 
             RootMovies mov = new RootMovies();
-            var result = mov.getUpcomingMovies();
+            var result = await mov.getUpcomingMovies();
             return View(result);
         }
 
@@ -64,9 +64,16 @@ namespace MastiTimes.Controllers
             return View(result);
         }
 
-        public IActionResult Test(string s)
+        [HttpGet]
+        public IActionResult Test()
         {
-            if(s == "null")
+            return View();
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public IActionResult Test(string comment)
+        {
+            if(comment == "null")
             {
                 ViewBag.LoginError = "Please login to view the page.";
             }          
@@ -103,15 +110,30 @@ namespace MastiTimes.Controllers
             return View(result);
         }
 
-        public IActionResult GetSelectedMovieByTitle(string title, int movieId)
+        public IActionResult GetSelectedMovieByTitle(string title, int movieId, string country)
         {
-            RootMovies mov = new RootMovies();
-            Search result = mov.getSelectedMovieByTitle(title);
+            if(country == "Nepal")
+            {
+                Movie movie = new Movie();
+                Search nepResult = movie.getNepalMovie(movieId);
 
-            var showtimes = DAL.GetTimesByMovie(movieId);
-            ViewBag.MovieTimes = showtimes;
+                var showtimes = DAL.GetTimesByMovie(movieId);
+                ViewBag.MovieTimes = showtimes;
 
-            return View(result);
+                return View(showtimes);
+
+            }
+            else
+            {
+                RootMovies mov = new RootMovies();
+                Search result = mov.getSelectedMovieByTitle(title);
+
+                var showtimes = DAL.GetTimesByMovie(movieId);
+                ViewBag.MovieTimes = showtimes;
+
+                return View(result);
+            }
+            
         }
 
         public IActionResult InsertMovies()

@@ -47,6 +47,7 @@ namespace MastiTimes.Models
         public string Trailer { get; set; }
         public string Duration { get; set; }
         public string Genre { get; set; }
+        public string Plot { get; set; }
 
         [NotMapped]
         public List<Theater> theaters { get; set; }
@@ -67,7 +68,7 @@ namespace MastiTimes.Models
         internal const string db_Trailer = "trailer";
         internal const string db_Duration = "duration";
         internal const string db_Genre = "genre";
-
+        internal const string db_Plot = "plot";
 
         #endregion
 
@@ -100,6 +101,8 @@ namespace MastiTimes.Models
                 Duration = dr.GetString(db_Duration);
             if (!dr.IsDBNull(13))
                 Genre = dr.GetString(db_Genre);
+            if (!dr.IsDBNull(14))
+                Plot = dr.GetString(db_Plot);
         }
         #endregion
 
@@ -161,6 +164,7 @@ namespace MastiTimes.Models
                 movie.Likes = 11;
                 movie.Duration = "test";
                 movie.Trailer = "test";
+                movie.Plot = "plot";
             }
             int i = DAL.AddMovie(movie);
         }
@@ -174,6 +178,36 @@ namespace MastiTimes.Models
 
             return jsonContent.imdb_id;
 
+        }
+
+        public Search getNepalMovie(int id)
+        {
+            var mov = DAL.GetMovieByID(id);
+
+            Search movie = new Search();
+
+            if (mov == null)
+            {
+                return movie;//return empty 
+            }
+            else
+            {
+                movie.Title = mov.Title; // Retrieve info from json obj
+                movie.Poster = mov.PosterUrl;
+                movie.Released = mov.DateReleased.ToString();
+                movie.Rated = mov.Rated;
+                string Gen = mov.Genre;
+                movie.Genre = Gen.Split(',').ToList<string>();
+                movie.Plot = mov.Plot;
+                movie.ImdbVotes = mov.Votes;
+                movie.ImdbRating = mov.Rating;
+                movie.Actors = mov.Actors;
+                movie.Directors = "N/A";
+                movie.Country = mov.Country;
+                movie.Language = mov.Language;
+                movie.Duration = mov.Duration;
+            }
+            return movie;
         }
     }
 }

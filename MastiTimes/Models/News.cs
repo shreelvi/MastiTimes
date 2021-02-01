@@ -14,12 +14,12 @@ namespace MastiTimes.Models
     {
         public List<Articles> articles { get; set; }
 
-        public List<Articles> getBollywoodNews()
+        public async Task<List<Articles>> getBollywoodNews()
         {
             string url = "http://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey=f2fb14b93057475b84c589edf3909959";
             //synchronous client.
             var client = new WebClient();
-            var content = client.DownloadString(url);
+            var content =  client.DownloadString(url);
             dynamic jsonContent = JsonConvert.DeserializeObject(content);
 
             List<Articles> articles = new List<Articles>();

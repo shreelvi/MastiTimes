@@ -6,11 +6,15 @@
 
 <div class="show-time">
     <h3 style="text-align:center;">Movie Playing at:</h3>
-    <div class="time" style="margin-bottom: 10px; margin-left: 15px; text-align: center;">
+    <div class="time" style="margin-bottom: 20px; margin-left: 15px; text-align: center;">
+        @{
+            List<string> theater = new List<string>();
+        }
+
         @foreach (var time in ViewBag.MovieTimes)
         {
-            <strong>@time.Theater.Name - </strong>
-            <button type="button" class="btn-success" disabled style="margin-right:15px">@time.ShowTime.ToString("hh:mm tt")</button>                           
+        <strong>@time.Theater.Name - </strong>
+        <button type="button" class="btn-success" disabled style="margin-right:15px; margin-bottom: 20px;">@time.ShowTime.ToString("hh:mm tt")</button>
         }
     </div>
 </div>
@@ -69,4 +73,5 @@
         </div> <!-- end description -->
     </div>
 </div>
+
 

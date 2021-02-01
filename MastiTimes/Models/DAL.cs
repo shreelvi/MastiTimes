@@ -334,6 +334,7 @@ namespace MastiTimes.Models
                 comm.Parameters.AddWithValue("@" + Movie.db_Trailer, obj.Trailer);
                 comm.Parameters.AddWithValue("@" + Movie.db_Duration, obj.Duration);
                 comm.Parameters.AddWithValue("@" + Movie.db_Genre, obj.Genre);
+                comm.Parameters.AddWithValue("@" + Movie.db_Plot, obj.Plot);
                 return AddObject(comm, "@" + Movie.db_ID);
             }
             catch (Exception ex)
@@ -363,6 +364,7 @@ namespace MastiTimes.Models
                 comm.Parameters.AddWithValue("@" + Movie.db_Likes, obj.Likes);
                 comm.Parameters.AddWithValue("@" + Movie.db_Duration, obj.Duration);
                 comm.Parameters.AddWithValue("@" + Movie.db_Genre, obj.Genre);
+                comm.Parameters.AddWithValue("@" + Movie.db_Plot, obj.Plot);
                 UpdateObject(comm);
             }
             catch (Exception ex)
@@ -462,14 +464,14 @@ namespace MastiTimes.Models
             return retObj;
         }
 
-        internal static List<MovieTheater> GetNowShowingMovies()
+        internal static async Task<List<MovieTheater>> GetNowShowingMovies()
         {
             MySqlCommand comm = new MySqlCommand("get_now_showing_movies");
             List<MovieTheater> retObj = new List<MovieTheater>();
             try
             {
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
-                MySqlDataReader dr = GetDataReader(comm);
+                MySqlDataReader dr =  GetDataReader(comm);
                 while (dr.Read())
                 {
                     retObj.Add(new MovieTheater(dr));
