@@ -114,7 +114,7 @@
     // It checks to see if the span id #heart has "liked" class, if not it run the else statement and adds the "liked" class, on a 2nd click it see that it has the "liked" class so it replaces the ihherHTML and removes class, on 3rd click it runs the else statement again cause there is no "liked" class(remomved on 2nd click).
     $(document).ready(function () {
         $("#heart").click(function () {
-            
+
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("LikeTheater")',
@@ -127,7 +127,7 @@
                 //contentType: "application/json; charset=utf-8",
                 success: function (response) {
                     //console.log(response)
-                    if (response.message == "No") {
+                    if (response.test == "No") {
                         $("#Error").html('<span>Please Login to like the page!</span>');
                         //alert("Please Login to Like the page!");
                     }
@@ -136,7 +136,7 @@
                             $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
                             $("#heart").removeClass("liked");
                         } else {
-                            $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+                            $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i> &nbsp; @ViewBag.Likes likes');
                             $("#heart").addClass("liked");
                         }
                     }
@@ -145,7 +145,7 @@
                 error: function () {
                     alert("Error rror ror");
                 }
-            });                
+            });
         });
     });
 </script>
@@ -219,7 +219,7 @@
 
 <div style="margin-left: 175px; margin-top: 30px">
     <p id="Error" style="color:red">@ViewBag.LoginError</p>
-    <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i></span>&nbsp; @ViewBag.Likes likes 
+    <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp; @ViewBag.Likes likes </span>
 
     <div id="comments">
         <h2>
