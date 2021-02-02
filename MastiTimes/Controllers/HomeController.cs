@@ -87,12 +87,12 @@ namespace MastiTimes.Controllers
             User LoggedIn = CurrentUser;
             if (LoggedIn.FirstName == "Anony")
             {
-                return Json(new { Message = "No", JsonRequestBehavior.AllowGet });
+                return Json(new { Message = "No", test = 2, JsonRequestBehavior.AllowGet });
             }
             else 
             {
                 int check = DAL.LikeMovie(like);
-                return Json(new { Message = "Yes", JsonRequestBehavior.AllowGet }); 
+                return Json(new { Message = "Yes", test =2, JsonRequestBehavior.AllowGet }); 
             }
         }
 
