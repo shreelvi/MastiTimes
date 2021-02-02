@@ -92,7 +92,9 @@ namespace MastiTimes.Controllers
             else 
             {
                 int check = DAL.LikeMovie(like);
-                return Json(new { Message = "Yes", test =2, JsonRequestBehavior.AllowGet }); 
+                int likes = DAL.GetMovieLikes(movie);
+
+                return Json(new { Message = "Yes", test = likes, JsonRequestBehavior.AllowGet }); 
             }
         }
 
