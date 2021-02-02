@@ -4,7 +4,7 @@
 
 @{ ViewData["Title"] = "GetSelectedMovie"; }
 
-@{ var check = "no"; int l = 0; }
+@{ var check = "no"; string l = @Context.Session.GetString("username"); }
 
 
 <link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
@@ -128,7 +128,7 @@
                 //contentType: "application/json; charset=utf-8",
                 success: function (response) {
                     var i = response.test
-                    console.log(i)
+                    console.log(1)
                     if (response.message == "No") {
                         $("#Error").html('<span>Please Login to like the page!</span>');
                         //alert("Please Login to Like the page!");
@@ -220,6 +220,8 @@
     </div>
 </div>
 
+
+
 <div style="margin-left: 175px; margin-top: 30px">
     <p id="Error" style="color:red">@ViewBag.LoginError</p>
     <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp;</span>
@@ -228,7 +230,7 @@
     <div id="comments">
         <h2>
             Comments
-            <span>(3)</span>
+            <span>(1)</span>
         </h2>
         <div class="comment even">
             <div class="avatar">
@@ -243,59 +245,66 @@
                     </a>
                 </strong>
                 <span>on March 7, 2020 at 11:39am</span>
-                <p>Great video! I'm so glad I watched this.</p>
+                <p>Great movie! I'm so glad I watched this.</p>
             </div>
         </div>
-        <form action="" class="new_comment" id="new_comment" method="post">
-            <div style="margin:0; padding:0; display:inline">
+        
+        @if(l == null)
+        {
+            <form action="" class="new_comment" id="new_comment" method="post">
+                <div style="margin:0; padding:0; display:inline">
 
-            </div>
-            <div class="login_prompt">You must login before making a comment.</div>
-            <h2>New Comment</h2>
-            <p>
-                <textarea cols="40" disabled="disabled" id="comment_body" name="comment[body]" rows="5" style="overflow:hidden; width:630px;">
-               
-            </textarea>
-                <div class="comment-box">
-                    &nbsp;
                 </div>
-
-            </p>
-
-            <div class="tips">
-                <ul>
-                    <li>Contribute something to the conversation</li>
-                    <li>No personal attacks</li>
-                    <li>Stay on-topic</li>
-                </ul>
+                <div class="login_prompt">You must login before making a comment.</div>
+                <h2>New Comment</h2>
                 <p>
-                    <input disabled="disabled" id="comment_submit" name="commit" type="submit" value="Add comment" />
+                    <textarea cols="40" disabled="disabled" id="comment_body" name="comment[body]" rows="5" style="overflow:hidden; width:630px;">
+               
+                    </textarea>
+                    <div class="comment-box">
+                        &nbsp;
+                    </div>
+
                 </p>
-            </div>
-        </form>
 
-        <form asp-action="test" class="new_comment" id="new_comment" method="post">
-            <div style="margin:0; padding:0; display:inline">
+                <div class="tips">
+                    <ul>
+                        <li>Contribute something to the conversation</li>
+                        <li>No personal attacks</li>
+                        <li>Stay on-topic</li>
+                    </ul>
+                    <p>
+                        <input disabled="disabled" id="comment_submit" name="commit" type="submit" value="Add comment" />
+                    </p>
+                </div>
+            </form>
+        }
+        
+        else
+        {
+            <form asp-action="test" class="new_comment" id="new_comment" method="post">
+                <div style="margin:0; padding:0; display:inline">
 
-            </div>
-            <div class="login_prompt">You must login before making a comment.</div>
-            <h2>New Comment</h2>
-            <p>
-                <textarea cols="40" id="comment_body" name="comment" rows="5" style="overflow:hidden; width:630px;">  
-            </textarea>
-            </p>
-
-            <div class="tips">
-                <ul>
-                    <li>Contribute something to the conversation</li>
-                    <li>No personal attacks</li>
-                    <li>Stay on-topic</li>
-                </ul>
+                </div>
+                <h2>New Comment</h2>
                 <p>
-                    <input id="comment_submit" name="commit" type="submit" value="Add comment" />
+                    <textarea cols="40" id="comment_body" name="comment" rows="5" style="overflow:hidden; width:630px;">  
+                    </textarea>
                 </p>
-            </div>
-        </form>
+
+                <div class="tips">
+                    <ul>
+                        <li>Contribute something to the conversation</li>
+                        <li>No personal attacks</li>
+                        <li>Stay on-topic</li>
+                    </ul>
+                    <p>
+                        <input id="comment_submit" name="commit" type="submit" value="Add comment" />
+                    </p>
+                </div>
+            </form>
+        }
+        
 
     </div>
 </div>
