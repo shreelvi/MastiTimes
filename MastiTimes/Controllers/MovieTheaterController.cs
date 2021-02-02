@@ -115,7 +115,6 @@ namespace MastiTimes.Controllers
             }
             return View(movietheater);
 
-            return View();
         }
 
         // POST: MovieTheater/Edit/5
