@@ -24,10 +24,13 @@ namespace MastiTimes.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var watch = Stopwatch.StartNew();
             News news = new News();
-            var bollywood =  news.getBollywoodNews();
+
+            List<Articles> bollywood = await news.getBollyWoodNews();
+            //var bollywood =  news.getBollywoodNews();
 
             //filter top 5 articles and pass them to viewbag
             List<Articles> TopFive = new List<Articles>();
@@ -43,20 +46,26 @@ namespace MastiTimes.Controllers
             ViewBag.Articles = TopFive;
 
             List<MovieTheater> nowMovies = new List<MovieTheater>();
-            nowMovies = DAL.GetNowShowingMovies();
+            nowMovies = await DAL.GetNowShowingMovies();
 
             ViewBag.NowMovies = nowMovies;
 
             RootMovies mov = new RootMovies();
-            var result = mov.getUpcomingMovies();
+            var result = await mov.getUpcomingMovies();
+
+            watch.Stop();
+            ViewBag.watch = watch.ElapsedMilliseconds;
+
             return View(result);
         }
 
-        public IActionResult News()
+        public async Task<IActionResult> News()
         {
             News news = new News();
             RootMovies movies = new RootMovies();
-            var result = news.getBollywoodNews();
+
+            List<Articles> result = await news.getBollyWoodNews();
+
             var hollywood = news.getHollywoodNews();
             ViewBag.hollywood = hollywood;
             ViewBag.trailers = movies.GetNowPlayingTrailers();
@@ -139,6 +148,7 @@ namespace MastiTimes.Controllers
 
                 var showtimes = DAL.GetTimesByMovie(movieId);
                 int likes = DAL.GetMovieLikes(movieId);
+
 
                 ViewBag.Likes = likes;
                 ViewBag.MovieTimes = showtimes;

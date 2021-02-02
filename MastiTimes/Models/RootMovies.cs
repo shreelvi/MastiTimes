@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -23,26 +24,28 @@ namespace MastiTimes.Models
         /// Get now playing movies from the TMDB API DB.
         /// </summary>
         /// <returns></returns>
-        public List<Results> getUpcomingMovies()
+        public async Task<List<Results>> getUpcomingMovies()
         {
             string url = "https://api.themoviedb.org/3/movie/upcoming?api_key=312856db5a65474581b8885d46fc2c75&language=en-US&page=1";
             string poster = "https://image.tmdb.org/t/p/w500";
-            //synchronous client.
-            var client = new WebClient();
-            var content = client.DownloadString(url);
-            dynamic jsonContent = JsonConvert.DeserializeObject(content);
 
-            List<Results> movies = new List<Results>();
-
-            foreach (var obj in jsonContent.results)
+             using (HttpClient client = new HttpClient())
             {
-                Results movie = new Results();
-                movie.title = obj.title;
-                movie.poster_path = poster + obj.poster_path;
-                movie.ID = obj.id;
-                movies.Add(movie);
+                var content = await client.GetStringAsync(url);
+                dynamic jsonContent = JsonConvert.DeserializeObject(content);
+
+                List<Results> movies = new List<Results>();
+
+                foreach (var obj in jsonContent.results)
+                {
+                    Results movie = new Results();
+                    movie.title = obj.title;
+                    movie.poster_path = poster + obj.poster_path;
+                    movie.ID = obj.id;
+                    movies.Add(movie);
+                }
+                return movies;
             }
-            return movies;
         }
 
 
