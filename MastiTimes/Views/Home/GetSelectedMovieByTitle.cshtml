@@ -4,7 +4,8 @@
 
 @{ ViewData["Title"] = "GetSelectedMovie"; }
 
-@{ var check = "no";}
+@{ var check = "no"; int l = 0; }
+
 
 <link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -126,8 +127,9 @@
                 dataType: "json",
                 //contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    //console.log(response)
-                    if (response.test == "No") {
+                    var i = response.test
+                    console.log(i)
+                    if (response.message == "No") {
                         $("#Error").html('<span>Please Login to like the page!</span>');
                         //alert("Please Login to Like the page!");
                     }
@@ -136,7 +138,8 @@
                             $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
                             $("#heart").removeClass("liked");
                         } else {
-                            $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i> &nbsp; @ViewBag.Likes likes');
+                            $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+                            $("#like").html(i + ' LIKES')
                             $("#heart").addClass("liked");
                         }
                     }
@@ -219,7 +222,9 @@
 
 <div style="margin-left: 175px; margin-top: 30px">
     <p id="Error" style="color:red">@ViewBag.LoginError</p>
-    <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp; @ViewBag.Likes likes </span>
+    <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp;</span>
+    <p>@ViewBag.Likes LIKES</p>
+    <div id="like"></div>
 
     <div id="comments">
         <h2>
