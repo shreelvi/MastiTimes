@@ -79,13 +79,13 @@ namespace MastiTimes.Controllers
             return View();
         }
 
-        public JsonResult LikeMovie(int movie, int user)
+        public JsonResult LikeTheater(string howdy, int movie, int user)
         {
             Like like = new Like();
             like._MovieID = movie;
             like._UserID = user;
             User LoggedIn = CurrentUser;
-            if (LoggedIn == null)
+            if (LoggedIn.FirstName == "Anony")
             {
                 return Json(new { Message = "No", JsonRequestBehavior.AllowGet });
             }
@@ -141,7 +141,15 @@ namespace MastiTimes.Controllers
                 ViewBag.Likes = likes;
                 ViewBag.MovieTimes = showtimes;
                 ViewBag.Movie = movieId;
+                if(CurrentUser.ID == 0)
+                {
+                    ViewBag.User = 11;
+                }
+                else
+                {
+                    ViewBag.User = CurrentUser.ID;
 
+                }
                 return View(result);
             }
             

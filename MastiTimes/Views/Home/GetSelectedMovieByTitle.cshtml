@@ -12,7 +12,7 @@
 <style>
     .fa-heart-o {
         color: red;
-        cursor: pointer;
+        cursor: pointer;       
     }
 
     .fa-heart {
@@ -114,13 +114,14 @@
     // It checks to see if the span id #heart has "liked" class, if not it run the else statement and adds the "liked" class, on a 2nd click it see that it has the "liked" class so it replaces the ihherHTML and removes class, on 3rd click it runs the else statement again cause there is no "liked" class(remomved on 2nd click).
     $(document).ready(function () {
         $("#heart").click(function () {
-
+            
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("LikeMovie")',
+                url: '@Url.Action("LikeTheater")',
                 data: {
+                    'howdy': "theaterr",
                     'movie': @ViewBag.Movie,
-                    'user': @Context.Session.GetInt32("UserID")
+                    'user': @ViewBag.User
                 },
                 dataType: "json",
                 //contentType: "application/json; charset=utf-8",
@@ -144,7 +145,7 @@
                 error: function () {
                     alert("Error rror ror");
                 }
-            });
+            });                
         });
     });
 </script>
@@ -156,8 +157,9 @@
 
         @foreach (var time in ViewBag.MovieTimes)
         {
-<strong>@time.Theater.Name - </strong>
-                <button type="button" class="btn-success" disabled style="margin-right:15px; margin-bottom: 20px;">@time.ShowTime.ToString("hh:mm tt")</button>}
+            <strong>@time.Theater.Name - </strong>
+            <button type="button" class="btn-success" disabled style="margin-right:15px; margin-bottom: 20px;">@time.ShowTime.ToString("hh:mm tt")</button>
+        }
     </div>
 </div>
 
@@ -215,10 +217,9 @@
     </div>
 </div>
 
-<br />
-<div class="c" style="margin-left:170px;">
+<div style="margin-left: 175px; margin-top: 30px">
     <p id="Error" style="color:red">@ViewBag.LoginError</p>
-    <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i></span>&nbsp;&nbsp;<span>@ViewBag.Likes LIKES</span>
+    <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp; 2 likes </span>
 
     <div id="comments">
         <h2>
@@ -294,6 +295,4 @@
 
     </div>
 </div>
-
-
 
