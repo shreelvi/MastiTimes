@@ -464,7 +464,7 @@ namespace MastiTimes.Models
             return retObj;
         }
 
-        internal static async Task<List<MovieTheater>> GetNowShowingMovies()
+        internal static List<MovieTheater> GetNowShowingMovies()
         {
             MySqlCommand comm = new MySqlCommand("get_now_showing_movies");
             List<MovieTheater> retObj = new List<MovieTheater>();
@@ -595,7 +595,7 @@ namespace MastiTimes.Models
         public static User GetUser(string userName, string password)
         {
 
-            MySqlCommand comm = new MySqlCommand("GetUserByUserName");
+            MySqlCommand comm = new MySqlCommand("get_user");
             User retObj = null;
             try
             {
@@ -629,7 +629,7 @@ namespace MastiTimes.Models
         internal static int AddUser(User obj)
         {
             if (obj == null) return -1;
-            MySqlCommand comm = new MySqlCommand("sproc_UserAdd");
+            MySqlCommand comm = new MySqlCommand("insert_user");
             try
             {
                 // generate new password first.
@@ -673,5 +673,39 @@ namespace MastiTimes.Models
             return -1;
         }
 
+        internal static int GetMovieLikes(int movieId)
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie_likes");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Like.db_MovieID, movieId);
+                int dr = GetIntReader(comm);
+
+                return dr;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
+
+
+        internal static int LikeMovie(Like obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("like_movie");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Like.db_MovieID, obj._MovieID);
+                comm.Parameters.AddWithValue("@" + Like.db_UserID, obj._UserID);
+                return AddObject(comm, "@" + Like.db_ID);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
     }
 }

@@ -24,11 +24,11 @@ namespace MastiTimes.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            
+            var watch = Stopwatch.StartNew();
             News news = new News();
-            var bollywood = await news.getBollywoodNews();
+            var bollywood =  news.getBollywoodNews();
 
             //filter top 5 articles and pass them to viewbag
             List<Articles> TopFive = new List<Articles>();
@@ -44,12 +44,14 @@ namespace MastiTimes.Controllers
             ViewBag.Articles = TopFive;
 
             List<MovieTheater> nowMovies = new List<MovieTheater>();
-            nowMovies = await DAL.GetNowShowingMovies();
+            nowMovies = DAL.GetNowShowingMovies();
 
             ViewBag.NowMovies = nowMovies;
 
             RootMovies mov = new RootMovies();
-            var result = await mov.getUpcomingMovies();
+            var result = mov.getUpcomingMovies();
+            watch.Stop();
+            ViewBag.watch = watch.ElapsedMilliseconds;
             return View(result);
         }
 
@@ -80,17 +82,17 @@ namespace MastiTimes.Controllers
             return View();
         }
 
-        public IActionResult LikeTheater(string howdy)
+        public JsonResult LikeTheater(string howdy, int movie, int user)
         {
-            User LoggedIn = null;
+            User LoggedIn = CurrentUser;
             if (LoggedIn == null)
             {
                 return Json(new { Message = "No", JsonRequestBehavior.AllowGet });
             }
-            //else { string message = "SUCCESS"; }
-            return RedirectToAction("Test");
-
-
+            else 
+            { 
+                return Json(new { Message = "Yes", JsonRequestBehavior.AllowGet }); 
+            }
         }
 
         [System.Web.Mvc.HttpPost]
@@ -119,6 +121,7 @@ namespace MastiTimes.Controllers
 
                 var showtimes = DAL.GetTimesByMovie(movieId);
                 ViewBag.MovieTimes = showtimes;
+                ViewBag.Movie = movieId;
 
                 return View(showtimes);
 
@@ -130,6 +133,7 @@ namespace MastiTimes.Controllers
 
                 var showtimes = DAL.GetTimesByMovie(movieId);
                 ViewBag.MovieTimes = showtimes;
+                ViewBag.Movie = movieId;
 
                 return View(result);
             }

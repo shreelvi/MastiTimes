@@ -23,7 +23,7 @@ namespace MastiTimes.Models
         /// Get now playing movies from the TMDB API DB.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Results>> getUpcomingMovies()
+        public List<Results> getUpcomingMovies()
         {
             string url = "https://api.themoviedb.org/3/movie/upcoming?api_key=312856db5a65474581b8885d46fc2c75&language=en-US&page=1";
             string poster = "https://image.tmdb.org/t/p/w500";
