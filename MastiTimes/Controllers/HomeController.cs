@@ -26,7 +26,6 @@ namespace MastiTimes.Controllers
 
         public IActionResult Index()
         {
-            var watch = Stopwatch.StartNew();
             News news = new News();
             var bollywood =  news.getBollywoodNews();
 
@@ -50,8 +49,6 @@ namespace MastiTimes.Controllers
 
             RootMovies mov = new RootMovies();
             var result = mov.getUpcomingMovies();
-            watch.Stop();
-            ViewBag.watch = watch.ElapsedMilliseconds;
             return View(result);
         }
 
@@ -82,15 +79,19 @@ namespace MastiTimes.Controllers
             return View();
         }
 
-        public JsonResult LikeTheater(string howdy, int movie, int user)
+        public JsonResult LikeMovie(int movie, int user)
         {
+            Like like = new Like();
+            like._MovieID = movie;
+            like._UserID = user;
             User LoggedIn = CurrentUser;
             if (LoggedIn == null)
             {
                 return Json(new { Message = "No", JsonRequestBehavior.AllowGet });
             }
             else 
-            { 
+            {
+                int check = DAL.LikeMovie(like);
                 return Json(new { Message = "Yes", JsonRequestBehavior.AllowGet }); 
             }
         }
@@ -120,6 +121,9 @@ namespace MastiTimes.Controllers
                 Search nepResult = movie.getNepalMovie(movieId);
 
                 var showtimes = DAL.GetTimesByMovie(movieId);
+                int likes = DAL.GetMovieLikes(movieId);
+
+                ViewBag.Likes = likes;
                 ViewBag.MovieTimes = showtimes;
                 ViewBag.Movie = movieId;
 
@@ -132,6 +136,9 @@ namespace MastiTimes.Controllers
                 Search result = mov.getSelectedMovieByTitle(title);
 
                 var showtimes = DAL.GetTimesByMovie(movieId);
+                int likes = DAL.GetMovieLikes(movieId);
+
+                ViewBag.Likes = likes;
                 ViewBag.MovieTimes = showtimes;
                 ViewBag.Movie = movieId;
 

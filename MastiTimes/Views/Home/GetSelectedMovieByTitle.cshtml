@@ -117,9 +117,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("LikeTheater")',
+                url: '@Url.Action("LikeMovie")',
                 data: {
-                    'howdy': "theaterr",
                     'movie': @ViewBag.Movie,
                     'user': @Context.Session.GetInt32("UserID")
                 },
@@ -216,82 +215,85 @@
     </div>
 </div>
 
-<p>Click on the heart to love or un-love this post.</p>
-<p id="Error" style="color:red">@ViewBag.LoginError</p>
-<span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp; 2 likes </span>
+<br />
+<div class="c" style="margin-left:170px;">
+    <p id="Error" style="color:red">@ViewBag.LoginError</p>
+    <span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i></span>&nbsp;&nbsp;<span>@ViewBag.Likes LIKES</span>
 
-<div id="comments">
-    <h2>
-        Comments
-        <span>(3)</span>
-    </h2>
-    <div class="comment even">
-        <div class="avatar">
-            <a href="">
-                <img alt="karpf" height="48" width="48" src="http://photos.cinematreasures.org/production/users/96350/1583394046/small.jpg?1583394046" />
-            </a>
-        </div>
-        <div class="body">
-            <strong>
-                <a class="acontent" href="#">
-                    Bilal
+    <div id="comments">
+        <h2>
+            Comments
+            <span>(3)</span>
+        </h2>
+        <div class="comment even">
+            <div class="avatar">
+                <a href="">
+                    <img alt="karpf" height="48" width="48" src="http://photos.cinematreasures.org/production/users/96350/1583394046/small.jpg?1583394046" />
                 </a>
-            </strong>
-            <span>on March 7, 2020 at 11:39am</span>
-            <p>Great video! I'm so glad I watched this.</p>
+            </div>
+            <div class="body">
+                <strong>
+                    <a class="acontent" href="#">
+                        Bilal
+                    </a>
+                </strong>
+                <span>on March 7, 2020 at 11:39am</span>
+                <p>Great video! I'm so glad I watched this.</p>
+            </div>
         </div>
-    </div>
-    <form action="" class="new_comment" id="new_comment" method="post">
-        <div style="margin:0; padding:0; display:inline">
+        <form action="" class="new_comment" id="new_comment" method="post">
+            <div style="margin:0; padding:0; display:inline">
 
-        </div>
-        <div class="login_prompt">You must login before making a comment.</div>
-        <h2>New Comment</h2>
-        <p>
-            <textarea cols="40" disabled="disabled" id="comment_body" name="comment[body]" rows="5" style="overflow:hidden; width:630px;">
+            </div>
+            <div class="login_prompt">You must login before making a comment.</div>
+            <h2>New Comment</h2>
+            <p>
+                <textarea cols="40" disabled="disabled" id="comment_body" name="comment[body]" rows="5" style="overflow:hidden; width:630px;">
                
             </textarea>
-            <div class="comment-box">
-                &nbsp;
+                <div class="comment-box">
+                    &nbsp;
+                </div>
+
+            </p>
+
+            <div class="tips">
+                <ul>
+                    <li>Contribute something to the conversation</li>
+                    <li>No personal attacks</li>
+                    <li>Stay on-topic</li>
+                </ul>
+                <p>
+                    <input disabled="disabled" id="comment_submit" name="commit" type="submit" value="Add comment" />
+                </p>
             </div>
+        </form>
 
-        </p>
+        <form asp-action="test" class="new_comment" id="new_comment" method="post">
+            <div style="margin:0; padding:0; display:inline">
 
-        <div class="tips">
-            <ul>
-                <li>Contribute something to the conversation</li>
-                <li>No personal attacks</li>
-                <li>Stay on-topic</li>
-            </ul>
+            </div>
+            <div class="login_prompt">You must login before making a comment.</div>
+            <h2>New Comment</h2>
             <p>
-                <input disabled="disabled" id="comment_submit" name="commit" type="submit" value="Add comment" />
-            </p>
-        </div>
-    </form>
-
-    <form asp-action="test" class="new_comment" id="new_comment" method="post">
-        <div style="margin:0; padding:0; display:inline">
-
-        </div>
-        <div class="login_prompt">You must login before making a comment.</div>
-        <h2>New Comment</h2>
-        <p>
-            <textarea cols="40" id="comment_body" name="comment" rows="5" style="overflow:hidden; width:630px;">  
+                <textarea cols="40" id="comment_body" name="comment" rows="5" style="overflow:hidden; width:630px;">  
             </textarea>
-        </p>
-
-        <div class="tips">
-            <ul>
-                <li>Contribute something to the conversation</li>
-                <li>No personal attacks</li>
-                <li>Stay on-topic</li>
-            </ul>
-            <p>
-                <input id="comment_submit" name="commit" type="submit" value="Add comment" />
             </p>
-        </div>
-    </form>
 
+            <div class="tips">
+                <ul>
+                    <li>Contribute something to the conversation</li>
+                    <li>No personal attacks</li>
+                    <li>Stay on-topic</li>
+                </ul>
+                <p>
+                    <input id="comment_submit" name="commit" type="submit" value="Add comment" />
+                </p>
+            </div>
+        </form>
+
+    </div>
 </div>
+
 
 
