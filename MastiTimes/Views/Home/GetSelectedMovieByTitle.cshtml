@@ -230,24 +230,28 @@
     <div id="comments">
         <h2>
             Comments
-            <span>(1)</span>
+            <span>()</span>
         </h2>
-        <div class="comment even">
-            <div class="avatar">
-                <a href="">
-                    <img alt="karpf" height="48" width="48" src="http://photos.cinematreasures.org/production/users/96350/1583394046/small.jpg?1583394046" />
-                </a>
-            </div>
-            <div class="body">
-                <strong>
-                    <a class="acontent" href="#">
-                        Bilal
+        @foreach (var com in ViewBag.Comments)
+        {
+            <div class="comment even">
+                <div class="avatar">
+                    <a href="">
+                        <img alt="karpf" height="48" width="48" src="" />
                     </a>
-                </strong>
-                <span>on March 7, 2020 at 11:39am</span>
-                <p>Great movie! I'm so glad I watched this.</p>
-            </div>
-        </div>
+                </div>
+                <div class="body">
+                    <strong>
+                        <a class="acontent" href="#">
+                            @com.userName
+                        </a>
+                    </strong>
+                    <span>@com.dateCreated</span>
+                    @*<span>on March 7, 2020 at 11:39am</span>*@
+                    <p>@com.comment</p>
+                </div>
+            </div>       
+        }
         
         @if(l == null)
         {
@@ -282,7 +286,7 @@
         
         else
         {
-            <form asp-action="test" class="new_comment" id="new_comment" method="post">
+            <form asp-action="Comment" class="new_comment" id="new_comment" method="post">
                 <div style="margin:0; padding:0; display:inline">
 
                 </div>
@@ -291,6 +295,18 @@
                     <textarea cols="40" id="comment_body" name="comment" rows="5" style="overflow:hidden; width:630px;">  
                     </textarea>
                 </p>
+
+                <div class="row">
+                    <input type="hidden" id="movie_id" name="movie" value="@ViewBag.Movie" />
+                </div>
+
+                <div class="row">
+                    <input type="hidden" id="user_id" name="user" value="@ViewBag.User" />
+                </div>
+
+                <div class="row">
+                    <input type="hidden" id="title" name="title" value="@Model.Title" />
+                </div>
 
                 <div class="tips">
                     <ul>

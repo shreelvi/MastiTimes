@@ -65,13 +65,21 @@ namespace MastiTimes.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public IActionResult Test(string comment)
+        public IActionResult Comment(string comment, int movie, int user, string title)
         {
-            if(comment == "null")
-            {
-                ViewBag.LoginError = "Please login to view the page.";
-            }          
-            return View();
+            Comment com = new Comment();
+            com._MovieID = movie;
+            com._UserID = user;
+            com._Comment = comment.Trim();
+
+
+            com._DateCreated = DateTime.Now;
+
+            User LoggedIn = CurrentUser;
+            int c = DAL.CommentMovie(com);
+
+                    
+            return RedirectToAction("GetSelectedMovieByTitle", new {title = title, movieId = movie });
         }
 
         public JsonResult LikeTheater(string howdy, int movie, int user)
@@ -134,9 +142,10 @@ namespace MastiTimes.Controllers
 
                 var showtimes = DAL.GetTimesByMovie(movieId);
                 int likes = DAL.GetMovieLikes(movieId);
-
+                var comments = DAL.GetMovieComments(movieId);
 
                 ViewBag.Likes = likes;
+                ViewBag.Comments = comments;
                 ViewBag.MovieTimes = showtimes;
                 ViewBag.Movie = movieId;
                 if(CurrentUser.ID == 0)

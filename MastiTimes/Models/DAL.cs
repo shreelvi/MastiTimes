@@ -690,6 +690,29 @@ namespace MastiTimes.Models
             return -1;
         }
 
+        internal static List<MovieComment> GetMovieComments(int movieId)
+        {
+            MySqlCommand comm = new MySqlCommand("get_movie_comments");
+            List<MovieComment> retObj = new List<MovieComment>();
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Movie.db_ID, movieId);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlDataReader dr = GetDataReader(comm);
+                while (dr.Read())
+                {
+                    retObj.Add(new MovieComment(dr));
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+        }
+
 
         internal static int LikeMovie(Like obj)
         {
@@ -700,6 +723,25 @@ namespace MastiTimes.Models
                 comm.Parameters.AddWithValue("@" + Like.db_MovieID, obj._MovieID);
                 comm.Parameters.AddWithValue("@" + Like.db_UserID, obj._UserID);
                 return AddObject(comm, "@" + Like.db_ID);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return -1;
+        }
+
+        internal static int CommentMovie(Comment obj)
+        {
+            if (obj == null) return -1;
+            MySqlCommand comm = new MySqlCommand("comment_movie");
+            try
+            {
+                comm.Parameters.AddWithValue("@" + Comment.db_MovieID, obj._MovieID);
+                comm.Parameters.AddWithValue("@" + Comment.db_UserID, obj._UserID);
+                comm.Parameters.AddWithValue("@" + Comment.db_Comment, obj._Comment);
+                comm.Parameters.AddWithValue("@" + Comment.db_DateCreated, obj._DateCreated);
+                return AddObject(comm, "@" + Comment.db_ID);
             }
             catch (Exception ex)
             {
