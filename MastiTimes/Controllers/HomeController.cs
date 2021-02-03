@@ -146,6 +146,7 @@ namespace MastiTimes.Controllers
 
                 ViewBag.Likes = likes;
                 ViewBag.Comments = comments;
+                ViewBag.Count = comments.Count();
                 ViewBag.MovieTimes = showtimes;
                 ViewBag.Movie = movieId;
                 if(CurrentUser.ID == 0)

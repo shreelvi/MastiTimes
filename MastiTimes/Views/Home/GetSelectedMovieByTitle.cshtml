@@ -230,14 +230,14 @@
     <div id="comments">
         <h2>
             Comments
-            <span>()</span>
+            <span>(@ViewBag.Count)</span>
         </h2>
         @foreach (var com in ViewBag.Comments)
         {
             <div class="comment even">
                 <div class="avatar">
                     <a href="">
-                        <img alt="karpf" height="48" width="48" src="" />
+                        <img alt="user" height="48" width="48" src="~/img/avatar.png" />
                     </a>
                 </div>
                 <div class="body">
@@ -246,7 +246,7 @@
                             @com.userName
                         </a>
                     </strong>
-                    <span>@com.dateCreated</span>
+                    <span style="margin-left:10px">@com.dateCreated</span>
                     @*<span>on March 7, 2020 at 11:39am</span>*@
                     <p>@com.comment</p>
                 </div>
