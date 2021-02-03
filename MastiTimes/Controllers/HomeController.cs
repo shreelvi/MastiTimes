@@ -27,23 +27,9 @@ namespace MastiTimes.Controllers
         public async Task<IActionResult> Index()
         {
             var watch = Stopwatch.StartNew();
-            News news = new News();
-
-            List<Articles> bollywood = await news.getBollyWoodNews();
-            //var bollywood =  news.getBollywoodNews();
-
-            //filter top 5 articles and pass them to viewbag
-            List<Articles> TopFive = new List<Articles>();
-            for (int i = 0; i < 5; i++)
-            {
-                Articles article = new Articles();
-                article.title = bollywood[i].title;
-                article.url = bollywood[i].url;
-                article.urlToImage = bollywood[i].urlToImage;
-                article.description = bollywood[i].description;
-                TopFive.Add(article);
-            }
-            ViewBag.Articles = TopFive;
+            
+            RootMovies movies = new RootMovies();
+            ViewBag.trailers = movies.GetNowPlayingTrailers();
 
             List<MovieTheater> nowMovies = new List<MovieTheater>();
             nowMovies = await DAL.GetNowShowingMovies();
