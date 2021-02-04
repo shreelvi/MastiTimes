@@ -1,4 +1,4 @@
-﻿@model List<MastiTimes.Models.Results>
+﻿@*@model List<MastiTimes.Models.Results>*@
 
 
 @{
@@ -180,105 +180,37 @@
             </a>
 
         </div>
-    </div>
-    <br /><br />
-
-    <nav class="navbar ">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">New and Upcoming Movies</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- container class for bootstrap card-->
-    <div class="container" style="width:800px">
-        <!-- bootstrap card with row name myCarousel as row 1-->
-        <div class="carousel slide" id="myCarousel">
-            <div class="carousel-inner">
-                @{
-                    bool active = true;
-                }
-                @foreach (var movie in Model)
-                {
-                    if (active)
-                    {
-                <div class="item active">
-                    <div class="col-xs-2">
-
-                        <a href='@Url.Action("GetSelectedMovie", "Home",
-                                    new { id = @movie.ID })' target="_blank">
-                            <img src="@movie.poster_path"
-                                 class="img-responsive">
-                            @Html.ActionLink(@movie.title, "GetSelectedMovie", "Home", new { id = movie.imdbID })
-                        </a>
-                    </div>
-                </div>
-                    }
-                    else
-                    {
-                <div class="item">
-                    <div class="col-xs-2">
-
-                        <a href='@Url.Action("GetSelectedMovie", "Home", new { id = @movie.ID })'>
-                            <img src="@movie.poster_path"
-                                 class="img-responsive">
-                            @Html.ActionLink(@movie.title, "GetSelectedMovie", "Home", new { id = movie.imdbID })
-                        </a>
-                    </div>
-                </div>
-                    }
-                    active = false;
-                }
-
-            </div> <a class="left carousel-control"
-                      href="#myCarousel"
-                      data-slide="prev">
-                <i class="glyphicon glyphicon-chevron-left">
-                </i>
-            </a>
-            <a class="right carousel-control"
-               href="#myCarousel"
-               data-slide="next">
-                <i class="glyphicon glyphicon-chevron-right">
-                </i>
-            </a>
-
-        </div>
-    </div>
+    </div> 
 </div>
 
+
 <div class="widget-box-popular">
-    <h4>&nbsp;&nbsp; New Movie Trailers</h4>
+    <h4>&nbsp;&nbsp; Theaters List</h4>
     <table class="table">
         <tbody>
-            @foreach (var trailer in ViewBag.trailers)
+            &nbsp;&nbsp;
+            <a href='@Url.Action("ShowTimes", "Movie")'>BROWSE SHOWTIMES BY THEATER</a>
+            @foreach (var theater in Model)
             {
-                string url;
-                url = "https://www.youtube.com/watch?v=" + trailer.key;
-            <tr>
-                <td class="movie">
-                    <a href="@url" target="_blank">
-                        @trailer.title
-                    </a><br />
-                </td>
-                <td class="movie-thumbnail">
-                    <div class="tdiv">
-                        <a href="@url" target="_blank">
-                            <img src="@trailer.backdrop_path" style="height:80px; width:100px" />
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            }
+        <tr>
+            <td class="movie">
+                <h4>
+                    @theater.Name
+                </h4><br />
+            </td>
+            <td class="movie-thumbnail">
+                <div>
+                    <p>
+                        <img src="~/img/theater.png" style="height:80px; width:100px" />
+                    </p>
+                </div>
+            </td>
+        </tr>            }
         </tbody>
     </table>
 </div>
 
-
-
-
-
+ 
 
 
 

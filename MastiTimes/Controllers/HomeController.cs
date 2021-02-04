@@ -27,22 +27,21 @@ namespace MastiTimes.Controllers
         public async Task<IActionResult> Index()
         {
             var watch = Stopwatch.StartNew();
-            
-            RootMovies movies = new RootMovies();
-            ViewBag.trailers = movies.GetNowPlayingTrailers();
+
+            Theater theater = new Theater();
+            List<Theater> theaters = new List<Theater>();
+
+            theaters = theater.GetTheatersByCity("Kathmandu");
 
             List<MovieTheater> nowMovies = new List<MovieTheater>();
             nowMovies = await DAL.GetNowShowingMovies();
 
             ViewBag.NowMovies = nowMovies;
 
-            RootMovies mov = new RootMovies();
-            var result = await mov.getUpcomingMovies();
-
             watch.Stop();
             ViewBag.watch = watch.ElapsedMilliseconds;
 
-            return View(result);
+            return View(theaters);
         }
 
         public async Task<IActionResult> News()
