@@ -17,6 +17,11 @@ namespace MastiTimes.Models
         {
             Fill(dr);
         }
+        internal Theater(MySqlDataReader dr, int movie)
+        {
+            MovieId = movie;
+            Fill(dr);
+        }
         #endregion
 
         public string Name { get; set; }
@@ -64,9 +69,11 @@ namespace MastiTimes.Models
         internal const string db_City = "city";
         internal const string db_Phone = "phone_number";
         internal const string db_Likes = "likes";
+        internal const string db_MovieId = "movie_id";
+
         #endregion
 
-        
+
 
         #region Public Subs
         public override void Fill(MySqlDataReader dr)

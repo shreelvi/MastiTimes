@@ -117,14 +117,14 @@ namespace MastiTimes.Controllers
             return View(result);
         }
 
-        public IActionResult GetSelectedMovieByTitle(string title, int movieId, string country)
+        public IActionResult GetSelectedMovieByTitle(string title, int movieId, string country, int theater)
         {
             if(country == "Nepal")
             {
                 Movie movie = new Movie();
                 Search nepResult = movie.getNepalMovie(movieId);
 
-                var showtimes = DAL.GetTimesByMovie(movieId);
+                var showtimes = DAL.GetTimesByMovie(movieId, theater);
                 int likes = DAL.GetMovieLikes(movieId);
 
                 ViewBag.Likes = likes;
@@ -139,14 +139,14 @@ namespace MastiTimes.Controllers
                 RootMovies mov = new RootMovies();
                 Search result = mov.getSelectedMovieByTitle(title);
 
-                var showtimes = DAL.GetTimesByMovie(movieId);
+                var theaters = DAL.GetTimesByMovie(movieId, theater);
                 int likes = DAL.GetMovieLikes(movieId);
                 var comments = DAL.GetMovieComments(movieId);
 
                 ViewBag.Likes = likes;
                 ViewBag.Comments = comments;
                 ViewBag.Count = comments.Count();
-                ViewBag.MovieTimes = showtimes;
+                ViewBag.MovieTimes = theaters;
                 ViewBag.Movie = movieId;
                 if(CurrentUser.ID == 0)
                 {

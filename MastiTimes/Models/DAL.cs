@@ -229,18 +229,18 @@ namespace MastiTimes.Models
             return retObj;
         }
 
-        internal static List<MovieTheater> GetTimesByMovie(int? id)
+        internal static List<Theater> GetTimesByMovie(int id, int theater)
         {
-            MySqlCommand comm = new MySqlCommand("get_movie_showtimes");
-            List<MovieTheater> retObj = new List<MovieTheater>();
+            MySqlCommand comm = new MySqlCommand("get_theaters_for_movies");
+            List<Theater> retObj = new List<Theater>();
             try
             {
-                comm.Parameters.AddWithValue("@" + MovieTheater.db_MovieID, id);
+                comm.Parameters.AddWithValue("@" + Theater.db_MovieId, id);
                 MySqlDataReader dr = GetDataReader(comm);
 
                 while (dr.Read())
                 {
-                    retObj.Add(new MovieTheater(dr));
+                    retObj.Add(new Theater(dr, id));
                 }
                 comm.Connection.Close();
             }
@@ -539,6 +539,7 @@ namespace MastiTimes.Models
             List<Movie> retObj = new List<Movie>();
             try
             {
+                comm.Parameters.AddWithValue("@" + Movie.db_ID, movie);
                 comm.Parameters.AddWithValue("@" + Theater.db_ID, id);
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
                 MySqlDataReader dr = GetDataReader(comm);

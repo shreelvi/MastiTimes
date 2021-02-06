@@ -160,7 +160,7 @@
                     <img class="img-fluid mx-auto d-bloc" src="@movie.Movie.PosterUrl" alt="@movie.Movie.Title" style="height: 255px;">
                     <h4 style="color:blue">@movie.Theater.Name</h4>
                     <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
-                                    new { title = @movie.Movie.Title, movieId = movie.MovieID, country = movie.Movie.Country })' target="_blank">
+                                    new { title = @movie.Movie.Title, movieId = movie.MovieID, country = movie.Movie.Country, theater = movie.Theater.ID })' target="_blank">
                         <button type="button" class="btn btn-success">@movie.ShowTime.ToString("hh:mm tt")</button>
                     </a>
                 </div>

@@ -158,10 +158,13 @@
     <div class="time" style="margin-bottom: 20px; margin-left: 15px; text-align: center;">
         @{ List<string> theater = new List<string>(); }
 
-        @foreach (var time in ViewBag.MovieTimes)
+        @foreach (var theat in ViewBag.MovieTimes)
         {
-            <strong>@time.Theater.Name - </strong>
-            <button type="button" class="btn-success" disabled style="margin-right:15px; margin-bottom: 20px;">@time.ShowTime.ToString("hh:mm tt")</button>
+            <strong>@theat.Name - </strong>
+            foreach (var t in theat.NowPlayingMoviesByMovie[0].showtimes)
+            {
+                <button type="button" class="btn-success" disabled style="margin-right:15px; margin-bottom: 20px;">@t.ToString("hh:mm tt")</button>
+            }
         }
     </div>
 </div>
