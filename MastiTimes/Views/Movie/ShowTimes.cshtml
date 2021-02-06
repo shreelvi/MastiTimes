@@ -55,7 +55,6 @@
                 @{int j = 0;}
                 @foreach (var movie in theater.NowPlayingMovies)
                 {
-                    <p>@movie.showtimes[0]</p>
                     <div class="col-md-3">
                         <div class="well text-center">
                             <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
@@ -64,6 +63,10 @@
                                      class="img-responsive" style="height:100px; width:100px;">
                             </a>
                             <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                            @foreach(var time in movie.showtimes)
+                            {
+                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                            }
                             @*<button type="button" class="btn-success" disabled>@(movie.Showtime.ToString("hh:mm tt"))</button>*@
                             @*<a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>*@
                         </div>
