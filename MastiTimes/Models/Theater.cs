@@ -26,9 +26,9 @@ namespace MastiTimes.Models
         public int Likes { get; set; }
 
         [NotMapped]
-        public List<MovieShowtimes> _NowPlayingMovies;
+        public List<Movie> _NowPlayingMovies;
 
-        public List<MovieShowtimes> NowPlayingMovies
+        public List<Movie> NowPlayingMovies
         {
             get
             {

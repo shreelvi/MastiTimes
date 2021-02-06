@@ -23,8 +23,17 @@ namespace MastiTimes.Models
         public Movie()
         {
         }
+        public Movie(int theater)
+        {
+            TheaterId = theater;
+        }
         internal Movie(MySqlDataReader dr)
         {
+            Fill(dr);
+        }
+        internal Movie(MySqlDataReader dr, int theater)
+        {
+            TheaterId = theater;
             Fill(dr);
         }
         #endregion
@@ -48,7 +57,23 @@ namespace MastiTimes.Models
         public string Duration { get; set; }
         public string Genre { get; set; }
         public string Plot { get; set; }
+        public int TheaterId { get; set; }
 
+        private List<DateTime> _showtimes;
+        public List<DateTime> showtimes
+        {
+            get
+            {
+                _showtimes = DAL.GetMovieShowtimesByTheater(_ID, TheaterId);
+                return _showtimes;
+            }
+            set
+            {
+                _showtimes = value;
+
+            }
+        }
+        
         [NotMapped]
         public List<Theater> theaters { get; set; }
 
