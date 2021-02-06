@@ -24,15 +24,30 @@ namespace MastiTimes.Models
         public string City { get; set; }
         public string PhoneNumber { get; set; }
         public int Likes { get; set; }
-
+        public List<Movie> _nowPlayingMoviesByMovie{get;set;}
         [NotMapped]
         public List<Movie> _NowPlayingMovies;
+        public int MovieId;
 
         public List<Movie> NowPlayingMovies
         {
             get
             {
                 _NowPlayingMovies = DAL.GetNowPlayingMoviesByTheater(_ID);
+                return _NowPlayingMovies;
+            }
+            set
+            {
+                _NowPlayingMovies = value;
+
+            }
+        }
+
+        public List<Movie> NowPlayingMoviesByMovie
+        {
+            get
+            {
+                _NowPlayingMovies = DAL.GetNowPlayingMoviesByMovieTheater(_ID, MovieId);
                 return _NowPlayingMovies;
             }
             set

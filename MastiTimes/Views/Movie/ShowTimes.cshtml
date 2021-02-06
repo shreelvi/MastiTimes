@@ -52,27 +52,39 @@
 
         <div class="movie-container" style=" margin-top: 10px;">
             <div id="@i" class="collapse">
-                @{int j = 0;}
-                @foreach (var movie in theater.NowPlayingMovies)
+                @if(theater.NowPlayingMovies != null)
                 {
-                    <div class="col-md-3">
-                        <div class="well text-center">
-                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
-                        new { title = @movie.Title, movieId = movie.ID })'>
-                                <img src="@movie.PosterUrl"
-                                     class="img-responsive" style="height:100px; width:100px;">
-                            </a>
-                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
-                            @foreach(var time in movie.showtimes)
-                            {
-                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
-                            }
-                            @*<button type="button" class="btn-success" disabled>@(movie.Showtime.ToString("hh:mm tt"))</button>*@
-                            @*<a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>*@
+                    int j = 0;
+                    @foreach (var movie in theater.NowPlayingMovies)
+                    {
+                        <div class="col-md-3">
+                            <div class="well text-center">
+                                <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                            new { title = @movie.Title, movieId = movie.ID })'>
+                                    <img src="@movie.PosterUrl"
+                                         class="img-responsive" style="height:100px; width:100px;">
+                                </a>
+                                <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                                @foreach(var time in movie.showtimes)
+                                {
+                                    <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                                }
+                                @*<button type="button" class="btn-success" disabled>@(movie.Showtime.ToString("hh:mm tt"))</button>*@
+                                @*<a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>*@
+                            </div>
                         </div>
-                    </div>
 
-                }
+                    }
+                 }
+
+                  else if(theater.NowPlayingMovies == null)
+                  {
+                       <div class="col-md-3">
+                            <div class="well text-center">No movies showing at this theater!</div>
+                       </div>
+                  }
+
+
             </div>
         </div>
 
