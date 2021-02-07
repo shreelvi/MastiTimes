@@ -94,5 +94,12 @@ namespace MastiTimes.Controllers
             }
             return RedirectToAction("Login"); //Directs to Login page after success
         }
+
+        public IActionResult Logout()
+        {
+            //await _signManager.SignOutAsync();
+            HttpContext.Session.Clear();
+            return RedirectToAction("index", "Home");
+        }
     }
 }

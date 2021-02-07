@@ -149,7 +149,10 @@
                     if (act)
                     {
                 <div class="carousel-item col-md-4 active">
-                    <img class="img-fluid mx-auto d-bloc" src="@movie.Movie.PosterUrl" alt="@movie.Movie.Title" style="height: 255px;">
+                    <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                                    new { title = @movie.Movie.Title, movieId = movie.MovieID, country = movie.Movie.Country, theater = movie.Theater.ID })' target="_blank">
+                        <img class="img-fluid mx-auto d-bloc" src="@movie.Movie.PosterUrl" alt="@movie.Movie.Title" style="height: 255px;">
+                    </a>
                     <h4 style="color:blue">@movie.Theater.Name</h4>
                     <button type="button" class="btn btn-success">@movie.ShowTime.ToString("hh:mm tt")</button>
                 </div>
@@ -157,7 +160,10 @@
                     else
                     {
                 <div class="carousel-item col-md-4">
-                    <img class="img-fluid mx-auto d-bloc" src="@movie.Movie.PosterUrl" alt="@movie.Movie.Title" style="height: 255px;">
+                    <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                                    new { title = @movie.Movie.Title, movieId = movie.MovieID, country = movie.Movie.Country, theater = movie.Theater.ID })' target="_blank">
+                        <img class="img-fluid mx-auto d-bloc" src="@movie.Movie.PosterUrl" alt="@movie.Movie.Title" style="height: 255px;">
+                    </a>
                     <h4 style="color:blue">@movie.Theater.Name</h4>
                     <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
                                     new { title = @movie.Movie.Title, movieId = movie.MovieID, country = movie.Movie.Country, theater = movie.Theater.ID })' target="_blank">

@@ -52,7 +52,7 @@
 
         <div class="movie-container" style=" margin-top: 10px;">
             <div id="@i" class="collapse">
-                @if(theater.NowPlayingMovies != null)
+                @if(theater.NowPlayingMovies.Count >= 1)
                 {
                     int j = 0;
                     @foreach (var movie in theater.NowPlayingMovies)
@@ -77,7 +77,7 @@
                     }
                  }
 
-                  else if(theater.NowPlayingMovies == null)
+                  else if(theater.NowPlayingMovies.Count == 0)
                   {
                        <div class="col-md-3">
                             <div class="well text-center">No movies showing at this theater!</div>
