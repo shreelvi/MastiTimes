@@ -52,7 +52,7 @@
 
         <div class="movie-container" style=" margin-top: 10px;">
             <div id="@i" class="collapse">
-                @if(theater.NowPlayingMovies.Count >= 1)
+                @if (theater.NowPlayingMovies != null)
                 {
                     int j = 0;
                     @foreach (var movie in theater.NowPlayingMovies)
@@ -65,7 +65,7 @@
                                          class="img-responsive" style="height:100px; width:100px;">
                                 </a>
                                 <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
-                                @foreach(var time in movie.showtimes)
+                                @foreach (var time in movie.showtimes)
                                 {
                                     <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
                                 }
@@ -75,14 +75,14 @@
                         </div>
 
                     }
-                 }
+                }
 
-                  else if(theater.NowPlayingMovies.Count == 0)
-                  {
-                       <div class="col-md-3">
-                            <div class="well text-center">No movies showing at this theater!</div>
-                       </div>
-                  }
+                else if (theater.NowPlayingMovies == null)
+                {
+                    <div class="col-md-3">
+                        <div class="well text-center">No movies showing at this theater!</div>
+                    </div>
+                }
 
 
             </div>
