@@ -129,28 +129,115 @@
 
 </script>
 
+<!-- CSS and JS END for Sliders-->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                @foreach (var movie in Model[0].NowPlayingMovies)
+                {
+                    <div class="col-md-6">
+                        <div class="well text-center">
+                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                            new { title = @movie.Title, movieId = movie.ID })'>
+                                <img src="@movie.PosterUrl"
+                                     class="img-responsive" style="height:100px; width:100px;">
+                            </a>
+                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                            @foreach (var time in movie.showtimes)
+                            {
+                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                            }
+                        </div>
+                    </div>
+
+                }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-<!-- CSS and JS END for Sliders-->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (var movie in Model[3].NowPlayingMovies)
+                {
+                    <div class="col-md-6">
+                        <div class="well text-center">
+                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                            new { title = @movie.Title, movieId = movie.ID })'>
+                                <img src="@movie.PosterUrl"
+                                     class="img-responsive" style="height:100px; width:100px;">
+                            </a>
+                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                            @foreach (var time in movie.showtimes)
+                            {
+                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                            }
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (var movie in Model[6].NowPlayingMovies)
+                {
+                    <div class="col-md-6">
+                        <div class="well text-center">
+                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                            new { title = @movie.Title, movieId = movie.ID })'>
+                                <img src="@movie.PosterUrl"
+                                     class="img-responsive" style="height:100px; width:100px;">
+                            </a>
+                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                            @foreach (var time in movie.showtimes)
+                            {
+                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                            }
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- https://bootstrapr.io/carousels.html -->
 <div id="carousel-4756560" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -160,62 +247,45 @@
         <li data-target="#carousel-4756560" data-slide-to="3"></li>
         <li data-target="#carousel-4756560" data-slide-to="4"></li>
         <li data-target="#carousel-4756560" data-slide-to="5"></li>
-        <li data-target="#carousel-4756560" data-slide-to="6"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
             <img src="~/img/QFX-civil.jpg" alt="..." style="width: 1200px; height: 500px">
             <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">This is a Heading</h3>
-                <p style="color: #ffffff !important">This is a subheading</p>
+                <h3 style="color: #ffffff !important">QFX Civil Mall</h3>
+                @*<p style="color: #ffffff !important">This is a subheading</p>*@
+
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Launch demo modal
+                    View Showtimes
                 </button>
+
             </div>
         </div>
         <div class="item">
             <img src="~/img/QFX-labim.jpg" alt="..." style="width: 1200px; height: 500px">
             <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">This is a Heading</h3>
-                <p style="color: #ffffff !important">This is a subheading</p>
+                <h3 style="color: #ffffff !important">QFX Labim Mall</h3>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">
+                    View Showtimes
+                </button>
             </div>
         </div>
         <div class="item">
-            <img src="~/img/QFX.jpg" alt="..." style="width: 1200px; height: 500px">
+            <img src="~/img/FCube.png" alt="..." style="width: 1200px; height: 500px">
             <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">This is a Heading</h3>
-                <p style="color: #ffffff !important">This is a subheading</p>
+                <h3 style="color: #ffffff !important">FCube Movies</h3>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+                    View Showtimes
+                </button>
             </div>
         </div>
-        <div class="item">
+        @*<div class="item">
             <img src="~/img/QFX-Bhakt.png" alt="..." style="width: 1200px; height: 500px">
             <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">This is a Heading</h3>
-                <p style="color: #ffffff !important">This is a subheading</p>
+                <h3 style="color: #ffffff !important">QFX Bhaktapur</h3>
             </div>
-        </div>
-        <div class="item">
-            <img src="http://placehold.it/1200x500" alt="...">
-            <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">This is a Heading</h3>
-                <p style="color: #ffffff !important">This is a subheading</p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="http://placehold.it/1200x500" alt="...">
-            <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">This is a Heading</h3>
-                <p style="color: #ffffff !important">This is a subheading</p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="http://placehold.it/1200x500" alt="...">
-            <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">This is a Heading</h3>
-                <p style="color: #ffffff !important">This is a subheading</p>
-            </div>
-        </div>
+        </div>*@
     </div>
     <a class="left carousel-control" href="#carousel-4756560" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
