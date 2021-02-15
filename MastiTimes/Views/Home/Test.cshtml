@@ -1,226 +1,125 @@
-﻿
-@{
-    ViewData["Title"] = "ShowTimes";
+﻿@{
+    ViewData["Title"] = "Test";
 }
-@{ var check = "no";}
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@{
+    var temp = 0;
+    var count = 1;
+    var ColClass = "";
+    var ColID = "";
+    var movieTemp = 0;
+}
 
 <style>
-    .fa-heart-o {
-        color: red;
-        cursor: pointer;       
+    .card-title {
+        margin-left: 10px;
     }
 
-    .fa-heart {
-        color: red;
-        cursor: pointer;
+    .card-text {
+        margin-left: 10px;
     }
-
-    #comments {
-        margin: 24px 0 12px 0;
-        width: 640px;
-    }
-
-
-    h2 {
-        color: #A3121B;
-        font-family: "museo-1","museo-2";
-        font-size: 20px;
-        font-weight: normal;
-        margin: 12px 0;
-    }
-
-    .comment .avatar {
-        float: left;
-        margin: 0 12px 0 0;
-        position: absolute;
-    }
-
-    .acontent {
-        color: #666;
-        text-decoration: none;
-    }
-
-
-    .comment {
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        -o-border-radius: 10px;
-        -ms-border-radius: 10px;
-        -khtml-border-radius: 10px;
-        border-radius: 10px;
-        behavior: url(/stylesheets/PIE.htc);
-        border: 1px solid #eee;
-        color: #444;
-        font-size: 14px;
-        margin: 12px 0;
-        overflow: hidden;
-        padding: 12px 12px 0px 12px;
-    }
-
-        .comment.even {
-            background-color: #fafafa;
-        }
-
-    #new_comment {
-        margin: 24px 0 24px 0;
-        padding: 0;
-        width: 630px;
-    }
-
-
-    .comment .body {
-        float: left;
-        margin: 0 0 0 65px;
-        min-height: 50px;
-    }
-
-    form input, .form input {
-        display: block;
-    }
-
-    .login_prompt {
-        float: right;
-        margin-top: 3px;
-    }
-
-    p {
-        margin: 12px 0;
-    }
-
-    .comment-box {
-        position: absolute;
-        display: none;
-        overflow-wrap: break-word;
-        font-weight: 400;
-        width: 630px;
-        font-family: monospace;
-        line-height: normal;
-        font-size: 16px;
-        padding: 3px;
-    }
-
-    #new_comment .tips {
-        color: #555555;
-        font-size: 14px;
-        margin: 12px 30px 24px 0;
     }
 </style>
-<script>
-    // It checks to see if the span id #heart has "liked" class, if not it run the else statement and adds the "liked" class, on a 2nd click it see that it has the "liked" class so it replaces the ihherHTML and removes class, on 3rd click it runs the else statement again cause there is no "liked" class(remomved on 2nd click).
-    $(document).ready(function () {
-        $("#heart").click(function () {
-            
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("LikeTheater")',
-                data: {
-                    'howdy': "theaterr"
-                },
-                dataType: "json",
-                //contentType: "application/json; charset=utf-8",
-                success: function (response) {
-                    //console.log(response)
-                    if (response.message == "No") {
-                        $("#Error").html('<span>Please Login to like the page!</span>');
-                        //alert("Please Login to Like the page!");
-                    }
-                    else {
-                        if ($("#heart").hasClass("liked")) {
-                            $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
-                            $("#heart").removeClass("liked");
-                        } else {
-                            $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
-                            $("#heart").addClass("liked");
-                        }
-                    }
-                    //$("#comments h2").append("Success");
-                },
-                error: function () {
-                    alert("Error rror ror");
-                }
-            });                
-        });
-    });
-</script>
 
 
-<p>Click on the heart to love or un-love this post.</p>
-<p id="Error" style="color:red">@ViewBag.LoginError</p>
-<span id=heart><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp; 2 likes </span>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<div id="comments">
-    <h2>
-        Comments
-        <span>(3)</span>
-    </h2>
-    <div class="comment even">
-        <div class="avatar">
-            <a href="">
-                <img alt="karpf" height="48" width="48" src="http://photos.cinematreasures.org/production/users/96350/1583394046/small.jpg?1583394046" />
-            </a>
+
+
+@*<div class="card">
+    <h2>Now Playing Movies</h2>
+    @foreach (var movietheater in Model)
+    {
+        ColClass = "collapse";
+        ColID = "collapseExample";
+        if (movietheater.TheaterID == temp)
+        {
+            ColClass = ColClass + movietheater.TheaterID;
+            ColID = ColID + movietheater.TheaterID;
+            if (movietheater.MovieID != movieTemp)
+            {
+                <div class="@ColClass" id="@ColID">
+                    <div class="mt-3">
+                        <p>
+                            <h4>@movietheater.Movie.Title </h4><br />
+                            @movietheater.Movie.DateReleased
+                            @movietheater.ShowTime
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @movietheater.ShowTime
+            }
+            movieTemp = movietheater.MovieID;
+
+
+        }
+        else
+        {
+            ColClass = ColClass + movietheater.TheaterID;
+            ColID = ColID + movietheater.TheaterID;
+            <div class="card-block">
+                <h3 class="card-title"><a href="#">@movietheater.Theater.Name</a></h3>
+                <p class="card-text">
+                    <a href="#">Read Reviews </a> |
+                    <a href="#">Rate Theater</a><br />
+                    @movietheater.Theater.Address<br />
+                    <a href="#">@movietheater.Theater.PhoneNumber</a>|
+                    <a href="#">View map</a>
+                </p>
+                <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="@ColClass" data-target="#@ColID"
+                        aria-expanded="false" aria-controls="">
+                    View Showtimes
+                </button>
+            </div>
+        }
+        temp = movietheater.TheaterID;
+    }
+</div>*@
+
+
+<div class="card">
+        <div class="card-header">
+            Featured
         </div>
-        <div class="body">
-            <strong>
-                <a class="acontent" href="#">
-                    Bilal
-                </a>
-            </strong>
-            <span>on March 7, 2020 at 11:39am</span>
-            <p>Great video! I'm so glad I watched this.</p>
+        <div class="card-block">
+            <h3 class="card-title"><a href="#">QFX Cinemas</a></h3>
+            <p class="card-text">
+                <a href="#">Read Reviews </a> |
+                <a href="#">Rate Theater</a><br />
+                5550 Westwood st, Tempe AZ 83201<br />
+                <a href="#">555-999-0000</a>|
+                <a href="#">View map</a>
+            </p>
+            <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                View Showtimes
+            </button>
+        </div>
+
+        <div class="card-block">
+            <h3 class="card-title"><a href="#">QFX Cinemas</a></h3>
+            <p class="card-text">
+                <a href="#">Read Reviews </a> |
+                <a href="#">Rate Theater</a><br />
+                5550 Westwood st, Tempe AZ 83201<br />
+                <a href="#">555-999-0000</a>|
+                <a href="#">View map</a>
+            </p>
+            <button class="btn btn-primary" style="margin-left:10px;" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                View Showtimes
+            </button>
         </div>
     </div>
-    <form action="" class="new_comment" id="new_comment" method="post">
-        <div style="margin:0; padding:0; display:inline">
-
-        </div>
-        <div class="login_prompt">You must login before making a comment.</div>
-        <h2>New Comment</h2>
-        <p>
-            <textarea cols="40" disabled="disabled" id="comment_body" name="comment[body]" rows="5" style="overflow:hidden; width:630px;">
-               
-            </textarea>
-            <div class="comment-box">
-                &nbsp;
+             Collapsible element
+            <div class="collapse" id="collapseExample">
+                <div class="mt-3">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim
+                    keffiyeh helvetica,
+                    craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
             </div>
-
-        </p>
-
-        <div class="tips">
-            <ul>
-                <li>Contribute something to the conversation</li>
-                <li>No personal attacks</li>
-                <li>Stay on-topic</li>
-            </ul>
-            <p>
-                <input disabled="disabled" id="comment_submit" name="commit" type="submit" value="Add comment" />
-            </p>
-        </div>
-    </form>
-
-    <form asp-action="test" class="new_comment" id="new_comment" method="post">
-        <div style="margin:0; padding:0; display:inline">
-
-        </div>
-        <div class="login_prompt">You must login before making a comment.</div>
-        <h2>New Comment</h2>
-        <p>
-            <textarea cols="40" id="comment_body" name="comment" rows="5" style="overflow:hidden; width:630px;">  
-            </textarea>
-        </p>
-
-        <div class="tips">
-            <ul>
-                <li>Contribute something to the conversation</li>
-                <li>No personal attacks</li>
-                <li>Stay on-topic</li>
-            </ul>
-            <p>
-                <input id="comment_submit" name="commit" type="submit" value="Add comment" />
-            </p>
-        </div>
-    </form>
-
-</div>
