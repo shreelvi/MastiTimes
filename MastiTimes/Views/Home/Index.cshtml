@@ -5,6 +5,9 @@
     ViewData["Title"] = "Movie Showtimes, Events, Activities and more in Kathmandu, Nepal ";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/Event.css" />
+</head>
 <style>
     @@media (min-width: 1200px) {
         .container-home {
@@ -98,6 +101,9 @@
             visibility: visible;
         }
     }
+
+    /*style for the event list*/
+
 </style>
 
 <!-- CSS and JS for now playing and coming soon poster sliders-->
@@ -130,113 +136,115 @@
 </script>
 
 <!-- CSS and JS END for Sliders-->
-
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @foreach (var movie in Model[0].NowPlayingMovies)
-                {
-                    <div class="col-md-6">
-                        <div class="well text-center">
-                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+<div id="showtimes-modal">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var movie in Model[0].NowPlayingMovies)
+                    {
+                        <div class="col-md-6">
+                            <div class="well text-center">
+                                <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
                             new { title = @movie.Title, movieId = movie.ID })'>
-                                <img src="@movie.PosterUrl"
-                                     class="img-responsive" style="height:100px; width:100px;">
-                            </a>
-                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
-                            @foreach (var time in movie.showtimes)
-                            {
-                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
-                            }
+                                    <img src="@movie.PosterUrl"
+                                         class="img-responsive" style="height:100px; width:100px;">
+                                </a>
+                                <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                                @foreach (var time in movie.showtimes)
+                                {
+                                    <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                                }
+                            </div>
                         </div>
-                    </div>
 
-                }
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var movie in Model[3].NowPlayingMovies)
+                    {
+                        <div class="col-md-6">
+                            <div class="well text-center">
+                                <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                            new { title = @movie.Title, movieId = movie.ID })'>
+                                    <img src="@movie.PosterUrl"
+                                         class="img-responsive" style="height:100px; width:100px;">
+                                </a>
+                                <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                                @foreach (var time in movie.showtimes)
+                                {
+                                    <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                                }
+                            </div>
+                        </div>
+
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">FCube showtimes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var movie in Model[6].NowPlayingMovies)
+                    {
+                        <div class="col-md-6">
+                            <div class="well text-center">
+                                <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
+                            new { title = @movie.Title, movieId = movie.ID })'>
+                                    <img src="@movie.PosterUrl"
+                                         class="img-responsive" style="height:100px; width:100px;">
+                                </a>
+                                <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
+                                @foreach (var time in movie.showtimes)
+                                {
+                                    <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
+                                }
+                            </div>
+                        </div>
+
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @foreach (var movie in Model[3].NowPlayingMovies)
-                {
-                    <div class="col-md-6">
-                        <div class="well text-center">
-                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
-                            new { title = @movie.Title, movieId = movie.ID })'>
-                                <img src="@movie.PosterUrl"
-                                     class="img-responsive" style="height:100px; width:100px;">
-                            </a>
-                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
-                            @foreach (var time in movie.showtimes)
-                            {
-                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
-                            }
-                        </div>
-                    </div>
 
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">QFX showtimes</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @foreach (var movie in Model[6].NowPlayingMovies)
-                {
-                    <div class="col-md-6">
-                        <div class="well text-center">
-                            <a href='@Url.Action("GetSelectedMovieByTitle", "Home",
-                            new { title = @movie.Title, movieId = movie.ID })'>
-                                <img src="@movie.PosterUrl"
-                                     class="img-responsive" style="height:100px; width:100px;">
-                            </a>
-                            <h5 style="color:#5E5B54">@movie.Title [@movie.Rated]</h5>
-                            @foreach (var time in movie.showtimes)
-                            {
-                                <button type="button" class="btn-success" style="margin-top:10px;" disabled>@time.ToString("hh:mm tt")</button>
-                            }
-                        </div>
-                    </div>
-
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- https://bootstrapr.io/carousels.html -->
 <div id="carousel-4756560" class="carousel slide" data-ride="carousel">
@@ -246,7 +254,6 @@
         <li data-target="#carousel-4756560" data-slide-to="2"></li>
         <li data-target="#carousel-4756560" data-slide-to="3"></li>
         <li data-target="#carousel-4756560" data-slide-to="4"></li>
-        <li data-target="#carousel-4756560" data-slide-to="5"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
@@ -281,11 +288,11 @@
             </div>
         </div>
         @*<div class="item">
-            <img src="~/img/QFX-Bhakt.png" alt="..." style="width: 1200px; height: 500px">
-            <div class="carousel-caption">
-                <h3 style="color: #ffffff !important">QFX Bhaktapur</h3>
-            </div>
-        </div>*@
+                <img src="~/img/QFX-Bhakt.png" alt="..." style="width: 1200px; height: 500px">
+                <div class="carousel-caption">
+                    <h3 style="color: #ffffff !important">QFX Bhaktapur</h3>
+                </div>
+            </div>*@
     </div>
     <a class="left carousel-control" href="#carousel-4756560" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -385,16 +392,72 @@
     </table>
 </div>
 
-
-
-
-
-
-
-
-
-
-
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="tab1">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="media">
+                    <a class="pull-left" href="#"><span class="dateEl"><em>30</em>Nov</span></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="#">Venture Tech</a>
+                        </h4>
+                        <div class="meta-data">
+                            <span class="longDate">Nov 30, 2016</span> <span class="timeEl">12:00pm - 02:00pm</span>
+                        </div>
+                        <p>
+                            See the latest inspirations in the local tech scene.
+                        </p>
+                    </div><!-- / media-body -->
+                </div><!-- / media -->
+                <div class="media">
+                    <a class="pull-left" href="#"><span class="dateEl"><em>11</em>Dec</span></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="#">Tech Conference</a>
+                        </h4>
+                        <div class="meta-data">
+                            <span class="longDate">Dec 11, 2016</span> <span class="timeEl">06:00pm - 07:30pm</span>
+                        </div>
+                        <p>
+                            Local tech entrepreneurs gather to share their knowledge.
+                        </p>
+                    </div><!-- / media-body -->
+                </div><!-- / media -->
+                <div class="media">
+                    <a class="pull-left" href="#"><span class="dateEl"><em>15</em>Dec</span></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="#">Marketing for Large Businesses</a>
+                        </h4>
+                        <div class="meta-data">
+                            <span class="longDate">Dec 15, 2016</span> <span class="timeEl">05:30pm - 07:30pm</span>
+                        </div>
+                        <p>
+                            Learn how larger organizations can effectively manager their marketing projects.
+                        </p>
+                    </div><!-- / media-body -->
+                </div><!-- / media -->
+            </div><!-- / .col-md-6 -->
+            <div class="col-md-6">
+                <div class="media">
+                    <a class="pull-left" href="#"><span class="dateEl"><em>18</em>Dec</span></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="#">Programming 101</a>
+                        </h4>
+                        <div class="meta-data">
+                            <span class="longDate">Dec 18, 2016</span> <span class="timeEl">06:00pm - 08:00pm</span>
+                        </div>
+                        <p>
+                            Take the basic CMS training class to see where things are and how to build custom modules.
+                        </p>
+                    </div><!-- / media-body -->
+                </div><!-- / media -->
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
