@@ -97,9 +97,9 @@ namespace MastiTimes.Models
             return this.GetType().ToString();
         }
 
-        internal List<Theater> GetTheatersByCity(string city)
+        internal async Task<List<Theater>> GetTheatersByCity(string city)
         {
-            return DAL.GetTheatersByCity(city);
+            return await DAL.GetTheatersByCity(city);
         }
 
        

@@ -37,12 +37,12 @@ namespace MastiTimes.Controllers
             return View(movies);
         }
 
-        public IActionResult ShowTimes()
+        public async Task<IActionResult> ShowTimes()
         {
             Theater theater = new Theater();
             List<Theater> theaters = new List<Theater>();
 
-            theaters = theater.GetTheatersByCity("Kathmandu");
+            theaters = await theater.GetTheatersByCity("Kathmandu");
             return View(theaters);
         }
 

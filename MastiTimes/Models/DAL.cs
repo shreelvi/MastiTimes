@@ -487,7 +487,7 @@ namespace MastiTimes.Models
             return retObj;
         }
 
-        internal static List<Theater> GetTheatersByCity(string city)
+        internal static async Task<List<Theater>> GetTheatersByCity(string city)
         {
             MySqlCommand comm = new MySqlCommand("get_theaters_by_city");
             List<Theater> retObj = new List<Theater>();

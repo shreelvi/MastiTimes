@@ -31,12 +31,12 @@ namespace MastiTimes.Controllers
             Theater theater = new Theater();
             List<Theater> theaters = new List<Theater>();
 
-            theaters = theater.GetTheatersByCity("Kathmandu");
+            theaters = await theater.GetTheatersByCity("Kathmandu");
 
-            List<MovieTheater> nowMovies = new List<MovieTheater>();
-            nowMovies =  await DAL.GetNowShowingMovies();
+            //List<MovieTheater> nowMovies = new List<MovieTheater>();
+            //nowMovies =  await DAL.GetNowShowingMovies();
 
-            ViewBag.NowMovies = nowMovies;
+            //ViewBag.NowMovies = nowMovies;
             RootMovies movies = new RootMovies();
             ViewBag.trailers =  await movies.GetNowPlayingTrailers();
 
