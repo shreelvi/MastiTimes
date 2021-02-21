@@ -53,9 +53,9 @@ namespace MastiTimes.Controllers
 
             List<Articles> result = await news.getBollyWoodNews();
 
-            var hollywood = news.getHollywoodNews();
+            var hollywood = await news.getHollywoodNews();
             ViewBag.hollywood = hollywood;
-            ViewBag.trailers = movies.GetNowPlayingTrailers();
+            ViewBag.trailers = await movies.GetNowPlayingTrailers();
             return View(result);
         }
 

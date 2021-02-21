@@ -40,12 +40,12 @@ namespace MastiTimes.Models
             }
         }
 
-        public List<Articles> getHollywoodNews()
+        public async Task<List<Articles>> getHollywoodNews()
         {
             string url = "http://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=f2fb14b93057475b84c589edf3909959";
             //synchronous client.
-            var client = new WebClient();
-            var content = client.DownloadString(url);
+            var client = new HttpClient();
+            var content = await client.GetStringAsync(url);
             dynamic jsonContent = JsonConvert.DeserializeObject(content);
 
             List<Articles> articles = new List<Articles>();
