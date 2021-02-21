@@ -49,31 +49,32 @@ namespace MastiTimes.Models
         }
 
 
-        public List<Results> getNowPlayingMovies()
+        public async Task<List<Results>> getNowPlayingMovies()
         {
             string url = "https://api.themoviedb.org/3/movie/now_playing?api_key=312856db5a65474581b8885d46fc2c75&language=en-US&page=1";
             string poster = "https://image.tmdb.org/t/p/w500";
             //synchronous client.
-            var client = new WebClient();
-            var content = client.DownloadString(url);
-            dynamic jsonContent = JsonConvert.DeserializeObject(content);
-
-            List<Results> movies = new List<Results>();
-
-            foreach (var obj in jsonContent.results)
+            using (var client = new HttpClient())
             {
-                Results movie = new Results();
-                movie.title = obj.title;
-                movie.poster_path = poster + obj.poster_path;
-                movie.ID = obj.id;
-                movies.Add(movie);
-            }
-            return movies;
+                var content = await client.GetStringAsync(url);
+                dynamic jsonContent = JsonConvert.DeserializeObject(content);
+                List<Results> movies = new List<Results>();
+
+                foreach (var obj in jsonContent.results)
+                {
+                    Results movie = new Results();
+                    movie.title = obj.title;
+                    movie.poster_path = poster + obj.poster_path;
+                    movie.ID = obj.id;
+                    movies.Add(movie);
+                }
+                return movies;
+            }            
         }
 
-        public List<TrailerViewModel> getMovieTrailers()
+        public async Task<List<TrailerViewModel>> getMovieTrailers()
         {
-            List<Results> nowPlaying = getNowPlayingMovies();
+            List<Results> nowPlaying = await getNowPlayingMovies();
             string url;
             string poster = "https://image.tmdb.org/t/p/w500";
             List<TrailerViewModel> trailers = new List<TrailerViewModel>();
@@ -84,12 +85,14 @@ namespace MastiTimes.Models
                 TrailerViewModel trailer = new TrailerViewModel();
                 url = "https://api.themoviedb.org/3/movie/" + nowPlaying[i].ID + "/videos?api_key=312856db5a65474581b8885d46fc2c75&language=en-US";
                 //synchronous client.
-                var client = new WebClient();
-                var content = client.DownloadString(url);
-                dynamic jsonContent = JsonConvert.DeserializeObject(content);
+                using (var client = new HttpClient())
+                {
+                    var content = await client.GetStringAsync(url);
+                    dynamic jsonContent = JsonConvert.DeserializeObject(content);
 
-                trailer.key = jsonContent.results[0].key;
-                trailers.Add(trailer);          
+                    trailer.key = jsonContent.results[0].key;
+                    trailers.Add(trailer);
+                }           
             }
 
             //Get backdrop posters
@@ -97,20 +100,22 @@ namespace MastiTimes.Models
             {
                 url = "https://api.themoviedb.org/3/movie/" + nowPlaying[i].ID + "?api_key=312856db5a65474581b8885d46fc2c75&language=en-US";
                 //synchronous client.
-                var client = new WebClient();
-                var content = client.DownloadString(url);
-                dynamic jsonContent = JsonConvert.DeserializeObject(content);
-                trailers[i].backdrop_path = poster + jsonContent.backdrop_path;
-                trailers[i].title = jsonContent.title;
+                using (var client = new HttpClient())
+                {
+                    var content = await client.GetStringAsync(url);
+                    dynamic jsonContent = JsonConvert.DeserializeObject(content);
+                    trailers[i].backdrop_path = poster + jsonContent.backdrop_path;
+                    trailers[i].title = jsonContent.title;
+                }
+                    
             }
-
             return trailers;
         }
 
-        public List<TrailerViewModel> GetNowPlayingTrailers()
+        public async Task<List<TrailerViewModel>> GetNowPlayingTrailers()
         {
             List<TrailerViewModel> trailers = new List<TrailerViewModel>();
-            trailers = getMovieTrailers();
+            trailers = await getMovieTrailers();
             return trailers;
         }
 

@@ -34,9 +34,11 @@ namespace MastiTimes.Controllers
             theaters = theater.GetTheatersByCity("Kathmandu");
 
             List<MovieTheater> nowMovies = new List<MovieTheater>();
-            nowMovies = await DAL.GetNowShowingMovies();
+            nowMovies =  await DAL.GetNowShowingMovies();
 
             ViewBag.NowMovies = nowMovies;
+            RootMovies movies = new RootMovies();
+            ViewBag.trailers =  await movies.GetNowPlayingTrailers();
 
             watch.Stop();
             ViewBag.watch = watch.ElapsedMilliseconds;
