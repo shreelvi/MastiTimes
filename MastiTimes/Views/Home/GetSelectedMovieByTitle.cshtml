@@ -1,11 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Http;
+@using System.Diagnostics;
 
 @model MastiTimes.Models.Search
 
 @{ ViewData["Title"] = "GetSelectedMovie"; }
 
 @{ var check = "no"; string l = @Context.Session.GetString("username"); }
-
+@{
+    var watch = Stopwatch.StartNew();
+}
 
 <link rel="stylesheet" type="text/css" href="~/css/MoviePage.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -13,7 +16,7 @@
 <style>
     .fa-heart-o {
         color: red;
-        cursor: pointer;       
+        cursor: pointer;
     }
 
     .fa-heart {
@@ -153,6 +156,8 @@
     });
 </script>
 
+<h3 style="color:blue">Showtimes for @Model.Title in Kathmandu Theaters</h3>
+<br />
 <div class="show-time">
     <h3 style="text-align:center;">Movie Playing at:</h3>
     <div class="time" style="margin-bottom: 20px; margin-left: 15px; text-align: center;">
@@ -160,14 +165,14 @@
 
         @foreach (var theat in ViewBag.MovieTimes)
         {
-            @if(theat.NowPlayingMoviesByMovie[0].showtimes.Count != 0)
+            @if (theat.NowPlayingMoviesByMovie[0].showtimes.Count != 0)
             {
                 <strong>@theat.Name - </strong>
                 foreach (var t in theat.NowPlayingMoviesByMovie[0].showtimes)
                 {
                     <button type="button" class="btn-success" disabled style="margin-right:15px; margin-bottom: 20px;">@t.ToString("hh:mm tt")</button>
                 }
-            }        
+            }
         }
     </div>
 </div>
@@ -193,7 +198,7 @@
             <div class="column1">
                 @foreach (var genre in Model.Genre)
                 {
-    <span class="tag">@genre</span>}
+                    <span class="tag">@genre</span>}
             </div> <!-- end column1 -->
 
             <div class="column2">
@@ -256,10 +261,10 @@
                     @*<span>on March 7, 2020 at 11:39am</span>*@
                     <p>@com.comment</p>
                 </div>
-            </div>       
+            </div>
         }
-        
-        @if(l == null)
+
+        @if (l == null)
         {
             <form action="" class="new_comment" id="new_comment" method="post">
                 <div style="margin:0; padding:0; display:inline">
@@ -289,7 +294,7 @@
                 </div>
             </form>
         }
-        
+
         else
         {
             <form asp-action="Comment" class="new_comment" id="new_comment" method="post">
@@ -326,8 +331,10 @@
                 </div>
             </form>
         }
-        
+
 
     </div>
 </div>
 
+@{ watch.Stop(); }
+<p>@watch.ElapsedMilliseconds</p>

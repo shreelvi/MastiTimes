@@ -121,19 +121,33 @@ namespace MastiTimes.Controllers
 
         public IActionResult GetSelectedMovieByTitle(string title, int movieId, string country, int theater)
         {
-            if(country == "Nepal")
+            var watch = Stopwatch.StartNew();
+            if (movieId == 103)
             {
                 Movie movie = new Movie();
                 Search nepResult = movie.getNepalMovie(movieId);
 
-                var showtimes = DAL.GetTimesByMovie(movieId, theater);
+                var theaters = DAL.GetTimesByMovie(movieId, theater);
                 int likes = DAL.GetMovieLikes(movieId);
+                var comments = DAL.GetMovieComments(movieId);
 
                 ViewBag.Likes = likes;
-                ViewBag.MovieTimes = showtimes;
+                ViewBag.Comments = comments;
+                ViewBag.Count = comments.Count();
+                ViewBag.MovieTimes = theaters;
                 ViewBag.Movie = movieId;
+                if (CurrentUser.ID == 0)
+                {
+                    ViewBag.User = 11;
+                }
+                else
+                {
+                    ViewBag.User = CurrentUser.ID;
 
-                return View(showtimes);
+                }
+                watch.Stop();
+                ViewBag.watch = watch.ElapsedMilliseconds;
+                return View(nepResult);
 
             }
             else
@@ -159,6 +173,8 @@ namespace MastiTimes.Controllers
                     ViewBag.User = CurrentUser.ID;
 
                 }
+                watch.Stop();
+                ViewBag.watch = watch.ElapsedMilliseconds;
                 return View(result);
             }
             
